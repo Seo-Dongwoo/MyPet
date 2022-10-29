@@ -1,35 +1,37 @@
 import React from "react";
 import styled from "styled-components";
 import { Link as LinkR } from "react-router-dom";
-import { Link as LinkS } from "react-scroll";
 import { FaBars } from "react-icons/fa";
+import { BsFillCartPlusFill } from "react-icons/bs";
 
-const Navbar = () => {
+const Navbar = ({ toggle }) => {
   return (
     <>
       <Nav>
         <NavbarContainer>
-          <NavLogo to="/">Logo</NavLogo>
-          <MobileIcon>
+          <NavLogo to="/">MyPet</NavLogo>
+          <MobileIcon onClick={toggle}>
             <FaBars />
           </MobileIcon>
           <NavMenu>
             <NavItem>
-              <NavLinks to="/">Home</NavLinks>
+              <NavLinks to="/">About</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks to="/">Products</NavLinks>
+              <NavLinks to="/clothes">Clothes</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks to="/">Cart</NavLinks>
+              <NavLinks to="/food">Food</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks to="/">Service</NavLinks>
+              <NavLinks to="/toy">Toy</NavLinks>
             </NavItem>
           </NavMenu>
           <NavBtn>
-            <NavBtnLink to="/">Login</NavBtnLink>
-            <NavBtnLink to="/">Cart</NavBtnLink>
+            <NavBtnLink to="/login">Login</NavBtnLink>
+            <NavBtnLink to="/cart">
+              <BsFillCartPlusFill />
+            </NavBtnLink>
           </NavBtn>
         </NavbarContainer>
       </Nav>
@@ -91,6 +93,7 @@ const NavMenu = styled.ul`
   list-style: none;
   text-align: center;
   margin-right: -22px;
+
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -100,16 +103,21 @@ const NavItem = styled.li`
   height: 80px;
 `;
 
-const NavLinks = styled(LinkS)`
+const NavLinks = styled(LinkR)`
   color: #fff;
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0 1.5rem;
+  padding: 0 1.35rem;
   height: 100%;
-  cursor: porinter;
+  cursor: pointer;
   &.active {
     border-bottom: 3px solid #01bf71;
+  }
+  &:hover {
+    color: #01bf71;
+    border-bottom: 4px solid #01bf71;
+    transition: all 0.2s ease-out;
   }
 `;
 
@@ -122,13 +130,16 @@ const NavBtn = styled.nav`
 `;
 
 const NavBtnLink = styled(LinkR)`
+  width: 90px;
+  text-align: center;
   border-radius: 50px;
   background: #01bf71;
   white-space: nowrap;
   padding: 10px 22px;
-  margin-right: 5px;
-  color: #010606;
+  margin-right: 10px;
+  color: white;
   font-size: 16px;
+  font-weight: bold;
   border: none;
   outline: none;
   border: none;
