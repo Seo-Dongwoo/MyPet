@@ -1,15 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home } from "./pages";
-import { Navbar, Footer } from "./components";
+import { Home, Login, Cart, Clothes, Food, Toy } from "./pages";
+import { Footer } from "./components";
 import "./App.css";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/clothes" element={<Clothes />}></Route>
+          <Route path="/food" element={<Food />}></Route>
+          <Route path="/toy" element={<Toy />}></Route>
         </Routes>
         <Footer />
       </BrowserRouter>
