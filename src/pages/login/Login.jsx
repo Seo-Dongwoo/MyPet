@@ -1,7 +1,169 @@
-import React from "react";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { AiOutlineGithub } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-  return <div></div>;
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = state;
+
+  const handleSubmit = () => {};
+  const handleGoogleLogin = () => {};
+  const handleGithubLogin = () => {};
+  const handleChange = () => {};
+
+  return (
+    <LoginContainer>
+      <FormWrapper>
+        <LoginForm onSubmit={handleSubmit}>
+          <FormTitle>LOGIN</FormTitle>
+          <InputField>
+            <Input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={email}
+              required
+              onChange={handleChange}
+            />
+          </InputField>
+          <InputField>
+            <Input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              required
+              onChange={handleChange}
+            />
+          </InputField>
+          <SubmitBtn>로그인</SubmitBtn>
+          <Boundary>---- Social Login ----</Boundary>
+          <SocialLogin>
+            <SocialLoginBtn onClick={handleGoogleLogin}>
+              <GoogleIcon>구글 로그인</GoogleIcon>
+            </SocialLoginBtn>
+            <SocialLoginBtn onClick={handleGithubLogin}>
+              <GithubIcon>깃허브 로그인</GithubIcon>
+            </SocialLoginBtn>
+          </SocialLogin>
+        </LoginForm>
+      </FormWrapper>
+    </LoginContainer>
+  );
 };
+
+const LoginContainer = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  overflow: hidden;
+`;
+const FormWrapper = styled.div`
+  position: absolute;
+  width: 450px;
+  height: 100%;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+`;
+
+const LoginForm = styled.form`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 3px solid #01bf71;
+`;
+const FormTitle = styled.h1`
+  margin-top: 1.2rem;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #01bf71;
+`;
+
+const InputField = styled.div`
+  max-width: 350px;
+  width: 100%;
+  height: 55px;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+  display: grid;
+  border-radius: 55px;
+  padding: 0 0.4rem;
+`;
+const Input = styled.input`
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  &::placeholder {
+    color: #aaa;
+    font-weight: 500;
+  }
+`;
+
+const SubmitBtn = styled.button`
+  width: 200px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: #01bf71;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    color: #01bf71;
+    background-color: white;
+    border: 3px solid #01bf71;
+    transition: 0.4s ease-in-out;
+  }
+`;
+
+const SocialLogin = styled.div`
+  width: 50%;
+  height: 70px;
+  text-align: center;
+`;
+
+const SocialLoginBtn = styled.button`
+  max-width: 350px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #333;
+  margin: 0 0.5rem;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
+const GoogleIcon = styled(FcGoogle)`
+  width: 60%;
+  height: 60%;
+`;
+const GithubIcon = styled(AiOutlineGithub)`
+  width: 60%;
+  height: 60%;
+`;
+const Boundary = styled.p`
+  font-weight: bold;
+  font-size: 20px;
+  color: #01bf71;
+  margin: 1rem 0;
+`;
 
 export default Login;
