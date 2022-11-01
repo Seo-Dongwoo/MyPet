@@ -26,6 +26,7 @@ export const registerInitiate = (email, password) => {
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
         dispatch(registerSuccess(user));
+        console.log(user);
       })
       .catch((error) => dispatch(registerFail(error.message)));
   };

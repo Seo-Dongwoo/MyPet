@@ -5,42 +5,31 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { registerInitiate } from "../../redux/modules/reducer/loginReducer";
 import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import { signupSchema } from "../../components/AuthSchema/SignupSchema";
 
 const Signup = () => {
-  const [state, setState] = useState({
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const initialValues = {
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
-  });
-  const { username, email, password, confirmPassword } = state;
-  const [error, setError] = useState("");
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const checkPassword = (password, confirmPassword) => {
-    if (password && confirmPassword && password === confirmPassword) {
-      return true;
-    } else {
-      return false;
-    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!checkPassword(password, confirmPassword)) {
-      return setError("비밀번호가 일치하지 않습니다.");
-    }
-    dispatch(registerInitiate(email, password));
-    navigate("/login");
-    setState({ username: "", email: "", password: "" });
-  };
-
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    setState({ ...state, [name]: value });
-  };
+  // 새로운 Form 상태관리, 제출처리, 유효성검사 라이브러리 사용해보기.
+  // touched : 양식 필드가 터치되었는지 감시하는 객체. values와 initialValues를 미러링해서 저장한다.
+  // handleBlur : blur 이벤트핸들러. 입력의 터치 여부를 추적해야 하는 경우에 유용하다.
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: signupSchema,
+      onSubmit: (values) => {
+        dispatch(registerInitiate(values.email, values.password));
+        navigate("/login");
+      },
+    });
 
   return (
     <>
@@ -48,47 +37,58 @@ const Signup = () => {
         <FormWrapper>
           <LoginForm onSubmit={handleSubmit}>
             <FormTitle to="/">REGISTER</FormTitle>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
             <InputField>
               <Input
                 type="text"
                 name="username"
                 placeholder="UserName"
-                value={username || ""}
-                required
+                value={values.username || ""}
+                onBlur={handleBlur}
                 onChange={handleChange}
               />
             </InputField>
+            {errors.username && touched.username ? (
+              <ErrorMessage>{errors.username}</ErrorMessage>
+            ) : null}
             <InputField>
               <Input
                 type="email"
                 name="email"
                 placeholder="Email"
-                value={email || ""}
-                required
+                value={values.email || ""}
+                onBlur={handleBlur}
                 onChange={handleChange}
               />
             </InputField>
+            {errors.email && touched.email ? (
+              <ErrorMessage>{errors.email}</ErrorMessage>
+            ) : null}
             <InputField>
               <Input
                 type="password"
                 name="password"
                 placeholder="Password"
-                value={password || ""}
-                required
+                value={values.password || ""}
+                onBlur={handleBlur}
                 onChange={handleChange}
               />
             </InputField>
+            {errors.password && touched.password ? (
+              <ErrorMessage>{errors.password}</ErrorMessage>
+            ) : null}
             <InputField>
               <Input
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                value={confirmPassword || ""}
-                required
+                value={values.confirmPassword || ""}
+                onBlur={handleBlur}
                 onChange={handleChange}
               />
             </InputField>
+            {errors.confirmPassword && touched.confirmPassword ? (
+              <ErrorMessage>{errors.confirmPassword}</ErrorMessage>
+            ) : null}
             <SubmitBtn>
               <Icon />
               회원가입
