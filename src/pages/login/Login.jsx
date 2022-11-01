@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+import { BiRightArrowAlt } from "react-icons/bi";
 
 const Login = () => {
   const [state, setState] = useState({
@@ -14,13 +16,16 @@ const Login = () => {
   const handleSubmit = () => {};
   const handleGoogleLogin = () => {};
   const handleGithubLogin = () => {};
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
 
   return (
     <LoginContainer>
       <FormWrapper>
         <LoginForm onSubmit={handleSubmit}>
-          <FormTitle>LOGIN</FormTitle>
+          <FormTitle to="/">LOGIN</FormTitle>
           <InputField>
             <Input
               type="email"
@@ -41,8 +46,18 @@ const Login = () => {
               onChange={handleChange}
             />
           </InputField>
+          <AutoAndFind>
+            <AutoLogin>
+              <CheckBox type="checkbox" />
+              로그인 유지
+            </AutoLogin>
+            <FindField>
+              <FindEmail>Email찾기</FindEmail>/
+              <FindPassword>Password찾기</FindPassword>
+            </FindField>
+          </AutoAndFind>
           <SubmitBtn>로그인</SubmitBtn>
-          <Boundary>---- Social Login ----</Boundary>
+          <Boundary>--- SOCIAL LOGIN ---</Boundary>
           <SocialLogin>
             <SocialLoginBtn onClick={handleGoogleLogin}>
               <GoogleIcon>구글 로그인</GoogleIcon>
@@ -51,6 +66,11 @@ const Login = () => {
               <GithubIcon>깃허브 로그인</GithubIcon>
             </SocialLoginBtn>
           </SocialLogin>
+          <Register>
+            <RegisterLink to="/signup">
+              REGISTER <RegisterIcon />
+            </RegisterLink>
+          </Register>
         </LoginForm>
       </FormWrapper>
     </LoginContainer>
@@ -80,11 +100,14 @@ const LoginForm = styled.form`
   flex-direction: column;
   border: 3px solid #01bf71;
 `;
-const FormTitle = styled.h1`
+
+const FormTitle = styled(Link)`
   margin-top: 1.2rem;
   font-size: 2.2rem;
+  font-weight: bold;
   margin-bottom: 10px;
   color: #01bf71;
+  text-decoration: none;
 `;
 
 const InputField = styled.div`
@@ -105,10 +128,36 @@ const Input = styled.input`
   font-weight: 600;
   font-size: 1rem;
   color: #333;
+  margin-left: 10px;
   &::placeholder {
     color: #aaa;
     font-weight: 500;
   }
+`;
+
+const AutoAndFind = styled.div`
+  max-width: 320px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+`;
+const AutoLogin = styled.div`
+  font-size: 15px;
+`;
+const CheckBox = styled.input`
+  margin-right: 5px;
+`;
+const FindField = styled.div`
+  font-size: 15px;
+`;
+const FindEmail = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
+const FindPassword = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;
 
 const SubmitBtn = styled.button`
@@ -161,9 +210,28 @@ const GithubIcon = styled(AiOutlineGithub)`
 `;
 const Boundary = styled.p`
   font-weight: bold;
-  font-size: 20px;
+  font-size: 17px;
   color: #01bf71;
   margin: 1rem 0;
+`;
+
+const Register = styled.div`
+  width: 100%;
+  height: 40px;
+`;
+const RegisterLink = styled(Link)`
+  display: flex;
+  align-item: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #007fff;
+  font-weight: 700;
+`;
+
+const RegisterIcon = styled(BiRightArrowAlt)`
+  margin-left: 5px;
+  width: 22px;
+  height: 22px;
 `;
 
 export default Login;
