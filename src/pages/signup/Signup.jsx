@@ -6,7 +6,7 @@ import { BiLeftArrowAlt } from "react-icons/bi";
 import { registerInitiate } from "../../redux/modules/actions/actions";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
-import { signupSchema } from "../../components/AuthSchema/SignupSchema";
+import { signupSchema } from "../../components/Auth/AuthSchema/SignupSchema";
 
 const Signup = () => {
   const dispatch = useDispatch();

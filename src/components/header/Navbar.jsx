@@ -3,11 +3,19 @@ import styled from "styled-components";
 import { Link as LinkR } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { BsFillCartPlusFill } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutInitiate } from "../../redux/modules/actions/actions";
 
 const Navbar = ({ toggle }) => {
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    if (currentUser) {
+      dispatch(logoutInitiate());
+    }
+  };
+
   return (
     <>
       {currentUser ? (
@@ -32,7 +40,9 @@ const Navbar = ({ toggle }) => {
               </NavItem>
             </NavMenu>
             <NavBtn>
-              <NavBtnLink to="/">Logout</NavBtnLink>
+              <NavBtnLink to="/" onClick={handleLogout}>
+                Logout
+              </NavBtnLink>
               <NavBtnLink to="/cart">
                 <BsFillCartPlusFill />
               </NavBtnLink>

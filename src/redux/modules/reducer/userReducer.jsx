@@ -18,6 +18,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case types.LOGOUT_START:
+      return {
+        ...state,
+        loading: true,
+      };
     case types.REGISTER_SUCCESS:
       return {
         ...state,
@@ -29,6 +34,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         currentUser: action.payload,
+      };
+    case types.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        currentUser: null,
       };
     case types.SET_USER:
       return {
@@ -43,6 +53,12 @@ const userReducer = (state = initialState, action) => {
         error: action.payload,
       };
     case types.LOGIN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case types.LOGOUT_FAIL:
       return {
         ...state,
         loading: false,
