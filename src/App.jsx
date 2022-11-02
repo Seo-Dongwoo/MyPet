@@ -1,8 +1,24 @@
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home, Login, Signup, Cart, Clothes, Food, Toy } from "./pages";
+import { auth } from "./firebase";
+import { useDispatch } from "react-redux";
 import "./App.css";
+import { setUser } from "./redux/modules/actions/actions";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        dispatch(setUser(authUser));
+      } else {
+        dispatch(setUser(null));
+      }
+    });
+  });
+
   return (
     <>
       <BrowserRouter>

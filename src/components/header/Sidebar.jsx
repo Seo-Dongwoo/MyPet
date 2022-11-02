@@ -2,25 +2,49 @@ import React from "react";
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import { Link as LinkR } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({ openSidebar, toggle }) => {
+  const { currentUser } = useSelector((state) => state.user);
+
   return (
-    <SidebarContainer openSidebar={openSidebar} onClick={toggle}>
-      <Icon onClick={toggle}>
-        <CloseIcon />
-      </Icon>
-      <SidebarWrapper>
-        <SidebarMenu>
-          <SidebarLinks to="/">About</SidebarLinks>
-          <SidebarLinks to="/clothes">Clothes</SidebarLinks>
-          <SidebarLinks to="/food">Food</SidebarLinks>
-          <SidebarLinks to="/toy">Toy</SidebarLinks>
-        </SidebarMenu>
-        <SideBtnWrap>
-          <SideBarLogin to="/login">Login</SideBarLogin>
-        </SideBtnWrap>
-      </SidebarWrapper>
-    </SidebarContainer>
+    <>
+      {currentUser ? (
+        <SidebarContainer openSidebar={openSidebar} onClick={toggle}>
+          <Icon onClick={toggle}>
+            <CloseIcon />
+          </Icon>
+          <SidebarWrapper>
+            <SidebarMenu>
+              <SidebarLinks to="/">About</SidebarLinks>
+              <SidebarLinks to="/clothes">Clothes</SidebarLinks>
+              <SidebarLinks to="/food">Food</SidebarLinks>
+              <SidebarLinks to="/toy">Toy</SidebarLinks>
+            </SidebarMenu>
+            <SideBtnWrap>
+              <SideBarLogin to="/login">Logout</SideBarLogin>
+            </SideBtnWrap>
+          </SidebarWrapper>
+        </SidebarContainer>
+      ) : (
+        <SidebarContainer openSidebar={openSidebar} onClick={toggle}>
+          <Icon onClick={toggle}>
+            <CloseIcon />
+          </Icon>
+          <SidebarWrapper>
+            <SidebarMenu>
+              <SidebarLinks to="/">About</SidebarLinks>
+              <SidebarLinks to="/clothes">Clothes</SidebarLinks>
+              <SidebarLinks to="/food">Food</SidebarLinks>
+              <SidebarLinks to="/toy">Toy</SidebarLinks>
+            </SidebarMenu>
+            <SideBtnWrap>
+              <SideBarLogin to="/login">Login</SideBarLogin>
+            </SideBtnWrap>
+          </SidebarWrapper>
+        </SidebarContainer>
+      )}
+    </>
   );
 };
 
