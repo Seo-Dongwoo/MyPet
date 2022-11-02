@@ -1,25 +1,34 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { BiRightArrowAlt } from "react-icons/bi";
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { loginInitiate } from "../../redux/modules/actions/actions";
+import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
 
 const Login = () => {
-  const [state, setState] = useState({
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const initialValues = {
     email: "",
     password: "",
-  });
+  };
 
-  const { email, password } = state;
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: loginSchema,
+      onSubmit: (values) => {
+        dispatch(loginInitiate(values.email, values.password));
+        navigate("/");
+      },
+    });
 
-  const handleSubmit = () => {};
   const handleGoogleLogin = () => {};
   const handleGithubLogin = () => {};
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    setState({ ...state, [name]: value });
-  };
 
   return (
     <LoginContainer>
@@ -31,21 +40,27 @@ const Login = () => {
               type="email"
               name="email"
               placeholder="Email"
-              value={email}
-              required
+              value={values.email}
+              onBlur={handleBlur}
               onChange={handleChange}
             />
           </InputField>
+          {errors.email && touched.email ? (
+            <ErrorMessage>{errors.email}</ErrorMessage>
+          ) : null}
           <InputField>
             <Input
               type="password"
               name="password"
               placeholder="Password"
-              value={password}
-              required
+              value={values.password}
+              onBlur={handleBlur}
               onChange={handleChange}
             />
           </InputField>
+          {errors.password && touched.password ? (
+            <ErrorMessage>{errors.password}</ErrorMessage>
+          ) : null}
           <AutoAndFind>
             <AutoLogin>
               <CheckBox type="checkbox" />
@@ -232,6 +247,16 @@ const RegisterIcon = styled(BiRightArrowAlt)`
   margin-left: 5px;
   width: 22px;
   height: 22px;
+`;
+
+const ErrorMessage = styled.span`
+  max-width: 350px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+  color: red;
+  font-size: 0.8rem;
+  font-weight: bold;
 `;
 
 export default Login;

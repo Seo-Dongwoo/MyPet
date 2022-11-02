@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BiLeftArrowAlt } from "react-icons/bi";
-import { registerInitiate } from "../../redux/modules/reducer/loginReducer";
+import { registerInitiate } from "../../redux/modules/actions/actions";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { signupSchema } from "../../components/AuthSchema/SignupSchema";

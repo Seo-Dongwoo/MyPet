@@ -3,38 +3,72 @@ import styled from "styled-components";
 import { Link as LinkR } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { BsFillCartPlusFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 const Navbar = ({ toggle }) => {
+  const { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser);
   return (
     <>
-      <Nav>
-        <NavbarContainer>
-          <NavLogo to="/">MyPet</NavLogo>
-          <MobileIcon onClick={toggle}>
-            <FaBars />
-          </MobileIcon>
-          <NavMenu>
-            <NavItem>
-              <NavLinks to="/">About</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks to="/clothes">Clothes</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks to="/food">Food</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks to="/toy">Toy</NavLinks>
-            </NavItem>
-          </NavMenu>
-          <NavBtn>
-            <NavBtnLink to="/login">Login</NavBtnLink>
-            <NavBtnLink to="/cart">
-              <BsFillCartPlusFill />
-            </NavBtnLink>
-          </NavBtn>
-        </NavbarContainer>
-      </Nav>
+      {currentUser ? (
+        <Nav>
+          <NavbarContainer>
+            <NavLogo to="/">MyPet</NavLogo>
+            <MobileIcon onClick={toggle}>
+              <FaBars />
+            </MobileIcon>
+            <NavMenu>
+              <NavItem>
+                <NavLinks to="/">About</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/clothes">Clothes</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/food">Food</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/toy">Toy</NavLinks>
+              </NavItem>
+            </NavMenu>
+            <NavBtn>
+              <NavBtnLink to="/">Logout</NavBtnLink>
+              <NavBtnLink to="/cart">
+                <BsFillCartPlusFill />
+              </NavBtnLink>
+            </NavBtn>
+          </NavbarContainer>
+        </Nav>
+      ) : (
+        <Nav>
+          <NavbarContainer>
+            <NavLogo to="/">MyPet</NavLogo>
+            <MobileIcon onClick={toggle}>
+              <FaBars />
+            </MobileIcon>
+            <NavMenu>
+              <NavItem>
+                <NavLinks to="/">About</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/clothes">Clothes</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/food">Food</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/toy">Toy</NavLinks>
+              </NavItem>
+            </NavMenu>
+            <NavBtn>
+              <NavBtnLink to="/login">Login</NavBtnLink>
+              <NavBtnLink to="/cart">
+                <BsFillCartPlusFill />
+              </NavBtnLink>
+            </NavBtn>
+          </NavbarContainer>
+        </Nav>
+      )}
     </>
   );
 };
@@ -135,7 +169,7 @@ const NavBtnLink = styled(LinkR)`
   border-radius: 50px;
   background: #01bf71;
   white-space: nowrap;
-  padding: 10px 22px;
+  padding: 10px;
   margin-right: 10px;
   color: white;
   font-size: 16px;
