@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { logoutInitiate } from "../../redux/modules/actions/actions";
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import { Link as LinkR } from "react-router-dom";
@@ -6,6 +8,13 @@ import { useSelector } from "react-redux";
 
 const Sidebar = ({ openSidebar, toggle }) => {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    if (currentUser) {
+      dispatch(logoutInitiate());
+    }
+  };
 
   return (
     <>
@@ -22,7 +31,9 @@ const Sidebar = ({ openSidebar, toggle }) => {
               <SidebarLinks to="/toy">Toy</SidebarLinks>
             </SidebarMenu>
             <SideBtnWrap>
-              <SideBarLogin to="/login">Logout</SideBarLogin>
+              <SideBarLogin to="/" onClick={handleLogout}>
+                Logout
+              </SideBarLogin>
             </SideBtnWrap>
           </SidebarWrapper>
         </SidebarContainer>
