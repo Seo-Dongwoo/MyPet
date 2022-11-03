@@ -1,5 +1,9 @@
 import * as types from "../actionTypes/actionTypes";
-import { auth } from "../../../firebase";
+import {
+  auth,
+  googleAuthProvider,
+  githubAuthProvider,
+} from "../../../firebase";
 
 const registerStart = () => ({
   type: types.REGISTER_START,
@@ -43,6 +47,34 @@ const logoutFail = (error) => ({
   payload: error,
 });
 
+const googleLoginStart = () => ({
+  type: types.GOOGLE_LOGIN_START,
+});
+
+const googleLoginSuccess = (user) => ({
+  type: types.GOOGLE_LOGIN_SUCCESS,
+  payload: user,
+});
+
+const googleLoginFail = (error) => ({
+  type: types.GOOGLE_LOGIN_FAIL,
+  payload: error,
+});
+
+const githubLoginStart = () => ({
+  type: types.GITHUB_LOGIN_START,
+});
+
+const githubLoginSuccess = (user) => ({
+  type: types.GITHUB_LOGIN_SUCCESS,
+  payload: user,
+});
+
+const githubLoginFail = (error) => ({
+  type: types.GITHUB_LOGIN_FAIL,
+  payload: error,
+});
+
 export const setUser = (user) => ({
   type: types.SET_USER,
   payload: user,
@@ -69,6 +101,30 @@ export const loginInitiate = (email, password) => {
         dispatch(loginSuccess(user));
       })
       .catch((error) => dispatch(loginFail(error.message)));
+  };
+};
+
+export const googleLoginInitiate = () => {
+  return function (dispatch) {
+    dispatch(googleLoginStart());
+    auth
+      .signInWithPopup(googleAuthProvider)
+      .then(({ user }) => {
+        dispatch(googleLoginSuccess(user));
+      })
+      .catch((error) => dispatch(googleLoginFail(error.message)));
+  };
+};
+
+export const githubLoginInitiate = () => {
+  return function (dispatch) {
+    dispatch(githubLoginStart());
+    auth
+      .signInWithPopup(githubAuthProvider)
+      .then(({ user }) => {
+        dispatch(githubLoginSuccess(user));
+      })
+      .catch((error) => dispatch(githubLoginFail(error.message)));
   };
 };
 
