@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineGithub } from "react-icons/ai";
@@ -6,13 +6,16 @@ import { FcGoogle } from "react-icons/fc";
 import { BiRightArrowAlt } from "react-icons/bi";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { loginInitiate } from "../../redux/modules/actions/actions";
+import {
+  googleLoginInitiate,
+  githubLoginInitiate,
+  loginInitiate,
+} from "../../redux/modules/actions/actions";
 import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
 import { useEffect } from "react";
 
 const Login = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValues = {
@@ -29,8 +32,13 @@ const Login = () => {
       },
     });
 
-  const handleGoogleLogin = () => {};
-  const handleGithubLogin = () => {};
+  const handleGoogleLogin = useCallback(() => {
+    dispatch(googleLoginInitiate());
+  });
+
+  const handleGithubLogin = () => {
+    dispatch(githubLoginInitiate());
+  };
 
   useEffect(() => {
     if (currentUser) {
@@ -43,7 +51,6 @@ const Login = () => {
       <FormWrapper>
         <LoginForm onSubmit={handleSubmit}>
           <FormTitle to="/">LOGIN</FormTitle>
-          {error && <ErrorMessage>{error}</ErrorMessage>}
           <InputField>
             <Input
               type="email"

@@ -18,6 +18,16 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case types.GOOGLE_LOGIN_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.GITHUB_LOGIN_START:
+      return {
+        ...state,
+        loading: true,
+      };
     case types.LOGOUT_START:
       return {
         ...state,
@@ -30,6 +40,18 @@ const userReducer = (state = initialState, action) => {
         currentUser: action.payload,
       };
     case types.LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: action.payload,
+      };
+    case types.GOOGLE_LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: action.payload,
+      };
+    case types.GITHUB_LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -53,6 +75,18 @@ const userReducer = (state = initialState, action) => {
         error: action.payload,
       };
     case types.LOGIN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case types.GOOGLE_LOGIN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case types.GITHUB_LOGIN_FAIL:
       return {
         ...state,
         loading: false,
