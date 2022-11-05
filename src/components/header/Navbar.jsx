@@ -18,13 +18,19 @@ const Navbar = ({ toggle }) => {
 
   return (
     <>
-      {currentUser ? (
-        <Nav>
-          <NavbarContainer>
-            <NavLogo to="/">MyPet</NavLogo>
-            <MobileIcon onClick={toggle}>
-              <FaBars />
-            </MobileIcon>
+      <Nav>
+        <NavbarContainer>
+          <NavLogo to="/">MyPet</NavLogo>
+          <MobileIcon onClick={toggle}>
+            <FaBars />
+          </MobileIcon>
+          {currentUser && currentUser.uid === process.env.REACT_APP_ADMIN_ID ? (
+            <NavMenu>
+              <NavItem>
+                <NavLinks to="/admin">관리자 페이지</NavLinks>
+              </NavItem>
+            </NavMenu>
+          ) : (
             <NavMenu>
               <NavItem>
                 <NavLinks to="/">About</NavLinks>
@@ -39,46 +45,24 @@ const Navbar = ({ toggle }) => {
                 <NavLinks to="/toy">Toy</NavLinks>
               </NavItem>
             </NavMenu>
-            <NavBtn>
+          )}
+          <NavBtn>
+            {currentUser ? (
               <NavBtnLink to="/" onClick={handleLogout}>
                 Logout
               </NavBtnLink>
-              <NavBtnLink to="/cart">
-                <BsFillCartPlusFill />
+            ) : (
+              <NavBtnLink to="/login" onClick={handleLogout}>
+                Login
               </NavBtnLink>
-            </NavBtn>
-          </NavbarContainer>
-        </Nav>
-      ) : (
-        <Nav>
-          <NavbarContainer>
-            <NavLogo to="/">MyPet</NavLogo>
-            <MobileIcon onClick={toggle}>
-              <FaBars />
-            </MobileIcon>
-            <NavMenu>
-              <NavItem>
-                <NavLinks to="/">About</NavLinks>
-              </NavItem>
-              <NavItem>
-                <NavLinks to="/clothes">Clothes</NavLinks>
-              </NavItem>
-              <NavItem>
-                <NavLinks to="/food">Food</NavLinks>
-              </NavItem>
-              <NavItem>
-                <NavLinks to="/toy">Toy</NavLinks>
-              </NavItem>
-            </NavMenu>
-            <NavBtn>
-              <NavBtnLink to="/login">Login</NavBtnLink>
-              <NavBtnLink to="/cart">
-                <BsFillCartPlusFill />
-              </NavBtnLink>
-            </NavBtn>
-          </NavbarContainer>
-        </Nav>
-      )}
+            )}
+
+            <NavBtnLink to="/cart">
+              <BsFillCartPlusFill />
+            </NavBtnLink>
+          </NavBtn>
+        </NavbarContainer>
+      </Nav>
     </>
   );
 };

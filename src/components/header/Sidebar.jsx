@@ -18,43 +18,36 @@ const Sidebar = ({ openSidebar, toggle }) => {
 
   return (
     <>
-      {currentUser ? (
-        <SidebarContainer openSidebar={openSidebar} onClick={toggle}>
-          <Icon onClick={toggle}>
-            <CloseIcon />
-          </Icon>
-          <SidebarWrapper>
+      <SidebarContainer openSidebar={openSidebar} onClick={toggle}>
+        <Icon onClick={toggle}>
+          <CloseIcon />
+        </Icon>
+        <SidebarWrapper>
+          {currentUser && currentUser.uid === process.env.REACT_APP_ADMIN_ID ? (
+            <AdminMenu>
+              <SidebarLinks to="/admin">관리자 페이지</SidebarLinks>
+            </AdminMenu>
+          ) : (
             <SidebarMenu>
               <SidebarLinks to="/">About</SidebarLinks>
               <SidebarLinks to="/clothes">Clothes</SidebarLinks>
               <SidebarLinks to="/food">Food</SidebarLinks>
               <SidebarLinks to="/toy">Toy</SidebarLinks>
             </SidebarMenu>
-            <SideBtnWrap>
+          )}
+          <SideBtnWrap>
+            {currentUser ? (
               <SideBarLogin to="/" onClick={handleLogout}>
                 Logout
               </SideBarLogin>
-            </SideBtnWrap>
-          </SidebarWrapper>
-        </SidebarContainer>
-      ) : (
-        <SidebarContainer openSidebar={openSidebar} onClick={toggle}>
-          <Icon onClick={toggle}>
-            <CloseIcon />
-          </Icon>
-          <SidebarWrapper>
-            <SidebarMenu>
-              <SidebarLinks to="/">About</SidebarLinks>
-              <SidebarLinks to="/clothes">Clothes</SidebarLinks>
-              <SidebarLinks to="/food">Food</SidebarLinks>
-              <SidebarLinks to="/toy">Toy</SidebarLinks>
-            </SidebarMenu>
-            <SideBtnWrap>
-              <SideBarLogin to="/login">Login</SideBarLogin>
-            </SideBtnWrap>
-          </SidebarWrapper>
-        </SidebarContainer>
-      )}
+            ) : (
+              <SideBarLogin to="/login" onClick={handleLogout}>
+                Login
+              </SideBarLogin>
+            )}
+          </SideBtnWrap>
+        </SidebarWrapper>
+      </SidebarContainer>
     </>
   );
 };
@@ -96,6 +89,17 @@ const SidebarMenu = styled.ul`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(5, 80px);
+  text-align: center;
+
+  @media screen and (max-width: 480px) {
+    grid-template-rows: repeat(5, 60px);
+  }
+`;
+
+const AdminMenu = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, 80px);
   text-align: center;
 
   @media screen and (max-width: 480px) {
