@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { registerInitiate } from "../../redux/modules/actions/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { signupSchema } from "../../components/Auth/AuthSchema/SignupSchema";
 
 const Signup = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const error = useSelector((state) => state.user.error);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValues = {
@@ -27,9 +31,20 @@ const Signup = () => {
       validationSchema: signupSchema,
       onSubmit: (values) => {
         dispatch(registerInitiate(values.email, values.password));
-        navigate("/login");
+        if (
+          error ===
+          "Firebase: The email address is already in use by another account. (auth/email-already-in-use)."
+        ) {
+          setErrorMessage("이미 존재하는 Email입니다.");
+        }
       },
     });
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [currentUser]);
 
   return (
     <>
@@ -37,6 +52,7 @@ const Signup = () => {
         <FormWrapper>
           <LoginForm onSubmit={handleSubmit}>
             <FormTitle to="/">REGISTER</FormTitle>
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <InputField>
               <Input
                 type="text"

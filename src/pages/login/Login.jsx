@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineGithub } from "react-icons/ai";
@@ -12,10 +12,11 @@ import {
   loginInitiate,
 } from "../../redux/modules/actions/actions";
 import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
-import { useEffect } from "react";
 
 const Login = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const error = useSelector((state) => state.user.error);
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValues = {
@@ -27,17 +28,41 @@ const Login = () => {
     useFormik({
       initialValues: initialValues,
       validationSchema: loginSchema,
-      onSubmit: (values) => {
-        dispatch(loginInitiate(values.email, values.password));
+      onSubmit: async (values) => {
+        await dispatch(loginInitiate(values.email, values.password));
+        if (
+          error ===
+          "Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found)."
+        ) {
+          setErrorMessage("가입된 Email이 아닙니다.");
+        } else {
+          setErrorMessage("");
+        }
       },
     });
 
-  const handleGoogleLogin = useCallback(() => {
-    dispatch(googleLoginInitiate());
-  });
+  const handleGoogleLogin = async () => {
+    try {
+      setErrorMessage("");
+      await dispatch(googleLoginInitiate());
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      setErrorMessage("Google 로그인 실패");
+    }
+  };
 
-  const handleGithubLogin = () => {
-    dispatch(githubLoginInitiate());
+  const handleGithubLogin = async () => {
+    try {
+      setErrorMessage("");
+      await dispatch(githubLoginInitiate());
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } catch (error) {
+      setErrorMessage("Github 로그인 실패");
+    }
   };
 
   useEffect(() => {
@@ -51,6 +76,7 @@ const Login = () => {
       <FormWrapper>
         <LoginForm onSubmit={handleSubmit}>
           <FormTitle to="/">LOGIN</FormTitle>
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           <InputField>
             <Input
               type="email"
