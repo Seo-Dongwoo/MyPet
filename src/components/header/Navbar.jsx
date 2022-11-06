@@ -56,7 +56,6 @@ const Navbar = ({ toggle }) => {
                 Login
               </NavBtnLink>
             )}
-
             <NavBtnLink to="/cart">
               <BsFillCartPlusFill />
             </NavBtnLink>
