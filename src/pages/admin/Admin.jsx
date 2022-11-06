@@ -1,7 +1,12 @@
 import React from "react";
+import AdminDashboard from "../../components/AdminDashboard/AdminDashboard";
 
 const Admin = () => {
-  return <div>관리자 페이지</div>;
+  return (
+    <>
+      <AdminDashboard />
+    </>
+  );
 };
 
 export default Admin;
