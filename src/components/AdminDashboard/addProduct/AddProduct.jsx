@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Category from "./Category";
 import { useDispatch } from "react-redux";
 import { addInitiate } from "../../../redux/modules/actions/productActions";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../../../firebase";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
+import { uploadFiles } from "../../../redux/modules/actions/productActions";
 
 const AddProduct = () => {
   const initialState = {
@@ -36,38 +34,7 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    const uploadFiles = () => {
-      const uploadRef = ref(storage, `images/${file.name}`);
-      const uploadTask = uploadBytesResumable(uploadRef, file);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const uploadProgress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setProgress(uploadProgress);
-
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is Pause");
-              break;
-            case "running":
-              console.log("Upload is Running");
-              break;
-            default:
-              break;
-          }
-        },
-        (err) => console.log(err),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) =>
-            setData((prev) => ({ ...prev, img: downloadUrl }))
-          );
-        }
-      );
-    };
-    file && uploadFiles();
+    file && uploadFiles(file, setProgress, setData);
   }, [file]);
 
   return (
