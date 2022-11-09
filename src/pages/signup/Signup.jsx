@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BiLeftArrowAlt } from "react-icons/bi";
-import { registerInitiate } from "../../redux/modules/actions/actions";
+import { registerInitiate } from "../../redux/modules/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { signupSchema } from "../../components/Auth/AuthSchema/SignupSchema";

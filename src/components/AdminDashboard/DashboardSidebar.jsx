@@ -2,12 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FaDog } from "react-icons/fa";
-import { RiFileCopyLine } from "react-icons/ri";
-import { IoIosHome } from "react-icons/io";
-import { AiFillFileAdd, AiFillSetting } from "react-icons/ai";
-import { FiUsers } from "react-icons/fi";
-import { GoListUnordered } from "react-icons/go";
 import { darkThemeColor } from "../../utils";
+import { SidebarData } from "./data/SidebarData";
 
 const DashboardSidebar = () => {
   return (
@@ -18,30 +14,14 @@ const DashboardSidebar = () => {
       </LogoContainer>
       <LinkContainer>
         <LinkItems>
-          <LinkItem to="/admin">
-            <IoIosHome />
-            <h3>Dashboard</h3>
-          </LinkItem>
-          <LinkItem to="/admin">
-            <RiFileCopyLine />
-            <h3>Products</h3>
-          </LinkItem>
-          <LinkItem to="/admin">
-            <AiFillFileAdd />
-            <h3>Add Product</h3>
-          </LinkItem>
-          <LinkItem to="/admin">
-            <FiUsers />
-            <h3>Users</h3>
-          </LinkItem>
-          <LinkItem to="/admin">
-            <GoListUnordered />
-            <h3>Orders</h3>
-          </LinkItem>
-          <LinkItem to="/admin">
-            <AiFillSetting />
-            <h3>Settings</h3>
-          </LinkItem>
+          {SidebarData.map((item, index) => {
+            return (
+              <LinkItem key={index} to={item.path}>
+                {item.icon}
+                <h3>{item.title}</h3>
+              </LinkItem>
+            );
+          })}
         </LinkItems>
       </LinkContainer>
     </Container>
@@ -58,6 +38,7 @@ const Container = styled.div`
   align-items: center;
   gap: 3rem;
 `;
+
 const LogoContainer = styled.div`
   display: flex;
   justify-content: center;

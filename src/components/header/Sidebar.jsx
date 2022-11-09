@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { logoutInitiate } from "../../redux/modules/actions/actions";
+import { logoutInitiate } from "../../redux/modules/actions/userActions";
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import { Link as LinkR } from "react-router-dom";

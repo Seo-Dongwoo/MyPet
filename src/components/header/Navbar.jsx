@@ -4,7 +4,7 @@ import { Link as LinkR } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutInitiate } from "../../redux/modules/actions/actions";
+import { logoutInitiate } from "../../redux/modules/actions/userActions";
 
 const Navbar = ({ toggle }) => {
   const { currentUser } = useSelector((state) => state.user);
