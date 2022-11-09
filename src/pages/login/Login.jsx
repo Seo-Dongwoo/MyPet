@@ -10,7 +10,7 @@ import {
   googleLoginInitiate,
   githubLoginInitiate,
   loginInitiate,
-} from "../../redux/modules/actions/actions";
+} from "../../redux/modules/actions/userActions";
 import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
 
 const Login = () => {
