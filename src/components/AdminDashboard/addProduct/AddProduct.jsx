@@ -6,9 +6,11 @@ import { addInitiate } from "../../../redux/modules/actions/productActions";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 import { uploadFiles } from "../../../redux/modules/actions/productActions";
+import { v4 } from "uuid";
 
 const AddProduct = () => {
   const initialState = {
+    id: v4(),
     product: "",
     category: "",
     price: "",
@@ -68,7 +70,7 @@ const AddProduct = () => {
                 onChange={handleChange}
               />
               <Input
-                type="number"
+                type="text"
                 name="price"
                 placeholder="상품 가격을 입력하세요."
                 value={price}
@@ -122,6 +124,7 @@ const LoginForm = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
+  background-color: white;
   border: 3px solid #01bf71;
 `;
 
