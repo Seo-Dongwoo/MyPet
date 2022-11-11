@@ -16,6 +16,13 @@ const productReducer = (state = initialState, action) => {
       return {
         products: [...state.products, action.payload],
       };
+    case types.DELETE_PRODUCT:
+      return {
+        ...state.products,
+        products: state.products.filter(
+          (product) => product.id !== action.payload
+        ),
+      };
     default:
       return state;
   }

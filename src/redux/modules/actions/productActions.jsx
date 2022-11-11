@@ -1,7 +1,12 @@
 import * as types from "../actionTypes/productActionTypes";
 import { db, storage } from "../../../firebase";
-import { collection, addDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { collection, addDoc, deleteDoc, doc } from "firebase/firestore";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+  deleteObject,
+} from "firebase/storage";
 
 const setLoading = (data) => ({
   type: types.SET_LOADING,
@@ -11,6 +16,10 @@ const setLoading = (data) => ({
 const addProducts = (data) => ({
   type: types.ADD_PRODUCT,
   payload: data,
+});
+
+const deleteProducts = () => ({
+  type: types.DELETE_PRODUCT,
 });
 
 const productCollectionRef = collection(db, "products");
@@ -55,4 +64,20 @@ export const uploadFiles = (file, setProgress, setData) => {
       );
     }
   );
+};
+
+export const deleteInitiate = (id, file) => {
+  return async function (dispatch) {
+    await deleteDoc(doc(productCollectionRef, id));
+    dispatch(deleteProducts());
+
+    // const deleteRef = ref(storage, `images/${file.name}`);
+    // deleteObject(deleteRef)
+    //   .then(() => {
+    //     console.log("success");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  };
 };

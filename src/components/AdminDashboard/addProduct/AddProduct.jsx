@@ -6,11 +6,9 @@ import { addInitiate } from "../../../redux/modules/actions/productActions";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 import { uploadFiles } from "../../../redux/modules/actions/productActions";
-import { v4 } from "uuid";
 
 const AddProduct = () => {
   const initialState = {
-    id: v4(),
     product: "",
     category: "",
     price: "",
@@ -56,7 +54,7 @@ const AddProduct = () => {
           <FormWrapper>
             <LoginForm onSubmit={handleSubmit}>
               <FormTitle to="/">상품 추가하기</FormTitle>
-              <h3>Upload {progress} %</h3>
+              <Upload>Upload {progress} %</Upload>
               <Category
                 name="category"
                 values={category}
@@ -136,6 +134,8 @@ const FormTitle = styled.h1`
   color: #01bf71;
   text-decoration: none;
 `;
+
+const Upload = styled.h3``;
 
 const Input = styled.input`
   max-width: 350px;
