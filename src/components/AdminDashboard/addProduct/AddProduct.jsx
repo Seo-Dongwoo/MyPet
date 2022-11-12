@@ -34,7 +34,7 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    file && uploadFiles(file, setProgress, setData);
+    file && uploadFiles(file, setProgress, setData, data.product);
   }, [file]);
 
   return (
