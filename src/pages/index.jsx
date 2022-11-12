@@ -6,3 +6,4 @@ export { default as Clothes } from "./products/Clothes";
 export { default as Food } from "./products/Food";
 export { default as Toy } from "./products/Toy";
 export { default as Admin } from "./admin/Admin";
+export { default as PrivateRoute } from "./privateRoute/PrivateRoute";
