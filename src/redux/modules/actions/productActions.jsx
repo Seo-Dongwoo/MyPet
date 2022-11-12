@@ -34,8 +34,8 @@ export const addInitiate = (data) => {
 };
 
 // Storage에 image파일 저장하기
-export const uploadFiles = (file, setProgress, setData) => {
-  const uploadRef = ref(storage, `images/${file.name}`);
+export const uploadFiles = async (file, setProgress, setData, name) => {
+  const uploadRef = ref(storage, `images/${name}`);
   const uploadTask = uploadBytesResumable(uploadRef, file);
 
   uploadTask.on(
@@ -66,18 +66,21 @@ export const uploadFiles = (file, setProgress, setData) => {
   );
 };
 
-export const deleteInitiate = (id, file) => {
+// Firebase Database에 있는 데이터 삭제
+export const deleteInitiate = (id) => {
   return async function (dispatch) {
     await deleteDoc(doc(productCollectionRef, id));
     dispatch(deleteProducts());
-
-    // const deleteRef = ref(storage, `images/${file.name}`);
-    // deleteObject(deleteRef)
-    //   .then(() => {
-    //     console.log("success");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
+};
+
+// Storage에 있는 Image 삭제
+export const deleteStorageFile = async (name) => {
+  try {
+    const deleteRef = ref(storage, `images/${name}`);
+    await deleteObject(deleteRef);
+    console.log("success");
+  } catch (error) {
+    console.log(error);
+  }
 };

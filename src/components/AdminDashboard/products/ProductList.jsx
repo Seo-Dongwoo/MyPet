@@ -5,16 +5,20 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { db } from "../../../firebase";
 import { collection, onSnapshot } from "firebase/firestore";
-import { Avatar, Button } from "@mui/material";
-import { deleteInitiate } from "../../../redux/modules/actions/productActions";
+import { Avatar } from "@mui/material";
+import {
+  deleteInitiate,
+  deleteStorageFile,
+} from "../../../redux/modules/actions/productActions";
 
 function ProductList() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const deleteHandler = (id, img) => {
-    dispatch(deleteInitiate(id, img));
+  const deleteHandler = (id, name) => {
+    dispatch(deleteInitiate(id));
+    deleteStorageFile(name);
   };
 
   useEffect(() => {
@@ -44,7 +48,7 @@ function ProductList() {
         field: "image",
         headerName: "Image",
         sortable: false,
-        width: 60,
+        width: 80,
         renderCell: (params) => <Avatar src={params.row.img} />,
         filterable: false,
       },
@@ -58,7 +62,7 @@ function ProductList() {
         field: "product",
         headerName: "Product",
         sortable: false,
-        width: 200,
+        width: 220,
       },
       {
         field: "price",
@@ -70,7 +74,7 @@ function ProductList() {
         field: "desc",
         headerName: "Desc",
         sortable: false,
-        width: 250,
+        width: 270,
       },
       {
         field: "edit",
@@ -82,7 +86,7 @@ function ProductList() {
         headerName: "Delete",
         renderCell: (params) => (
           <DeleteButton
-            onClick={() => deleteHandler(params.row.id, params.row.img)}
+            onClick={() => deleteHandler(params.row.id, params.row.product)}
           >
             Delete
           </DeleteButton>
@@ -101,7 +105,6 @@ function ProductList() {
           rows={data}
           columns={columns}
           pageSize={10}
-          checkboxSelection
           disableSelectionOnClick
           getRowId={(row) => row.id}
         />
