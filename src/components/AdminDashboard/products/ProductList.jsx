@@ -3,42 +3,30 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { db } from "../../../firebase";
-import { collection, onSnapshot } from "firebase/firestore";
 import { Avatar } from "@mui/material";
 import {
   deleteInitiate,
   deleteStorageFile,
+  unsubscribe,
 } from "../../../redux/modules/actions/productActions";
+import { useNavigate } from "react-router-dom";
 
 function ProductList() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const deleteHandler = (id, name) => {
     dispatch(deleteInitiate(id));
     deleteStorageFile(name);
+    alert("상품을 삭제하시겠습니까?");
   };
 
   useEffect(() => {
     setLoading(true);
-    const unsubscribe = onSnapshot(
-      collection(db, "products"),
-      (snapshot) => {
-        let list = [];
-        snapshot.docs.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
-        });
-        setData(list);
-        setLoading(false);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
     return () => {
-      unsubscribe();
+      unsubscribe(setData);
     };
   }, []);
 
@@ -79,7 +67,15 @@ function ProductList() {
       {
         field: "edit",
         headerName: "Edit",
-        renderCell: (params) => <DeleteButton>Edit</DeleteButton>,
+        renderCell: (row) => (
+          <EditButton
+            onClick={(id) => {
+              navigate(`/admin/edit/${row.id}`);
+            }}
+          >
+            Edit
+          </EditButton>
+        ),
       },
       {
         field: "delete",
@@ -95,8 +91,6 @@ function ProductList() {
     ],
     []
   );
-
-  console.log(data);
 
   return (
     <ListContainer>
@@ -131,6 +125,22 @@ const DeleteButton = styled.button`
   &:hover {
     background-color: white;
     color: red;
+    transition: all 0.5s ease;
+  }
+`;
+
+const EditButton = styled.button`
+  width: 60px;
+  height: 30px;
+  background: none;
+  background-color: #007fff;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  &:hover {
+    background-color: white;
+    color: #007fff;
     transition: all 0.5s ease;
   }
 `;
