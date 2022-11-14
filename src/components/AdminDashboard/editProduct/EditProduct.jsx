@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Category from "./Category";
+import Category from "../addProduct/Category";
 import { useDispatch } from "react-redux";
-import { addInitiate } from "../../../redux/modules/actions/productActions";
-import { useNavigate } from "react-router-dom";
-import { Audio } from "react-loader-spinner";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateInitiate } from "../../../redux/modules/actions/productActions";
 import { uploadFiles } from "../../../redux/modules/actions/productActions";
+import { Audio } from "react-loader-spinner";
 
-const AddProduct = () => {
-  const initialState = {
-    product: "",
-    category: "",
-    price: "",
-    desc: "",
-  };
-  const [data, setData] = useState(initialState);
+const EditProduct = () => {
+  const [data, setData] = useState([]);
   const { product, category, price, desc } = data;
-  const [progress, setProgress] = useState(0);
-  const [file, setFile] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { productId } = useParams();
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -29,11 +23,13 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmit(true);
-    try {
-      await dispatch(addInitiate(data));
-    } catch (err) {
-      console.log(err);
+    if (productId) {
+      try {
+        await dispatch(updateInitiate(productId, data));
+        setIsSubmit(true);
+      } catch (err) {
+        console.log(err);
+      }
     }
     navigate("/admin/products");
   };
@@ -58,32 +54,32 @@ const AddProduct = () => {
         <LoginContainer>
           <FormWrapper>
             <LoginForm onSubmit={handleSubmit}>
-              <FormTitle to="/">상품 추가하기</FormTitle>
+              <FormTitle to="/">상품 변경하기</FormTitle>
               <Upload>Upload {progress} %</Upload>
               <Category
                 name="category"
-                values={category}
+                values={category || ""}
                 onChange={handleChange}
               />
               <Input
                 type="text"
                 name="product"
                 placeholder="상품 이름을 입력하세요."
-                value={product}
+                value={product || ""}
                 onChange={handleChange}
               />
               <Input
                 type="text"
                 name="price"
                 placeholder="상품 가격을 입력하세요."
-                value={price}
+                value={price || ""}
                 onChange={handleChange}
               />
               <DescInput
                 type="text"
                 name="desc"
                 placeholder="상품 정보를 입력하세요."
-                value={desc}
+                value={desc || ""}
                 onChange={handleChange}
               />
               <ImageInput
@@ -95,7 +91,7 @@ const AddProduct = () => {
                 type="submit"
                 disabled={progress !== null && progress < 100}
               >
-                추가하기
+                변경하기
               </SubmitBtn>
             </LoginForm>
           </FormWrapper>
@@ -205,4 +201,4 @@ const Loading = styled.div`
   transform: translate(40%, 40%);
 `;
 
-export default AddProduct;
+export default EditProduct;

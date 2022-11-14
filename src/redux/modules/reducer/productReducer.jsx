@@ -23,6 +23,16 @@ const productReducer = (state = initialState, action) => {
           (product) => product.id !== action.payload
         ),
       };
+    case types.EDIT_PRODUCT:
+      const updateProduct = action.payload;
+      const updateProducts = state.products.map((product) => {
+        if (product.productId === updateProduct.id) {
+          return updateProduct;
+        }
+      });
+      return {
+        products: updateProducts,
+      };
     default:
       return state;
   }

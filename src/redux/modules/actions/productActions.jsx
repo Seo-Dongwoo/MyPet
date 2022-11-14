@@ -1,6 +1,14 @@
 import * as types from "../actionTypes/productActionTypes";
 import { db, storage } from "../../../firebase";
-import { collection, addDoc, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
 import {
   getDownloadURL,
   ref,
@@ -22,9 +30,30 @@ const deleteProducts = () => ({
   type: types.DELETE_PRODUCT,
 });
 
+const editProducts = (data) => ({
+  type: types.EDIT_PRODUCT,
+  payload: data,
+});
+
 const productCollectionRef = collection(db, "products");
 
-// DB에 데이터 추가
+export const unsubscribe = (setData) =>
+  onSnapshot(
+    productCollectionRef,
+    (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        list.push({ id: doc.id, ...doc.data() });
+      });
+      setData(list);
+      setLoading(false);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+
+// Firebase Database에 있는 데이터 추가
 export const addInitiate = (data) => {
   setLoading();
   return async function (dispatch) {
@@ -83,4 +112,15 @@ export const deleteStorageFile = async (name) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+// Firebase Database에 있는 데이터 변경
+export const updateInitiate = (productId, data) => async (dispatch) => {
+  await updateDoc(doc(db, "products", productId), {
+    ...data,
+  })
+    .then(() => {
+      dispatch(editProducts({ productId, data }));
+    })
+    .catch((err) => console.log(err));
 };
