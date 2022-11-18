@@ -23,7 +23,6 @@ function App() {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         dispatch(setUser(authUser));
-        console.log(authUser);
       } else {
         dispatch(setUser(null));
       }

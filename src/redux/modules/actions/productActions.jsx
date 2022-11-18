@@ -7,7 +7,6 @@ import {
   doc,
   updateDoc,
   onSnapshot,
-  setDoc,
 } from "firebase/firestore";
 import {
   getDownloadURL,

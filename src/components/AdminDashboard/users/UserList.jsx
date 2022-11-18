@@ -4,13 +4,10 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
-import {
-  deleteInitiate,
-  deleteStorageFile,
-  unsubscribe,
-} from "../../../redux/modules/actions/productActions";
+import { unsubscribe } from "../../../redux/modules/actions/userActions";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../loading/Loading";
+import { deleteInitiate } from "../../../redux/modules/actions/userActions";
 
 function ProductList() {
   const [data, setData] = useState([]);
@@ -18,10 +15,10 @@ function ProductList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const deleteHandler = (id, name) => {
+  const deleteHandler = (id) => {
     dispatch(deleteInitiate(id));
-    deleteStorageFile(name);
-    alert("상품을 삭제하시겠습니까?");
+
+    alert("해당 유저를 삭제하시겠습니까?");
   };
 
   useEffect(() => {
@@ -35,57 +32,71 @@ function ProductList() {
   const columns = useMemo(
     () => [
       {
-        field: "image",
+        field: "photoURL",
         headerName: "Image",
         sortable: false,
+        renderCell: (params) => <Avatar src={params.row.photoURL} />,
         width: 80,
-        renderCell: (params) => <Avatar src={params.row.img} />,
         filterable: false,
       },
       {
-        field: "category",
-        headerName: "Category",
+        field: "username",
+        headerName: "UserName",
+        renderCell: (params) => (
+          <h3>{params.row.username || params.row.values.username}</h3>
+        ),
         sortable: false,
         width: 150,
       },
       {
-        field: "product",
-        headerName: "Product",
+        field: "email",
+        headerName: "Email",
+        renderCell: (params) => (
+          <>
+            {params.row.email === null || params.row.values.email === null ? (
+              <h3>Email 비공개</h3>
+            ) : (
+              <h3>{params.row.values.email || params.row.email}</h3>
+            )}
+          </>
+        ),
         sortable: false,
-        width: 220,
+        width: 250,
       },
       {
-        field: "price",
-        headerName: "Price",
+        field: "phonenumber",
+        headerName: "PhoneNumber",
+        renderCell: (params) => (
+          <>
+            {params.row.phoneNumber === null ||
+            params.row.values.phoneNumber === null ? (
+              <h3>phoneNumber 비공개</h3>
+            ) : (
+              <h3>{params.row.values.phoneNumber || params.row.phoneNumber}</h3>
+            )}
+          </>
+        ),
         sortable: false,
-        width: 100,
+        width: 200,
       },
       {
-        field: "desc",
-        headerName: "Desc",
-        sortable: false,
-        width: 270,
-      },
-      {
-        field: "edit",
-        headerName: "Edit",
+        field: "view",
+        headerName: "View",
         renderCell: (row) => (
-          <EditButton
+          <ViewButton
             onClick={() => {
               navigate(`/admin/edit/${row.id}`);
             }}
           >
-            Edit
-          </EditButton>
+            View
+          </ViewButton>
         ),
       },
       {
         field: "delete",
         headerName: "Delete",
         renderCell: (params) => (
-          <DeleteButton
-            onClick={() => deleteHandler(params.row.id, params.row.product)}
-          >
+          <DeleteButton onClick={() => deleteHandler(params.row.id)}>
             Delete
           </DeleteButton>
         ),
@@ -100,7 +111,7 @@ function ProductList() {
         <Loading />
       ) : (
         <ListContainer>
-          <Box sx={{ height: "75.5%", width: "80%" }}>
+          <Box sx={{ height: "75.5%", width: "82%" }}>
             <DataGrid
               rows={data}
               columns={columns}
@@ -112,6 +123,7 @@ function ProductList() {
                 boxShadow: 2,
                 border: 2,
                 marginTop: 5,
+                paddingLeft: 1,
                 "& .MuiDataGrid-cell:hover": {
                   color: "primary.main",
                 },
@@ -125,8 +137,8 @@ function ProductList() {
 }
 
 const ListContainer = styled.div`
-  padding: 5% 0 0 5%;
-  width: 80%;
+  padding: 5% 0 0 10%;
+  width: 75%;
   height: 100%;
 `;
 
@@ -146,7 +158,7 @@ const DeleteButton = styled.button`
   }
 `;
 
-const EditButton = styled.button`
+const ViewButton = styled.button`
   width: 60px;
   height: 30px;
   background: none;

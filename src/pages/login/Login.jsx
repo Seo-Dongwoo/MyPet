@@ -10,6 +10,7 @@ import {
   googleLoginInitiate,
   githubLoginInitiate,
   loginInitiate,
+  addInitiate,
 } from "../../redux/modules/actions/userActions";
 import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
 
@@ -23,7 +24,7 @@ const Login = () => {
     email: "",
     password: "",
   };
-
+  console.log(currentUser);
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
@@ -35,8 +36,6 @@ const Login = () => {
           "Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found)."
         ) {
           setErrorMessage("가입된 Email이 아닙니다.");
-        } else {
-          setErrorMessage("");
         }
       },
     });
@@ -45,6 +44,7 @@ const Login = () => {
     try {
       setErrorMessage("");
       await dispatch(googleLoginInitiate());
+
       setTimeout(() => {
         navigate("/");
       }, 2000);

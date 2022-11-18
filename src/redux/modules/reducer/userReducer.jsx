@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   currentUser: null,
   error: null,
+  users: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -97,6 +98,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case types.ADD_USER:
+      return {
+        ...state,
+        users: [...state.users, action.payload],
       };
     default:
       return state;

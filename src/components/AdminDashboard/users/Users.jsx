@@ -1,11 +1,10 @@
 import React from "react";
+import UserList from "./UserList";
 
 const Users = () => {
   return (
     <>
-      <section>
-        <div>Users</div>
-      </section>
+      <UserList />
     </>
   );
 };
