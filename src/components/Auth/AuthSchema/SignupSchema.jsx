@@ -22,4 +22,7 @@ export const signupSchema = Yup.object({
   confirmPassword: Yup.string()
     .required("Confirm Password는 필수 항목입니다.")
     .oneOf([Yup.ref("password"), null], "Password가 일치하지 않습니다."),
+  phoneNumber:
+    Yup.string()
+    .required("핸드폰 번호를 입력해주세요."),
 });

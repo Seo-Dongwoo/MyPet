@@ -7,6 +7,8 @@ import { registerInitiate } from "../../redux/modules/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { signupSchema } from "../../components/Auth/AuthSchema/SignupSchema";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Signup = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -16,10 +18,12 @@ const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValues = {
+    photoURL: null,
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    phoneNumber: "",
   };
 
   // 새로운 Form 상태관리, 제출처리, 유효성검사 라이브러리 사용해보기.
@@ -29,8 +33,11 @@ const Signup = () => {
     useFormik({
       initialValues: initialValues,
       validationSchema: signupSchema,
-      onSubmit: (values) => {
+      onSubmit: async (values) => {
         dispatch(registerInitiate(values.email, values.password));
+
+        await addDoc(collection(db, "users"), { values });
+
         if (
           error ===
           "Firebase: The email address is already in use by another account. (auth/email-already-in-use)."
@@ -104,6 +111,20 @@ const Signup = () => {
             </InputField>
             {errors.confirmPassword && touched.confirmPassword ? (
               <ErrorMessage>{errors.confirmPassword}</ErrorMessage>
+            ) : null}
+            <InputField>
+              <Input
+                type="tel"
+                name="phoneNumber"
+                pattern="[0-9]{3}[0-9]{4}[0-9]{4}"
+                placeholder="PhoneNumber"
+                value={values.phoneNumber || ""}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+            </InputField>
+            {errors.phoneNumber && touched.phoneNumber ? (
+              <ErrorMessage>{errors.phoneNumber}</ErrorMessage>
             ) : null}
             <SubmitBtn>
               <Icon />

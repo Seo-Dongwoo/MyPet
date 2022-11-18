@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateInitiate } from "../../../redux/modules/actions/productActions";
 import { uploadFiles } from "../../../redux/modules/actions/productActions";
-import { Audio } from "react-loader-spinner";
+import Loading from "../../loading/Loading";
 
 const EditProduct = () => {
   const [data, setData] = useState([]);
@@ -41,19 +41,11 @@ const EditProduct = () => {
   return (
     <>
       {isSubmit ? (
-        <Loading>
-          <Audio
-            height="80"
-            width="80"
-            radius="9"
-            color="green"
-            ariaLabel="three-dots-loading"
-          />
-        </Loading>
+        <Loading />
       ) : (
-        <LoginContainer>
+        <EditContainer>
           <FormWrapper>
-            <LoginForm onSubmit={handleSubmit}>
+            <EditForm onSubmit={handleSubmit}>
               <FormTitle to="/">상품 변경하기</FormTitle>
               <Upload>Upload {progress} %</Upload>
               <Category
@@ -93,15 +85,15 @@ const EditProduct = () => {
               >
                 변경하기
               </SubmitBtn>
-            </LoginForm>
+            </EditForm>
           </FormWrapper>
-        </LoginContainer>
+        </EditContainer>
       )}
     </>
   );
 };
 
-const LoginContainer = styled.div`
+const EditContainer = styled.div`
   position: relative;
   width: 80%;
   height: 100%
@@ -116,7 +108,7 @@ const FormWrapper = styled.div`
   transform: translate(-50%, 0);
 `;
 
-const LoginForm = styled.form`
+const EditForm = styled.form`
   margin-top: 30px;
   width: 100%;
   height: 100%;
@@ -193,12 +185,6 @@ const SubmitBtn = styled.button`
     border: 3px solid #01bf71;
     transition: 0.4s ease-in-out;
   }
-`;
-
-const Loading = styled.div`
-  width: 80%;
-  height: 100%;
-  transform: translate(40%, 40%);
 `;
 
 export default EditProduct;

@@ -4,7 +4,7 @@ import Category from "./Category";
 import { useDispatch } from "react-redux";
 import { addInitiate } from "../../../redux/modules/actions/productActions";
 import { useNavigate } from "react-router-dom";
-import { Audio } from "react-loader-spinner";
+import Loading from "../../loading/Loading";
 import { uploadFiles } from "../../../redux/modules/actions/productActions";
 
 const AddProduct = () => {
@@ -45,19 +45,11 @@ const AddProduct = () => {
   return (
     <>
       {isSubmit ? (
-        <Loading>
-          <Audio
-            height="80"
-            width="80"
-            radius="9"
-            color="green"
-            ariaLabel="three-dots-loading"
-          />
-        </Loading>
+        <Loading />
       ) : (
-        <LoginContainer>
+        <AddContainer>
           <FormWrapper>
-            <LoginForm onSubmit={handleSubmit}>
+            <AddForm onSubmit={handleSubmit}>
               <FormTitle to="/">상품 추가하기</FormTitle>
               <Upload>Upload {progress} %</Upload>
               <Category
@@ -97,15 +89,15 @@ const AddProduct = () => {
               >
                 추가하기
               </SubmitBtn>
-            </LoginForm>
+            </AddForm>
           </FormWrapper>
-        </LoginContainer>
+        </AddContainer>
       )}
     </>
   );
 };
 
-const LoginContainer = styled.div`
+const AddContainer = styled.div`
   position: relative;
   width: 80%;
   height: 100%
@@ -120,7 +112,7 @@ const FormWrapper = styled.div`
   transform: translate(-50%, 0);
 `;
 
-const LoginForm = styled.form`
+const AddForm = styled.form`
   margin-top: 30px;
   width: 100%;
   height: 100%;
@@ -197,12 +189,6 @@ const SubmitBtn = styled.button`
     border: 3px solid #01bf71;
     transition: 0.4s ease-in-out;
   }
-`;
-
-const Loading = styled.div`
-  width: 80%;
-  height: 100%;
-  transform: translate(40%, 40%);
 `;
 
 export default AddProduct;

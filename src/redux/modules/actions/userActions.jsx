@@ -3,7 +3,15 @@ import {
   auth,
   googleAuthProvider,
   githubAuthProvider,
+  db,
 } from "../../../firebase";
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
 
 const registerStart = () => ({
   type: types.REGISTER_START,
@@ -80,6 +88,29 @@ export const setUser = (user) => ({
   payload: user,
 });
 
+const addUsers = (data) => ({
+  type: types.ADD_USER,
+  payload: data,
+});
+
+const userCollectionRef = collection(db, "users");
+
+export const unsubscribe = (setData) =>
+  onSnapshot(
+    userCollectionRef,
+    (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        list.push({ id: doc.id, ...doc.data() });
+      });
+      setData(list);
+      console.log(list);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+
 export const registerInitiate = (email, password) => {
   return function (dispatch) {
     dispatch(registerStart());
@@ -109,8 +140,22 @@ export const googleLoginInitiate = () => {
     dispatch(googleLoginStart());
     auth
       .signInWithPopup(googleAuthProvider)
-      .then(({ user }) => {
+      .then(async ({ user }) => {
         dispatch(googleLoginSuccess(user));
+
+        let userUID = user.uid;
+        let username = user.displayName;
+        let email = user.email;
+        let photoURL = user.photoURL;
+        let phoneNumber = user.phoneNumber;
+
+        await addDoc(userCollectionRef, {
+          userUID,
+          username,
+          email,
+          photoURL,
+          phoneNumber,
+        });
       })
       .catch((error) => dispatch(googleLoginFail(error.message)));
   };
@@ -137,5 +182,43 @@ export const logoutInitiate = () => {
         dispatch(logoutSuccess());
       })
       .catch((error) => dispatch(logoutFail(error.message)));
+  };
+};
+// .then(async (res) => {
+//   let username = res.user.displayName;
+//   let email = res.user.email;
+//   let photoURL = res.user.photoURL;
+//   let phoneNumber = res.user.phoneNumber;
+
+//   await addDoc(userCollectionRef, {
+//     username,
+//     email,
+//     photoURL,
+//     phoneNumber,
+//   });
+// })
+
+// Firebase Database에 있는 데이터 추가
+// export const addInitiate = (res) => {
+//   let username = res.user.displayName;
+//   let email = res.user.email;
+//   let photoURL = res.user.photoURL;
+//   let phoneNumber = res.user.phoneNumber;
+
+//   return async function (dispatch) {
+//     await addDoc(userCollectionRef, {
+//       username,
+//       email,
+//       photoURL,
+//       phoneNumber,
+//     });
+//     dispatch(addUsers(res));
+//   };
+// };
+
+// Firebase Database에 있는 데이터 삭제
+export const deleteInitiate = (id) => {
+  return async function () {
+    await deleteDoc(doc(userCollectionRef, id));
   };
 };
