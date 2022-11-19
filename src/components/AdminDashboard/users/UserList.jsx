@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../loading/Loading";
 import { deleteInitiate } from "../../../redux/modules/actions/userActions";
 
-function ProductList() {
+function UserList() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -174,4 +174,4 @@ const ViewButton = styled.button`
   }
 `;
 
-export default ProductList;
+export default UserList;

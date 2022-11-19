@@ -10,7 +10,6 @@ import {
   googleLoginInitiate,
   githubLoginInitiate,
   loginInitiate,
-  addInitiate,
 } from "../../redux/modules/actions/userActions";
 import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
 

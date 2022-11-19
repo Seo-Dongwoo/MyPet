@@ -7,9 +7,9 @@ import {
 } from "../../../firebase";
 import {
   collection,
-  addDoc,
   deleteDoc,
   doc,
+  setDoc,
   onSnapshot,
 } from "firebase/firestore";
 
@@ -88,7 +88,7 @@ export const setUser = (user) => ({
   payload: user,
 });
 
-const addUsers = (data) => ({
+export const addUsers = (data) => ({
   type: types.ADD_USER,
   payload: data,
 });
@@ -99,12 +99,14 @@ export const unsubscribe = (setData) =>
   onSnapshot(
     userCollectionRef,
     (snapshot) => {
-      let list = [];
+      let userList = [];
+
       snapshot.docs.forEach((doc) => {
-        list.push({ id: doc.id, ...doc.data() });
+        userList.push({ id: doc.id, ...doc.data() });
       });
-      setData(list);
-      console.log(list);
+
+      setData(userList);
+      console.log(userList);
     },
     (err) => {
       console.log(err);
@@ -135,6 +137,20 @@ export const loginInitiate = (email, password) => {
   };
 };
 
+const setSocialUser = async (user) => {
+  let username = user.displayName;
+  let email = user.email;
+  let photoURL = user.photoURL;
+  let phoneNumber = user.phoneNumber;
+
+  await setDoc(doc(db, "users", user.uid), {
+    username,
+    email,
+    photoURL,
+    phoneNumber,
+  });
+};
+
 export const googleLoginInitiate = () => {
   return function (dispatch) {
     dispatch(googleLoginStart());
@@ -142,20 +158,9 @@ export const googleLoginInitiate = () => {
       .signInWithPopup(googleAuthProvider)
       .then(async ({ user }) => {
         dispatch(googleLoginSuccess(user));
+        dispatch(addUsers(user));
 
-        let userUID = user.uid;
-        let username = user.displayName;
-        let email = user.email;
-        let photoURL = user.photoURL;
-        let phoneNumber = user.phoneNumber;
-
-        await addDoc(userCollectionRef, {
-          userUID,
-          username,
-          email,
-          photoURL,
-          phoneNumber,
-        });
+        setSocialUser(user);
       })
       .catch((error) => dispatch(googleLoginFail(error.message)));
   };
@@ -166,8 +171,11 @@ export const githubLoginInitiate = () => {
     dispatch(githubLoginStart());
     auth
       .signInWithPopup(githubAuthProvider)
-      .then(({ user }) => {
+      .then(async ({ user }) => {
         dispatch(githubLoginSuccess(user));
+        dispatch(addUsers(user));
+
+        setSocialUser(user);
       })
       .catch((error) => dispatch(githubLoginFail(error.message)));
   };
@@ -184,37 +192,6 @@ export const logoutInitiate = () => {
       .catch((error) => dispatch(logoutFail(error.message)));
   };
 };
-// .then(async (res) => {
-//   let username = res.user.displayName;
-//   let email = res.user.email;
-//   let photoURL = res.user.photoURL;
-//   let phoneNumber = res.user.phoneNumber;
-
-//   await addDoc(userCollectionRef, {
-//     username,
-//     email,
-//     photoURL,
-//     phoneNumber,
-//   });
-// })
-
-// Firebase Database에 있는 데이터 추가
-// export const addInitiate = (res) => {
-//   let username = res.user.displayName;
-//   let email = res.user.email;
-//   let photoURL = res.user.photoURL;
-//   let phoneNumber = res.user.phoneNumber;
-
-//   return async function (dispatch) {
-//     await addDoc(userCollectionRef, {
-//       username,
-//       email,
-//       photoURL,
-//       phoneNumber,
-//     });
-//     dispatch(addUsers(res));
-//   };
-// };
 
 // Firebase Database에 있는 데이터 삭제
 export const deleteInitiate = (id) => {

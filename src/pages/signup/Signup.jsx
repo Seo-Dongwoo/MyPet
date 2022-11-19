@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import { signupSchema } from "../../components/Auth/AuthSchema/SignupSchema";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+import { addUsers } from "../../redux/modules/actions/userActions";
 
 const Signup = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -35,6 +36,7 @@ const Signup = () => {
       validationSchema: signupSchema,
       onSubmit: async (values) => {
         dispatch(registerInitiate(values.email, values.password));
+        dispatch(addUsers(values));
 
         await addDoc(collection(db, "users"), { values });
 
