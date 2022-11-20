@@ -57,9 +57,9 @@ const Signup = () => {
 
   return (
     <>
-      <LoginContainer>
+      <SignupContainer>
         <FormWrapper>
-          <LoginForm onSubmit={handleSubmit}>
+          <SignupForm onSubmit={handleSubmit}>
             <FormTitle to="/">REGISTER</FormTitle>
             {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <InputField>
@@ -137,14 +137,14 @@ const Signup = () => {
                 <GoLoginIcon /> Already have account?
               </GoLoginLink>
             </GoLogin>
-          </LoginForm>
+          </SignupForm>
         </FormWrapper>
-      </LoginContainer>
+      </SignupContainer>
     </>
   );
 };
 
-const LoginContainer = styled.div`
+const SignupContainer = styled.div`
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -160,7 +160,7 @@ const FormWrapper = styled.div`
   transform: translate(-50%, 0);
 `;
 
-const LoginForm = styled.form`
+const SignupForm = styled.form`
   display: flex;
   align-items: center;
   justify-content: center;

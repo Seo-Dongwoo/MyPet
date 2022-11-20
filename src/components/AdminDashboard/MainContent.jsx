@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import AddProduct from "./addProduct/AddProduct";
 import DashboardHome from "./dashboard/DashboardHome";
@@ -7,8 +7,10 @@ import Products from "./products/Products";
 import Users from "./users/Users";
 import Settings from "./settings/Settings";
 import EditProduct from "../AdminDashboard/editProduct/EditProduct";
+import UserView from "../AdminDashboard/users/UserView";
 
 const MainContent = () => {
+  useEffect(() => {}, []);
   return (
     <>
       <Routes>
@@ -19,6 +21,7 @@ const MainContent = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/edit/:productId" element={<EditProduct />} />
+        <Route path="/view/:userId" element={<UserView />} />
       </Routes>
     </>
   );
