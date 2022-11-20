@@ -10,6 +10,7 @@ import Loading from "../../loading/Loading";
 import { deleteInitiate } from "../../../redux/modules/actions/userActions";
 
 function UserList() {
+  const { users } = useSelector((state) => state.user);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -85,7 +86,7 @@ function UserList() {
         renderCell: (row) => (
           <ViewButton
             onClick={() => {
-              navigate(`/admin/edit/${row.id}`);
+              navigate(`/admin/view/${row.id}`);
             }}
           >
             View
@@ -104,6 +105,7 @@ function UserList() {
     ],
     []
   );
+  console.log(users);
 
   return (
     <>
