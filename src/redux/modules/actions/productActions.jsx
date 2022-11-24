@@ -15,9 +15,9 @@ import {
   deleteObject,
 } from "firebase/storage";
 
-const setLoading = (data) => ({
+const setLoading = (products) => ({
   type: types.SET_LOADING,
-  payload: data,
+  payload: products,
 });
 
 const addProducts = (data) => ({
@@ -62,7 +62,7 @@ export const addInitiate = (data) => {
 };
 
 // Storage에 image파일 저장하기
-export const uploadFiles = async (file, setProgress, setData, name) => {
+export const uploadFiles = (file, setProgress, setData, name) => {
   const uploadRef = ref(storage, `images/${name}`);
   const uploadTask = uploadBytesResumable(uploadRef, file);
 
@@ -86,8 +86,8 @@ export const uploadFiles = async (file, setProgress, setData, name) => {
       }
     },
     (err) => console.log(err),
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) =>
+    async () => {
+      await getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) =>
         setData((prev) => ({ ...prev, img: downloadUrl }))
       );
     }
@@ -119,7 +119,7 @@ export const updateInitiate = (productId, data) => async (dispatch) => {
     ...data,
   })
     .then(() => {
-      dispatch(editProducts({ productId, data }));
+      dispatch(editProducts({ data }));
     })
     .catch((err) => console.log(err));
 };

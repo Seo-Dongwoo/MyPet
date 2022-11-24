@@ -3,6 +3,7 @@ import * as types from "../actionTypes/productActionTypes";
 const initialState = {
   loading: false,
   products: [],
+  product: {},
 };
 
 const productReducer = (state = initialState, action) => {
@@ -17,16 +18,14 @@ const productReducer = (state = initialState, action) => {
         products: [...state.products, action.payload],
       };
     case types.DELETE_PRODUCT:
-      return {
-        ...state.products,
-        products: state.products.filter(
-          (product) => product.id !== action.payload
-        ),
-      };
+      const deleteId = action.payload;
+      state.products = state.products.filter(
+        (product) => product.id !== deleteId
+      );
     case types.EDIT_PRODUCT:
       const updateProduct = action.payload;
       const updateProducts = state.products.map((product) => {
-        if (product.productId === updateProduct.id) {
+        if (product.id === updateProduct.id) {
           return updateProduct;
         }
       });
