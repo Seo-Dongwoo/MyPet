@@ -25,8 +25,9 @@ const addProducts = (data) => ({
   payload: data,
 });
 
-const deleteProducts = () => ({
+export const deleteProducts = (id) => ({
   type: types.DELETE_PRODUCT,
+  payload: id,
 });
 
 const editProducts = (data) => ({
@@ -34,23 +35,32 @@ const editProducts = (data) => ({
   payload: data,
 });
 
+const getProducts = (data) => ({
+  type: types.GET_PRODUCTS,
+  payload: data,
+});
+
 const productCollectionRef = collection(db, "products");
 
-export const unsubscribe = (setData) =>
-  onSnapshot(
-    productCollectionRef,
-    (snapshot) => {
-      let list = [];
-      snapshot.docs.forEach((doc) => {
-        list.push({ id: doc.id, ...doc.data() });
-      });
-      setData(list);
-      setLoading(false);
-    },
-    (err) => {
-      console.log(err);
-    }
-  );
+export const unsubscribe = (setData) => {
+  return function (dispatch) {
+    onSnapshot(
+      productCollectionRef,
+      (snapshot) => {
+        let list = [];
+        snapshot.docs.forEach((doc) => {
+          list.push({ id: doc.id, ...doc.data() });
+        });
+        setData(list);
+        setLoading(false);
+        dispatch(getProducts(list));
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  };
+};
 
 // Firebase Database에 있는 데이터 추가
 export const addInitiate = (data) => {
@@ -98,7 +108,7 @@ export const uploadFiles = (file, setProgress, setData, name) => {
 export const deleteInitiate = (id) => {
   return async function (dispatch) {
     await deleteDoc(doc(productCollectionRef, id));
-    dispatch(deleteProducts());
+    dispatch(deleteProducts(id));
   };
 };
 

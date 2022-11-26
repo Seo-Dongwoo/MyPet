@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
@@ -17,8 +17,6 @@ function ProductList() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { products } = useSelector((state) => state.addProduct);
-  console.log(products);
 
   const deleteHandler = (id, name) => {
     dispatch(deleteInitiate(id));
@@ -30,7 +28,7 @@ function ProductList() {
     setLoading(false);
 
     return () => {
-      unsubscribe(setData);
+      dispatch(unsubscribe(setData));
     };
   }, []);
 

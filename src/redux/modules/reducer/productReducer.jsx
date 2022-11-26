@@ -3,11 +3,15 @@ import * as types from "../actionTypes/productActionTypes";
 const initialState = {
   loading: false,
   products: [],
-  product: {},
 };
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.GET_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+      };
     case types.SET_LOADING:
       return {
         ...state,
@@ -18,10 +22,12 @@ const productReducer = (state = initialState, action) => {
         products: [...state.products, action.payload],
       };
     case types.DELETE_PRODUCT:
-      const deleteId = action.payload;
-      state.products = state.products.filter(
-        (product) => product.id !== deleteId
-      );
+      return {
+        ...state.products,
+        products: state.products.filter(
+          (product) => product.id !== action.payload
+        ),
+      };
     case types.EDIT_PRODUCT:
       const updateProduct = action.payload;
       const updateProducts = state.products.map((product) => {

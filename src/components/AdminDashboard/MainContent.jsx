@@ -10,7 +10,6 @@ import EditProduct from "../AdminDashboard/editProduct/EditProduct";
 import UserView from "../AdminDashboard/users/UserView";
 
 const MainContent = () => {
-  useEffect(() => {}, []);
   return (
     <>
       <Routes>

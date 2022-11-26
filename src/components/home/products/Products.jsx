@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { MdPets } from "react-icons/md";
 import { unsubscribe } from "../../../redux/modules/actions/productActions";
@@ -8,6 +8,7 @@ import Loading from "../../loading/Loading";
 const Products = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const { products } = useSelector((state) => state.addProduct);
   console.log(products);
 
@@ -15,13 +16,9 @@ const Products = () => {
     setLoading(false);
 
     return () => {
-      unsubscribe(setData);
+      dispatch(unsubscribe(setData));
     };
   }, []);
-
-  useEffect(() => {
-    if (products) return;
-  }, [products]);
 
   return (
     <ProductContainer>
