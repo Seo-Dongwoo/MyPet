@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Category from "../addProduct/Category";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  getProductInitiate,
-  getProducts,
-  updateInitiate,
-} from "../../../redux/modules/actions/productActions";
+import { updateInitiate } from "../../../redux/modules/actions/productActions";
 import { uploadFiles } from "../../../redux/modules/actions/productActions";
 import Loading from "../../loading/Loading";
 
@@ -20,7 +16,6 @@ const EditProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productId } = useParams();
-  const { products } = useSelector((state) => state.addProduct);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -42,7 +37,6 @@ const EditProduct = () => {
 
   useEffect(() => {
     file && uploadFiles(file, setProgress, setData, data.product);
-    // setData(products)
   }, [file]);
 
   return (
