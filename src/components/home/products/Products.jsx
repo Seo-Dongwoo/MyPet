@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { MdPets } from "react-icons/md";
-import { unsubscribe } from "../../../redux/modules/actions/productActions";
 import Loading from "../../loading/Loading";
+import FoodCard from "./FoodCard";
+import ClothesCard from "./ClothesCard";
+import ToyCard from "./ToyCard";
 
 const Products = () => {
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.addProduct);
-  console.log(products);
 
   useEffect(() => {
     setLoading(false);
-
-    return () => {
-      dispatch(unsubscribe(setData));
-    };
   }, []);
 
   return (
@@ -29,14 +22,24 @@ const Products = () => {
           <Icon />
         </Title>
       </TitleContainer>
-      <ClothesContainer>{loading ? <Loading /> : <>{}</>}</ClothesContainer>
+      <ItemContainer>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <FoodCard />
+            <ClothesCard />
+            <ToyCard />
+          </>
+        )}
+      </ItemContainer>
     </ProductContainer>
   );
 };
 
 const ProductContainer = styled.div`
   width: 100%;
-  height: 900px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: #fff0f5;
@@ -50,12 +53,12 @@ const TitleContainer = styled.div`
   justify-content: center;
 `;
 
-const ClothesContainer = styled.div`
+const ItemContainer = styled.div`
   width: 100%;
-  height: 30%;
 `;
 
 const Title = styled.span`
+  color: #01bf71;
   font-size: 2.5rem;
   font-weight: 700;
 `;

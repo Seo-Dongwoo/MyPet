@@ -68,7 +68,7 @@ const SidebarContainer = styled.aside`
 `;
 
 const CloseIcon = styled(FaTimes)`
-  color: #fff;
+  color: white;
 `;
 
 const Icon = styled.div`
@@ -146,9 +146,9 @@ const SideBarLogin = styled(LinkR)`
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   &:hover {
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
     background: #fff;
-    color: #010606;
+    color: #01bf71;
   }
 `;
 

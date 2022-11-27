@@ -66,7 +66,7 @@ const Navbar = ({ toggle }) => {
   );
 };
 const Nav = styled.nav`
-  background: #000;
+  background: white;
   height: 80px;
   display: flex;
   justift-content: center;
@@ -90,7 +90,7 @@ const NavbarContainer = styled.div`
 `;
 
 const NavLogo = styled(LinkR)`
-  color: #fff;
+  color: black;
   justify-self: flex-start;
   cursor: pointer;
   font-size: 1.5rem;
@@ -111,7 +111,7 @@ const MobileIcon = styled.div`
     transform: translate(-100%, 60%);
     font-size: 1.8rem;
     cursor: pointer;
-    color: #fff;
+    color: black;
   }
 `;
 const NavMenu = styled.ul`
@@ -119,7 +119,7 @@ const NavMenu = styled.ul`
   align-items: center;
   list-style: none;
   text-align: center;
-  margin-right: -22px;
+  margin-right: -100px;
 
   @media screen and (max-width: 768px) {
     display: none;
@@ -131,7 +131,8 @@ const NavItem = styled.li`
 `;
 
 const NavLinks = styled(LinkR)`
-  color: #fff;
+  color: black;
+  font-weight: bold;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -174,9 +175,10 @@ const NavBtnLink = styled(LinkR)`
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   &:hover {
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    border: 3px solid #01bf71;
     background: #fff;
-    color: #010606;
+    color: #01bf71;
   }
 `;
 export default Navbar;
