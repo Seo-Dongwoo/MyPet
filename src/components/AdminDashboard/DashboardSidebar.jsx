@@ -10,7 +10,9 @@ const DashboardSidebar = () => {
     <Container>
       <LogoContainer>
         <Logo />
-        <Title>PetShop</Title>
+        <TitleLink to="/">
+          <Title>PetShop</Title>
+        </TitleLink>
       </LogoContainer>
       <LinkContainer>
         <LinkItems>
@@ -52,6 +54,11 @@ const Logo = styled(FaDog)`
   width: 6rem;
   margin-top: 20%;
 `;
+
+const TitleLink = styled(Link)`
+  text-decoration: none;
+`;
+
 const Title = styled.h1`
   color: white;
   font: 1.5rem;

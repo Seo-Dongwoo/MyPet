@@ -62,7 +62,7 @@ const SlideContainer = styled.div`
 const LeftArrow = styled(AiOutlineArrowLeft)`
   position: absolute;
   border: 2px solid #01bf71;
-  border-radius: 10%;
+  border-radius: 50%;
   background: transparent;
   color: #01bf71;
   width: 2.5rem;
@@ -82,7 +82,7 @@ const CurrentSlide = styled.div``;
 const RightArrow = styled(AiOutlineArrowRight)`
   position: absolute;
   border: 2px solid #01bf71;
-  border-radius: 10%;
+  border-radius: 50%;
   background: transparent;
   color: #01bf71;
   width: 2.5rem;
