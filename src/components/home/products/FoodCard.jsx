@@ -1,9 +1,19 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { unsubscribe } from "../../../redux/modules/actions/productActions";
 import styled from "styled-components";
 
 const FoodCard = () => {
+  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
   const { products } = useSelector((state) => state.addProduct);
+  console.log(products);
+
+  useEffect(() => {
+    return () => {
+      dispatch(unsubscribe(setData));
+    };
+  }, []);
 
   return (
     <>
@@ -41,15 +51,31 @@ const TitleContainer = styled.div`
 
 const Title = styled.h1`
   color: #f5a0a0;
+  @media screen and (max-width: 875px) {
+    font-size: 2rem;
+    text-align: center;
+    margin-right: 25%;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-right: 25%;
+  }
 `;
 
 const ProductCards = styled.div`
-  width: 62.5%;
+  width: 70%;
   align-items: center;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   background-color: #fff0f5;
+  justify-content: center;
+  @media screen and (max-width: 875px) {
+    text-align: center;
+    width: 100%;
+  }
 `;
 
 const CardContainer = styled.div`
