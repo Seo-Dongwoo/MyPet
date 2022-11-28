@@ -57,6 +57,9 @@ const SlideContainer = styled.div`
   position: relative;
   overflow: hidden;
   background-color: var(--color-dark);
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const LeftArrow = styled(AiOutlineArrowLeft)`

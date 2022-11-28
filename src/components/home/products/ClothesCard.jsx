@@ -41,15 +41,31 @@ const TitleContainer = styled.div`
 
 const Title = styled.h1`
   color: #f5a0a0;
+  @media screen and (max-width: 875px) {
+    font-size: 2rem;
+    text-align: center;
+    margin-right: 25%;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-right: 25%;
+  }
 `;
 
 const ProductCards = styled.div`
-  width: 62.5%;
+  width: 70%;
   align-items: center;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   background-color: #fff0f5;
+  justify-content: center;
+  @media screen and (max-width: 875px) {
+    text-align: center;
+    width: 100%;
+  }
 `;
 
 const ProductContainer = styled.div`

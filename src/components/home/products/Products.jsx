@@ -46,7 +46,6 @@ const ProductContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  min-width: 600px;
   height: 15%;
   margin-top: 50px;
   display: flex;
@@ -61,12 +60,15 @@ const Title = styled.span`
   color: #01bf71;
   font-size: 2.5rem;
   font-weight: 700;
+  text-align: center;
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+    text-align: center;
+  }
 `;
 
 const Icon = styled(MdPets)`
   margin: 0 10px -3px 10px;
 `;
-
-const Desc = styled.span``;
 
 export default Products;
