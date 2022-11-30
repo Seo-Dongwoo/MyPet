@@ -67,6 +67,7 @@ const Navbar = ({ toggle }) => {
 };
 const Nav = styled.nav`
   background: white;
+  border-bottom: 1px solid #ededed;
   height: 80px;
   display: flex;
   justift-content: center;

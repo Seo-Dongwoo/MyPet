@@ -41,6 +41,7 @@ const Footer = () => {
 };
 const Container = styled.div`
   padding: 80px 60px;
+  border-top: 2px solid #ededed;
 `;
 
 const Wrapper = styled.div`
