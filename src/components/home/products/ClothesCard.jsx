@@ -4,32 +4,32 @@ import styled from "styled-components";
 
 const ClothesCard = () => {
   const { products } = useSelector((state) => state.addProduct);
-
+  console.log(products);
   return (
     <>
       <TitleContainer>
         <Title>Clothes Products</Title>
       </TitleContainer>
       <ProductCards>
-        {products.map((product) => {
-          return (
-            <>
-              {product.category === "clothes" ? (
-                <CardContainer>
-                  <ImageContainer>
-                    <Image src={product.img} alt="" />
-                  </ImageContainer>
-                  <ProductContainer>
-                    <NameContainer>
-                      <Name>{product.product}</Name>
-                    </NameContainer>
-                    <span>{product.price}</span>
-                  </ProductContainer>
-                </CardContainer>
-              ) : null}
-            </>
-          );
-        })}
+        {products.length > 0 ? (
+          products.map((product, index) =>
+            product.category === "clothes" ? (
+              <CardContainer key={index}>
+                <ImageContainer>
+                  <Image src={product.img} alt="" />
+                </ImageContainer>
+                <ProductContainer>
+                  <NameContainer>
+                    <Name>{product.product}</Name>
+                  </NameContainer>
+                  <span>{product.price}원</span>
+                </ProductContainer>
+              </CardContainer>
+            ) : null
+          )
+        ) : (
+          <h1>상품이 존재하지 않습니다.</h1>
+        )}
       </ProductCards>
     </>
   );
@@ -37,6 +37,13 @@ const ClothesCard = () => {
 const TitleContainer = styled.div`
   width: 100%;
   margin: 30px 0 20px 12%;
+  @media screen and (max-width: 875px) {
+    margin: 20px 0 20px 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin: 20px 0 20px 0;
+  }
 `;
 
 const Title = styled.h1`
@@ -44,13 +51,11 @@ const Title = styled.h1`
   @media screen and (max-width: 875px) {
     font-size: 2rem;
     text-align: center;
-    margin-right: 25%;
   }
 
   @media screen and (max-width: 768px) {
     font-size: 1.5rem;
     text-align: center;
-    margin-right: 25%;
   }
 `;
 
