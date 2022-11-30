@@ -17,7 +17,6 @@ const Pagination = ({ paginate, totalProducts, endPage, currentPage }) => {
             <PageLink
               aria-current={currentPage === number ? "currentPage" : null}
               onClick={() => paginate(number)}
-              to={number}
             >
               {number}
             </PageLink>

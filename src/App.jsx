@@ -9,6 +9,7 @@ import {
   Food,
   Toy,
   Admin,
+  ProductPage,
   PrivateRoute,
 } from "./pages";
 import { auth } from "./firebase";
@@ -47,6 +48,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/clothes" element={<Clothes />} />
           <Route path="/food" element={<Food />} />
+          <Route path="/food/:productId" element={<ProductPage />} />
           <Route path="/toy" element={<Toy />} />
         </Routes>
       </BrowserRouter>

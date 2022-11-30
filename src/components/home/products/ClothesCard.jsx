@@ -1,10 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const ClothesCard = () => {
   const { products } = useSelector((state) => state.addProduct);
-  console.log(products);
+  const navigate = useNavigate();
+
   return (
     <>
       <TitleContainer>
@@ -14,7 +16,12 @@ const ClothesCard = () => {
         {products.length > 0 ? (
           products.map((product, index) =>
             product.category === "clothes" ? (
-              <CardContainer key={index}>
+              <CardContainer
+                key={index}
+                onClick={() => {
+                  navigate(`/food/${product.id}`);
+                }}
+              >
                 <ImageContainer>
                   <Image src={product.img} alt="" />
                 </ImageContainer>

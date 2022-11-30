@@ -3,12 +3,14 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Sort from "../common/Sort";
 import Pagination from "../common/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const FoodProducts = () => {
   const [priceFilter, setPriceFilter] = useState("default");
   const { products } = useSelector((state) => state.addProduct);
   const [currentPage, setCurrentPage] = useState(1);
   const [endPage, setEndPage] = useState(8);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setPriceFilter(e.target.value);
@@ -49,7 +51,12 @@ const FoodProducts = () => {
       <ProductCards>
         {foodProducts.length > 0 ? (
           currentProduct.map((product, index) => (
-            <CardContainer key={index}>
+            <CardContainer
+              key={index}
+              onClick={() => {
+                navigate(`/food/${product.id}`);
+              }}
+            >
               <ImageContainer>
                 <Image src={product.img} alt="" />
               </ImageContainer>

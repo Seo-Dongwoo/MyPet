@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const ToyCard = () => {
   const { products } = useSelector((state) => state.addProduct);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -14,7 +16,12 @@ const ToyCard = () => {
         {products.length > 0 ? (
           products.map((product, index) =>
             product.category === "toy" ? (
-              <CardContainer key={index}>
+              <CardContainer
+                key={index}
+                onClick={() => {
+                  navigate(`/food/${product.id}`);
+                }}
+              >
                 <ImageContainer>
                   <Image src={product.img} alt="" />
                 </ImageContainer>
