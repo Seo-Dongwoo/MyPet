@@ -52,6 +52,7 @@ const ProductSection = () => {
                     <Quantity>{quantity}</Quantity>
                     <IncreaseBtn>+</IncreaseBtn>
                     <DecreaseBtn>-</DecreaseBtn>
+                    <TotalQuantity>{quantity}개</TotalQuantity>
                   </QuantityConatainer>
                   <TotalPriceContainer>
                     <TotalPriceDesc>총 상품 금액</TotalPriceDesc>
@@ -80,6 +81,10 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin: 60px auto;
+  @media (max-width: 1020px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -90,12 +95,24 @@ const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 60px;
+  @media (max-width: 1020px) {
+    margin: 0;
+  }
+  @media (max-width: 520px) {
+    width: 400px;
+    height: 350px;
+  }
 `;
 
 const Image = styled.img`
   width: 80%;
   height: 80%;
   min-width: 400px;
+  @media (max-width: 520px) {
+    width: 350px;
+    height: 300px;
+    min-width: 250px;
+  }
 `;
 
 const DescContainer = styled.div`
@@ -103,18 +120,28 @@ const DescContainer = styled.div`
   height: 400px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 520px) {
+    width: 400px;
+    height: 400px;
+  }
 `;
 
 const TitleContainer = styled.div`
   width: 100%;
   height: 30px;
   margin-bottom: 30px;
+  @media (max-width: 520px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const Title = styled.span`
   font-size: 1.3rem;
   font-weight: 700;
   line-height: 70px;
+  @media (max-width: 520px) {
+    font-size: 1rem;
+  }
 `;
 
 const TableContainer = styled.div`
@@ -143,7 +170,11 @@ const TitleTd = styled.td`
   font-weight: 600;
 `;
 
-const Td = styled.td``;
+const Td = styled.td`
+  @media (max-width: 520px) {
+    font-size: 11px;
+  }
+`;
 
 const PurchaseContainer = styled.div`
   width: 100%;
@@ -184,6 +215,16 @@ const DecreaseBtn = styled.button`
   background-color: #fff;
   border: 1px solid black;
   cursor: pointer;
+  margin-right: 275px;
+  @media (max-width: 520px) {
+    margin-right: 215px;
+    font-size: 0.9rem;
+  }
+`;
+
+const TotalQuantity = styled.span`
+  font-weight: 600;
+  font-size: 0.9rem;
 `;
 
 const TotalPriceContainer = styled.div`
@@ -202,6 +243,10 @@ const TotalPriceDesc = styled.span`
   font-weight: 600;
   font-size: 0.9rem;
   margin-right: 280px;
+  @media (max-width: 520px) {
+    margin-right: 220px;
+    font-size: 0.9rem;
+  }
 `;
 
 const TotalPrice = styled.span`
