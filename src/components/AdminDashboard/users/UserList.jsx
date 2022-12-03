@@ -105,7 +105,6 @@ function UserList() {
     ],
     []
   );
-  console.log(users);
 
   return (
     <>
