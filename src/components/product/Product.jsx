@@ -1,10 +1,15 @@
 import React from "react";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
+import ProductSection from "./ProductSection";
 
 const Product = () => {
   return (
-    <div>
-      <h1>상품 페이지 입니다.</h1>
-    </div>
+    <>
+      <Header />
+      <ProductSection />
+      <Footer />
+    </>
   );
 };
 
