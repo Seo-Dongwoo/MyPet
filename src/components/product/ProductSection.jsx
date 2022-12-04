@@ -9,6 +9,7 @@ import { addCartInitiate } from "../../redux/modules/actions/cartActions";
 const ProductSection = () => {
   const [quantity, setQuantity] = useState(1);
   const { products } = useSelector((state) => state.addProduct);
+  const { currentUser } = useSelector((state) => state.user);
   const { productId } = useParams();
   const dispatch = useDispatch();
 
@@ -17,6 +18,12 @@ const ProductSection = () => {
     if (e.target.value < 1) {
       alert("해당 상품은 최소구매 수량이 1개 입니다");
       return setQuantity(1);
+    }
+  };
+
+  const handleSubmit = (product) => {
+    if (currentUser) {
+      dispatch(addCartInitiate({ ...product, quantity }));
     }
   };
 
@@ -94,11 +101,7 @@ const ProductSection = () => {
                       </CartBtn>
                     </CartLink>
                     <PurchaseLink to="/cart">
-                      <PurchaseBtn
-                        onClick={() =>
-                          dispatch(addCartInitiate({ ...product, quantity }))
-                        }
-                      >
+                      <PurchaseBtn onClick={() => handleSubmit(product)}>
                         구매하기
                       </PurchaseBtn>
                     </PurchaseLink>
