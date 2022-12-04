@@ -16,6 +16,7 @@ import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import "./App.css";
 import { setUser } from "./redux/modules/actions/userActions";
+import ScrollToTop from "./components/common/ScrollTop";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
