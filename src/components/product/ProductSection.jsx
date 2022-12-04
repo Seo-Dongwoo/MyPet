@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FiHeart } from "react-icons/fi";
 import { BsFillCartPlusFill } from "react-icons/bs";
+import { addCartInitiate } from "../../redux/modules/actions/cartActions";
 
 const ProductSection = () => {
   const [quantity, setQuantity] = useState(1);
   const { products } = useSelector((state) => state.addProduct);
   const { productId } = useParams();
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    setQuantity(e.target.value);
+    if (e.target.value < 1) {
+      alert("해당 상품은 최소구매 수량이 1개 입니다");
+      return setQuantity(1);
+    }
+  };
 
   return (
     <>
@@ -49,14 +59,28 @@ const ProductSection = () => {
                 </TableContainer>
                 <PurchaseContainer>
                   <QuantityConatainer>
-                    <Quantity type="number" defaultValue={quantity} />
-                    <IncreaseBtn type="button">+</IncreaseBtn>
-                    <DecreaseBtn type="button">-</DecreaseBtn>
+                    <Quantity
+                      type="text"
+                      value={quantity}
+                      onChange={handleChange}
+                    />
+                    <IncreaseBtn
+                      onClick={() => setQuantity(quantity + 1)}
+                      type="button"
+                    >
+                      +
+                    </IncreaseBtn>
+                    <DecreaseBtn
+                      onClick={() => setQuantity(Math.max(quantity - 1, 1))}
+                      type="button"
+                    >
+                      -
+                    </DecreaseBtn>
                     <TotalQuantity>{quantity}개</TotalQuantity>
                   </QuantityConatainer>
                   <TotalPriceContainer>
                     <TotalPriceDesc>총 상품 금액</TotalPriceDesc>
-                    <TotalPrice>{product.price}원</TotalPrice>
+                    <TotalPrice>{product.price * quantity}원</TotalPrice>
                   </TotalPriceContainer>
                   <LinkContainer>
                     <LikeLink to="/login">
@@ -70,7 +94,13 @@ const ProductSection = () => {
                       </CartBtn>
                     </CartLink>
                     <PurchaseLink to="/cart">
-                      <PurchaseBtn>구매하기</PurchaseBtn>
+                      <PurchaseBtn
+                        onClick={() =>
+                          dispatch(addCartInitiate({ ...product, quantity }))
+                        }
+                      >
+                        구매하기
+                      </PurchaseBtn>
                     </PurchaseLink>
                   </LinkContainer>
                 </PurchaseContainer>
@@ -198,10 +228,7 @@ const QuantityConatainer = styled.div`
 const Quantity = styled.input`
   width: 50px;
   height: 30px;
-  border: 1px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
   margin-left: 20px;
   font-weight: 600;
 `;
