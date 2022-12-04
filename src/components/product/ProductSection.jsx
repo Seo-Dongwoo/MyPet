@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FiHeart } from "react-icons/fi";
 import { BsFillCartPlusFill } from "react-icons/bs";
@@ -49,24 +49,30 @@ const ProductSection = () => {
                 </TableContainer>
                 <PurchaseContainer>
                   <QuantityConatainer>
-                    <Quantity>{quantity}</Quantity>
-                    <IncreaseBtn>+</IncreaseBtn>
-                    <DecreaseBtn>-</DecreaseBtn>
+                    <Quantity type="number" defaultValue={quantity} />
+                    <IncreaseBtn type="button">+</IncreaseBtn>
+                    <DecreaseBtn type="button">-</DecreaseBtn>
                     <TotalQuantity>{quantity}개</TotalQuantity>
                   </QuantityConatainer>
                   <TotalPriceContainer>
                     <TotalPriceDesc>총 상품 금액</TotalPriceDesc>
                     <TotalPrice>{product.price}원</TotalPrice>
                   </TotalPriceContainer>
-                  <BtnContainer>
-                    <LikeBtn>
-                      <LikeIcon />
-                    </LikeBtn>
-                    <CartBtn>
-                      <CartIcon />
-                    </CartBtn>
-                    <PurchaseBtn>구매하기</PurchaseBtn>
-                  </BtnContainer>
+                  <LinkContainer>
+                    <LikeLink to="/login">
+                      <LikeBtn>
+                        <LikeIcon />
+                      </LikeBtn>
+                    </LikeLink>
+                    <CartLink to="/cart">
+                      <CartBtn>
+                        <CartIcon />
+                      </CartBtn>
+                    </CartLink>
+                    <PurchaseLink to="/cart">
+                      <PurchaseBtn>구매하기</PurchaseBtn>
+                    </PurchaseLink>
+                  </LinkContainer>
                 </PurchaseContainer>
               </DescContainer>
             </Container>
@@ -76,7 +82,7 @@ const ProductSection = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.form`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -189,7 +195,7 @@ const QuantityConatainer = styled.div`
   border-bottom: 2px solid #ededed;
 `;
 
-const Quantity = styled.div`
+const Quantity = styled.input`
   width: 50px;
   height: 30px;
   border: 1px solid black;
@@ -254,19 +260,28 @@ const TotalPrice = styled.span`
   font-size: 0.9rem;
 `;
 
-const BtnContainer = styled.div`
+const LinkContainer = styled.div`
   display: flex;
   align-items: center;
   height: 40%;
 `;
 
-const LikeBtn = styled.button`
+const LikeLink = styled(Link)`
   width: 55px;
   height: 55px;
+  margin-right: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LikeBtn = styled.button`
+  width: 100%;
+  height: 100%;
   background-color: #fff;
   color: #01bf71;
   border: 2px solid #01bf71;
-  margin-right: 5px;
   cursor: pointer;
 `;
 
@@ -275,13 +290,21 @@ const LikeIcon = styled(FiHeart)`
   height: 30px;
 `;
 
-const CartBtn = styled.button`
+const CartLink = styled(Link)`
   width: 55px;
   height: 55px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CartBtn = styled.button`
+  width: 100%;
+  height: 100%;
   background-color: #fff;
   color: #01bf71;
   border: 2px solid #01bf71;
-  margin-right: 5px;
   cursor: pointer;
 `;
 
@@ -290,9 +313,18 @@ const CartIcon = styled(BsFillCartPlusFill)`
   height: 30px;
 `;
 
-const PurchaseBtn = styled.button`
+const PurchaseLink = styled(Link)`
   width: 75%;
   height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+`;
+
+const PurchaseBtn = styled.button`
+  width: 100%;
+  height: 100%;
   background-color: #01bf71;
   border: none;
   color: #fff;
