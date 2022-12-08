@@ -30,7 +30,7 @@ const Pagination = ({ paginate, totalProducts, endPage, currentPage }) => {
 const Nav = styled.nav`
   width: 65%;
   text-align: center;
-  margin: 0 auto 2%;
+  margin: 20px auto 2%;
 `;
 
 const PaginationContainer = styled.ul`

@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
+import CartContainer from "../../components/cart/CartContainer";
 
 const Cart = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -14,7 +17,13 @@ const Cart = () => {
     }
   }, [currentUser, navigate]);
 
-  return <div>Cart</div>;
+  return (
+    <>
+      <Header />
+      <CartContainer />
+      <Footer />
+    </>
+  );
 };
 
 export default Cart;
