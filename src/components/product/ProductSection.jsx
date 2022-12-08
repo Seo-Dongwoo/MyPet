@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FiHeart } from "react-icons/fi";
 import { BsFillCartPlusFill } from "react-icons/bs";
@@ -21,9 +21,9 @@ const ProductSection = () => {
     }
   };
 
-  const handleSubmit = (product) => {
+  const handleSubmit = (product, id) => {
     if (currentUser) {
-      dispatch(addCartInitiate({ ...product, quantity }));
+      dispatch(addCartInitiate({ ...product, quantity }, id));
     }
   };
 
@@ -96,12 +96,16 @@ const ProductSection = () => {
                       </LikeBtn>
                     </LikeLink>
                     <CartLink to="/cart">
-                      <CartBtn>
+                      <CartBtn
+                        onClick={() => handleSubmit(product, product.id)}
+                      >
                         <CartIcon />
                       </CartBtn>
                     </CartLink>
                     <PurchaseLink to="/cart">
-                      <PurchaseBtn onClick={() => handleSubmit(product)}>
+                      <PurchaseBtn
+                        onClick={() => handleSubmit(product, product.id)}
+                      >
                         구매하기
                       </PurchaseBtn>
                     </PurchaseLink>
