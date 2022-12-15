@@ -5,9 +5,11 @@ import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import { Link as LinkR } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { BsFillCartPlusFill } from "react-icons/bs";
 
 const Sidebar = ({ openSidebar, toggle }) => {
   const { currentUser } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cartList);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -45,6 +47,16 @@ const Sidebar = ({ openSidebar, toggle }) => {
                 Login
               </SideBarLogin>
             )}
+            <SideBarCart to="/cart">
+              {cartItems.length > 0 ? (
+                <>
+                  <BsFillCartPlusFill />
+                  <CartItemsLength>{cartItems.length}</CartItemsLength>
+                </>
+              ) : (
+                <BsFillCartPlusFill />
+              )}
+            </SideBarCart>
           </SideBtnWrap>
         </SidebarWrapper>
       </SidebarContainer>
@@ -127,6 +139,8 @@ const SidebarLinks = styled(LinkR)`
 
 const SideBtnWrap = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 `;
 
@@ -145,11 +159,49 @@ const SideBarLogin = styled(LinkR)`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
+  margin-bottom: 15px;
   &:hover {
     transition: all 0.3s ease-in-out;
     background: #fff;
     color: #01bf71;
   }
+`;
+
+const SideBarCart = styled(LinkR)`
+  width: 250px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  background: #01bf71;
+  white-space: nowrap;
+  padding: 16px 64px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: flex;
+  &:hover {
+    transition: all 0.3s ease-in-out;
+    background: #fff;
+    color: #01bf71;
+  }
+`;
+
+const CartItemsLength = styled.span`
+  display: block;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 100%;
+  background: #55d2b0;
+  color: #fff;
+  text-align: center;
+  line-height: 22px;
+  margin-left: 10px;
 `;
 
 export default Sidebar;

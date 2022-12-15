@@ -8,6 +8,8 @@ import { logoutInitiate } from "../../redux/modules/actions/userActions";
 
 const Navbar = ({ toggle }) => {
   const { currentUser } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cartList);
+
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -15,6 +17,7 @@ const Navbar = ({ toggle }) => {
       dispatch(logoutInitiate());
     }
   };
+  console.log(cartItems.length);
 
   return (
     <>
@@ -57,7 +60,14 @@ const Navbar = ({ toggle }) => {
               </NavBtnLink>
             )}
             <NavBtnLink to="/cart">
-              <BsFillCartPlusFill />
+              {cartItems.length > 0 ? (
+                <>
+                  <BsFillCartPlusFill />
+                  <CartItemsLength>{cartItems.length}</CartItemsLength>
+                </>
+              ) : (
+                <BsFillCartPlusFill />
+              )}
             </NavBtnLink>
           </NavBtn>
         </NavbarContainer>
@@ -181,5 +191,20 @@ const NavBtnLink = styled(LinkR)`
     background: #fff;
     color: #01bf71;
   }
+`;
+
+const CartItemsLength = styled.span`
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  width: 19px;
+  height: 19px;
+  padding: 0;
+  border-radius: 100%;
+  background: #55d2b0;
+  color: #fff;
+  text-align: center;
+  line-height: 19px;
 `;
 export default Navbar;

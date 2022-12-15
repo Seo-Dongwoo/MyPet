@@ -81,11 +81,12 @@ const ProductCards = styled.div`
 `;
 
 const CardContainer = styled.div`
+  position: relative;
   width: 250px;
   height: 280px;
-  overflow: hidden;
   box-shadow: 0px 0px 15px -5px;
   margin: 10px;
+  overflow: hidden;
   &:hover {
     transition: all 0.2s ease-in-out;
     transform: scale(1.1);
