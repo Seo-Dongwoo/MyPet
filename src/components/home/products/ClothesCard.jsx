@@ -19,7 +19,7 @@ const ClothesCard = () => {
               <CardContainer
                 key={index}
                 onClick={() => {
-                  navigate(`/food/${product.id}`);
+                  navigate(`/clothes/${product.id}`);
                 }}
               >
                 <ImageContainer>
