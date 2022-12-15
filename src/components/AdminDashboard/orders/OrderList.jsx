@@ -8,26 +8,22 @@ import { unsubscribe } from "../../../redux/modules/actions/userActions";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../loading/Loading";
 import { deleteInitiate } from "../../../redux/modules/actions/userActions";
+import { deleteOrderInitiate } from "../../../redux/modules/actions/orderActions";
 
 function UserList() {
+  const { orderItems } = useSelector((state) => state.orderProduct);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const deleteHandler = (id) => {
-    dispatch(deleteInitiate(id));
+  const deleteHandler = () => {
+    dispatch(deleteOrderInitiate());
 
     alert("해당 유저를 삭제하시겠습니까?");
   };
 
-  useEffect(() => {
-    setLoading(false);
-
-    return () => {
-      unsubscribe(setData);
-    };
-  }, []);
+  console.log(orderItems);
 
   const columns = useMemo(
     () => [
@@ -35,70 +31,32 @@ function UserList() {
         field: "photoURL",
         headerName: "Image",
         sortable: false,
-        renderCell: (params) => <Avatar src={params.row.photoURL} />,
         width: 80,
         filterable: false,
       },
       {
         field: "username",
         headerName: "UserName",
-        renderCell: (params) => (
-          <h3>{params.row.username || params.row.values.username}</h3>
-        ),
         sortable: false,
         width: 150,
       },
       {
         field: "email",
         headerName: "Email",
-        renderCell: (params) => (
-          <>
-            {params.row.email === null || params.row.values.email === null ? (
-              <h3>Email 비공개</h3>
-            ) : (
-              <h3>{params.row.values.email || params.row.email}</h3>
-            )}
-          </>
-        ),
         sortable: false,
         width: 250,
       },
       {
         field: "phonenumber",
         headerName: "PhoneNumber",
-        renderCell: (params) => (
-          <>
-            {params.row.phoneNumber === null ||
-            params.row.values.phoneNumber === null ? (
-              <h3>phoneNumber 비공개</h3>
-            ) : (
-              <h3>{params.row.values.phoneNumber || params.row.phoneNumber}</h3>
-            )}
-          </>
-        ),
         sortable: false,
         width: 200,
-      },
-      {
-        field: "view",
-        headerName: "View",
-        renderCell: (row) => (
-          <ViewButton
-            onClick={() => {
-              navigate(`/admin/view/${row.id}`);
-            }}
-          >
-            View
-          </ViewButton>
-        ),
       },
       {
         field: "delete",
         headerName: "Delete",
         renderCell: (params) => (
-          <DeleteButton onClick={() => deleteHandler(params.row.id)}>
-            Delete
-          </DeleteButton>
+          <DeleteButton onClick={() => deleteHandler()}>Delete</DeleteButton>
         ),
       },
     ],

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import EmptyImg from "../../assets/images/empty3.png";
+import EmptyImg from "../../../assets/images/empty3.png";
 
 const Empty = () => {
   return <EmptyCart></EmptyCart>;

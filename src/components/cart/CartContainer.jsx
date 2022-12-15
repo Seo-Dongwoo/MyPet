@@ -3,16 +3,22 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCartInitiate } from "../../redux/modules/actions/cartActions";
 import Pagination from "../common/Pagination";
-import Empty from "./Empty";
-import ToggleItem from "./ToggleItem";
-import SelectContainer from "./SelectContainer";
+import Empty from "./productsDetails/Empty";
+import ToggleItem from "./productsDetails/ToggleItem";
+import SelectContainer from "./productsDetails/SelectContainer";
+import Address from "./orderDetails/Address";
+import OrderDetails from "./orderDetails/OrderDetails";
+import OrderButton from "./orderDetails/OrderButton";
 
 const CartContainer = () => {
   const { cartItems } = useSelector((state) => state.cartList);
   const [cartItemsList, setCartItemsList] = useState([]);
   const [checkItems, setCheckItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [endPage, setEndPage] = useState(5);
+  const [address, setAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
+  const [totalPrice, setTotalPrice] = useState("");
+  const [endPage, setEndPage] = useState(4);
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
@@ -44,8 +50,6 @@ const CartContainer = () => {
     cartItemsList.forEach((item) => (item.isSelected = true));
     setCartItemsList(cartItemsList);
   }, [cartItems]);
-
-  // console.log(checkItems);
 
   return (
     <Container>
@@ -85,7 +89,9 @@ const CartContainer = () => {
                             <ItemImg src={item.img} />
                             <ItemTitle>{item.product}</ItemTitle>
                             <ItemQuantity>{item.quantity}개</ItemQuantity>
-                            <ItemPrice>{item.price}원</ItemPrice>
+                            <ItemPrice>
+                              {item.price * item.quantity}원
+                            </ItemPrice>
                             <DeleteBtn onClick={() => deleteHandler(item.id)}>
                               x
                             </DeleteBtn>
@@ -109,7 +115,25 @@ const CartContainer = () => {
             </ItemsWrapper>
           </ItemListContainer>
         </ProductItems>
-        <OrderDetails></OrderDetails>
+        <OrderDetailsContainer>
+          <Address
+            address={address}
+            setAddress={setAddress}
+            detailAddress={detailAddress}
+            setDetailAddress={setDetailAddress}
+          />
+          <OrderDetails
+            checkItems={checkItems}
+            totalPrice={totalPrice}
+            setTotalPrice={setTotalPrice}
+          />
+          <OrderButton
+            totalPrice={totalPrice}
+            address={address}
+            detailAddress={detailAddress}
+            checkItems={checkItems}
+          />
+        </OrderDetailsContainer>
       </CartWrapper>
     </Container>
   );
@@ -132,16 +156,13 @@ const Title = styled.h2`
 
 const CartWrapper = styled.div`
   width: 1050px;
+  height: 1000px;
   display: flex;
 `;
 
 const ProductItems = styled.div`
   width: 742px;
   padding-right: 20px;
-`;
-
-const OrderDetails = styled.div`
-  width: 284px;
 `;
 
 const TitleWrapper = styled.div`
@@ -223,6 +244,14 @@ const DeleteBtn = styled.button`
   border: none;
   color: #bebebe;
   cursor: pointer;
+`;
+
+const OrderDetailsContainer = styled.div`
+  position: sticky;
+  top: 0;
+  width: 284px;
+  height: 600px;
+  padding-top: 60px;
 `;
 
 export default CartContainer;

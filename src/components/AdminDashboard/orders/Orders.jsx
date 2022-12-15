@@ -1,10 +1,11 @@
 import React from "react";
+import OrderList from "./OrderList";
 
 const Orders = () => {
   return (
-    <section>
-      <div>Orders</div>
-    </section>
+    <>
+      <OrderList />
+    </>
   );
 };
 
