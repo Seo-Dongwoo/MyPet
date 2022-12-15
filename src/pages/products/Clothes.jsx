@@ -1,7 +1,16 @@
 import React from "react";
+import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
+import ClothesProducts from "../../components/clothes/ClothesProducts";
 
-const Clothes = () => {
-  return <div>Clothes</div>;
+const Toy = () => {
+  return (
+    <>
+      <Header />
+      <ClothesProducts />
+      <Footer />
+    </>
+  );
 };
 
-export default Clothes;
+export default Toy;
