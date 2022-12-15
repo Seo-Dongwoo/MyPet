@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { deleteCheckedItems } from "../../redux/modules/actions/cartActions";
+import { deleteCheckedItems } from "../../../redux/modules/actions/cartActions";
 
 const SelectContainer = ({ cartItems, setCheckItems, checkItems }) => {
   const dispatch = useDispatch();

@@ -106,7 +106,6 @@ export const unsubscribe = (setData) =>
       });
 
       setData(userList);
-      console.log(userList);
     },
     (err) => {
       console.log(err);
