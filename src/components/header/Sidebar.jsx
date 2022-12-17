@@ -39,24 +39,31 @@ const Sidebar = ({ openSidebar, toggle }) => {
           )}
           <SideBtnWrap>
             {currentUser ? (
-              <SideBarLogin to="/" onClick={handleLogout}>
-                Logout
-              </SideBarLogin>
+              <>
+                <SideBarLogin to="/" onClick={handleLogout}>
+                  Logout
+                </SideBarLogin>
+                <SideBarCart to="/cart">
+                  {cartItems.length > 0 ? (
+                    <>
+                      <BsFillCartPlusFill />
+                      <CartItemsLength>{cartItems.length}</CartItemsLength>
+                    </>
+                  ) : (
+                    <BsFillCartPlusFill />
+                  )}
+                </SideBarCart>
+              </>
             ) : (
-              <SideBarLogin to="/login" onClick={handleLogout}>
-                Login
-              </SideBarLogin>
-            )}
-            <SideBarCart to="/cart">
-              {cartItems.length > 0 ? (
-                <>
+              <>
+                <SideBarLogin to="/login" onClick={handleLogout}>
+                  Login
+                </SideBarLogin>
+                <SideBarCart to="/login">
                   <BsFillCartPlusFill />
-                  <CartItemsLength>{cartItems.length}</CartItemsLength>
-                </>
-              ) : (
-                <BsFillCartPlusFill />
-              )}
-            </SideBarCart>
+                </SideBarCart>
+              </>
+            )}
           </SideBtnWrap>
         </SidebarWrapper>
       </SidebarContainer>

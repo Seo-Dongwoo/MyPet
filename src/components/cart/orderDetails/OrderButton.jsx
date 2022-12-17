@@ -14,7 +14,7 @@ const OrderButton = ({ checkItems, address, totalPrice, detailAddress }) => {
   const handleSubmit = () => {
     const userUId = currentUser.uid;
 
-    if (orderItemsList && address && detailAddress) {
+    if (orderItemsList && address && detailAddress && currentUser) {
       dispatch(
         addOrderInitiate({
           orderItemsList,
@@ -24,7 +24,7 @@ const OrderButton = ({ checkItems, address, totalPrice, detailAddress }) => {
           detailAddress,
         })
       );
-      navigate("/");
+      navigate("/order");
     } else {
       return false;
     }

@@ -43,6 +43,7 @@ const ProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff0f5;
+  overflow-x: hidden;
 `;
 
 const TitleContainer = styled.div`
