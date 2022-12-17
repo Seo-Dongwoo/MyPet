@@ -9,6 +9,7 @@ import {
   Food,
   Toy,
   Admin,
+  Order,
   ProductPage,
   PrivateRoute,
 } from "./pages";
@@ -44,6 +45,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Admin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/order"
+            element={
+              <PrivateRoute>
+                <Order />
               </PrivateRoute>
             }
           />

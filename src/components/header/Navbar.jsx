@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link as LinkR } from "react-router-dom";
+import { Link as LinkR, useParams } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,6 @@ import { logoutInitiate } from "../../redux/modules/actions/userActions";
 const Navbar = ({ toggle }) => {
   const { currentUser } = useSelector((state) => state.user);
   const { cartItems } = useSelector((state) => state.cartList);
-
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -17,7 +16,6 @@ const Navbar = ({ toggle }) => {
       dispatch(logoutInitiate());
     }
   };
-  console.log(cartItems.length);
 
   return (
     <>
@@ -51,13 +49,17 @@ const Navbar = ({ toggle }) => {
           )}
           <NavBtn>
             {currentUser ? (
-              <NavBtnLink to="/" onClick={handleLogout}>
-                Logout
-              </NavBtnLink>
+              <>
+                <NavBtnLink to="/" onClick={handleLogout}>
+                  Logout
+                </NavBtnLink>
+              </>
             ) : (
-              <NavBtnLink to="/login" onClick={handleLogout}>
-                Login
-              </NavBtnLink>
+              <>
+                <NavBtnLink to="/login" onClick={handleLogout}>
+                  Login
+                </NavBtnLink>
+              </>
             )}
             <NavBtnLink to="/cart">
               {cartItems.length > 0 ? (

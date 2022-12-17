@@ -23,7 +23,7 @@ function UserList() {
     alert("해당 유저를 삭제하시겠습니까?");
   };
 
-  console.log(orderItems);
+  console.log(data);
 
   const columns = useMemo(
     () => [

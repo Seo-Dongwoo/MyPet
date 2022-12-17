@@ -14,8 +14,6 @@ const UserView = () => {
     };
   }, []);
 
-  console.log(userId);
-
   return (
     <>
       <ProfileContainer>

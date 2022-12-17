@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import AddProduct from "./addProduct/AddProduct";
 import DashboardHome from "./dashboard/DashboardHome";

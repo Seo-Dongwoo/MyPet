@@ -9,8 +9,8 @@ import { addCartInitiate } from "../../redux/modules/actions/cartActions";
 const ProductSection = () => {
   const [quantity, setQuantity] = useState(1);
   const { products } = useSelector((state) => state.addProduct);
-  const { currentUser } = useSelector((state) => state.user);
   const { productId } = useParams();
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -22,9 +22,7 @@ const ProductSection = () => {
   };
 
   const handleSubmit = (product, id) => {
-    if (currentUser) {
-      dispatch(addCartInitiate({ ...product, quantity }, id));
-    }
+    dispatch(addCartInitiate({ ...product, quantity }, id));
   };
 
   return (

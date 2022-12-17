@@ -23,7 +23,7 @@ const Login = () => {
     email: "",
     password: "",
   };
-  console.log(currentUser);
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
