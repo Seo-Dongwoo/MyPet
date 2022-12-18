@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
@@ -19,6 +19,8 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const initialValues = {
     email: "",
     password: "",
@@ -57,18 +59,22 @@ const Login = () => {
       setErrorMessage("");
       await dispatch(githubLoginInitiate());
       setTimeout(() => {
-        navigate("/");
+        if (state) {
+          navigate(state);
+        } else {
+          navigate("/");
+        }
       }, 3000);
     } catch (error) {
       setErrorMessage("Github 로그인 실패");
     }
   };
 
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/");
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     navigate("/");
+  //   }
+  // }, [currentUser]);
 
   return (
     <LoginContainer>
