@@ -12,21 +12,16 @@ const OrderButton = ({ checkItems, address, totalPrice, detailAddress }) => {
   const orderItemsList = checkItems.map((item) => item);
 
   const handleSubmit = () => {
-    const userUId = currentUser.uid;
-
-    if (orderItemsList && address && detailAddress && currentUser) {
+    if (orderItemsList && address && detailAddress) {
       dispatch(
         addOrderInitiate({
           orderItemsList,
           totalPrice,
           address,
-          userUId,
           detailAddress,
         })
       );
       navigate("/order");
-    } else {
-      return false;
     }
   };
 
@@ -37,7 +32,7 @@ const OrderButton = ({ checkItems, address, totalPrice, detailAddress }) => {
       {orderItemsList.length === 0 ? (
         <Btn>상품을 선택하세요.</Btn>
       ) : address && detailAddress ? (
-        <OrderBtn onClick={() => handleSubmit()}>주문하기</OrderBtn>
+        <OrderBtn onClick={() => handleSubmit()}>구매하기</OrderBtn>
       ) : (
         <Btn>배송지를 입력하세요.</Btn>
       )}
