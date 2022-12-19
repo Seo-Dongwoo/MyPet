@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineGithub } from "react-icons/ai";
@@ -14,12 +14,13 @@ import {
 import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
 
 const Login = () => {
-  const { currentUser } = useSelector((state) => state.user);
   const error = useSelector((state) => state.user.error);
+  const { currentUser } = useSelector((state) => state.user);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const location = useLocation();
+  const origin = location.state?.from?.pathname;
 
   const initialValues = {
     email: "",
@@ -45,10 +46,6 @@ const Login = () => {
     try {
       setErrorMessage("");
       await dispatch(googleLoginInitiate());
-
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
     } catch (error) {
       setErrorMessage("Google 로그인 실패");
     }
@@ -58,28 +55,24 @@ const Login = () => {
     try {
       setErrorMessage("");
       await dispatch(githubLoginInitiate());
-      setTimeout(() => {
-        if (state) {
-          navigate(state);
-        } else {
-          navigate("/");
-        }
-      }, 3000);
     } catch (error) {
       setErrorMessage("Github 로그인 실패");
     }
   };
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     navigate("/");
-  //   }
-  // }, [currentUser]);
+  useEffect(() => {
+    if (currentUser && origin) {
+      navigate(origin);
+    }
+    if (currentUser && !origin) {
+      navigate("/");
+    }
+  }, [currentUser, origin]);
 
   return (
     <LoginContainer>
       <FormWrapper>
-        <LoginForm onSubmit={handleSubmit}>
+        <LoginForm type="submit" onSubmit={handleSubmit}>
           <FormTitle to="/">LOGIN</FormTitle>
           {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           <InputField>
@@ -121,10 +114,10 @@ const Login = () => {
           <SubmitBtn>로그인</SubmitBtn>
           <Boundary>--- SOCIAL LOGIN ---</Boundary>
           <SocialLogin>
-            <SocialLoginBtn onClick={handleGoogleLogin}>
+            <SocialLoginBtn type="button" onClick={() => handleGoogleLogin()}>
               <GoogleIcon>구글 로그인</GoogleIcon>
             </SocialLoginBtn>
-            <SocialLoginBtn onClick={handleGithubLogin}>
+            <SocialLoginBtn type="button" onClick={() => handleGithubLogin()}>
               <GithubIcon>깃허브 로그인</GithubIcon>
             </SocialLoginBtn>
           </SocialLogin>
