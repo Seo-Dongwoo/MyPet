@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FiHeart } from "react-icons/fi";
-import { BsFillCartPlusFill } from "react-icons/bs";
+import { BiMessageRoundedError } from "react-icons/bi";
 import { addCartInitiate } from "../../redux/modules/actions/cartActions";
 
 const ProductSection = () => {
@@ -93,18 +93,16 @@ const ProductSection = () => {
                         <LikeIcon />
                       </LikeBtn>
                     </LikeLink>
-                    <CartLink to="/cart">
-                      <CartBtn
-                        onClick={() => handleSubmit(product, product.id)}
-                      >
-                        <CartIcon />
-                      </CartBtn>
-                    </CartLink>
+                    <QuestionLink>
+                      <QuestionBtn>
+                        <QuestionIcon />
+                      </QuestionBtn>
+                    </QuestionLink>
                     <PurchaseLink to="/cart">
                       <PurchaseBtn
                         onClick={() => handleSubmit(product, product.id)}
                       >
-                        구매하기
+                        장바구니 담기
                       </PurchaseBtn>
                     </PurchaseLink>
                   </LinkContainer>
@@ -313,7 +311,7 @@ const LikeBtn = styled.button`
   height: 100%;
   background-color: #fff;
   color: #01bf71;
-  border: 2px solid #01bf71;
+  border: 2px solid rgb(221, 223, 225);
   cursor: pointer;
 `;
 
@@ -322,7 +320,7 @@ const LikeIcon = styled(FiHeart)`
   height: 30px;
 `;
 
-const CartLink = styled(Link)`
+const QuestionLink = styled(Link)`
   width: 55px;
   height: 55px;
   margin-right: 5px;
@@ -331,16 +329,16 @@ const CartLink = styled(Link)`
   justify-content: center;
 `;
 
-const CartBtn = styled.button`
+const QuestionBtn = styled.button`
   width: 100%;
   height: 100%;
   background-color: #fff;
-  color: #01bf71;
-  border: 2px solid #01bf71;
+  color: rgb(221, 223, 225);
+  border: 2px solid rgb(221, 223, 225);
   cursor: pointer;
 `;
 
-const CartIcon = styled(BsFillCartPlusFill)`
+const QuestionIcon = styled(BiMessageRoundedError)`
   width: 30px;
   height: 30px;
 `;

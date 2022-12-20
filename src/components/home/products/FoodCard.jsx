@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { BsCart2 } from "react-icons/bs";
+import ModalPortal from "../../common/ModalProtal";
+import CartModal from "../../common/CartModal";
 
 const FoodCard = () => {
+  const [modalOpen, setModalOpen] = useState();
+  const [itemId, setItemId] = useState("");
   const { products } = useSelector((state) => state.addProduct);
+
   const navigate = useNavigate();
+
+  const HandleModalCheck = (id) => {
+    setModalOpen(true);
+    setItemId(id);
+  };
+
+  const HandleModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -16,22 +31,43 @@ const FoodCard = () => {
         {products.length > 0 ? (
           products.map((product, index) =>
             product.category === "food" ? (
-              <CardContainer
-                key={index}
-                onClick={() => {
-                  navigate(`/food/${product.id}`);
-                }}
-              >
-                <ImageContainer>
-                  <Image src={product.img} alt="" />
-                </ImageContainer>
-                <ProductContainer>
-                  <NameContainer>
-                    <Name>{product.product}</Name>
-                  </NameContainer>
-                  <span>{product.price}원</span>
-                </ProductContainer>
-              </CardContainer>
+              <>
+                <CardContainer
+                  key={index}
+                  onClick={() => {
+                    navigate(`/food/${product.id}`);
+                  }}
+                >
+                  <ImageContainer>
+                    <Image src={product.img} alt="" />
+                    <CartDiv>
+                      <CartBtn
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          HandleModalCheck(product.id);
+                        }}
+                      >
+                        <CartIcon />
+                      </CartBtn>
+                    </CartDiv>
+                  </ImageContainer>
+                  <ProductContainer>
+                    <NameContainer>
+                      <Name>{product.product}</Name>
+                    </NameContainer>
+                    <span>{product.price}원</span>
+                  </ProductContainer>
+                </CardContainer>
+                {modalOpen && (
+                  <ModalPortal>
+                    <CartModal
+                      itemId={itemId}
+                      onClose={HandleModal}
+                      setModalOpen={setModalOpen}
+                    />
+                  </ModalPortal>
+                )}
+              </>
             ) : null
           )
         ) : (
@@ -74,6 +110,7 @@ const ProductCards = styled.div`
   flex-wrap: wrap;
   background-color: #fff0f5;
   justify-content: center;
+  margin-bottom: 50px;
   @media screen and (max-width: 875px) {
     text-align: center;
     width: 100%;
@@ -105,6 +142,7 @@ const ProductContainer = styled.div`
 `;
 
 const ImageContainer = styled.div`
+  position: relative;
   width: 250px;
   height: 200px;
   margin-bottom: 10px;
@@ -113,6 +151,32 @@ const ImageContainer = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 100%;
+`;
+
+const CartDiv = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: rgba(120, 239, 118, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
+const CartBtn = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+
+const CartIcon = styled(BsCart2)`
+  width: 20px;
+  height: 20px;
+  color: #fff;
 `;
 
 const NameContainer = styled.div`
