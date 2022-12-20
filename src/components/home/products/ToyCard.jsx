@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { BsCart2 } from "react-icons/bs";
+import ModalPortal from "../../common/ModalProtal";
+import CartModal from "../../common/CartModal";
 
-const ToyCard = () => {
+const FoodCard = () => {
+  const [modalOpen, setModalOpen] = useState();
+  const [itemId, setItemId] = useState("");
   const { products } = useSelector((state) => state.addProduct);
+
   const navigate = useNavigate();
+
+  const HandleModalCheck = (id) => {
+    setModalOpen(true);
+    setItemId(id);
+  };
+
+  const HandleModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -16,22 +31,43 @@ const ToyCard = () => {
         {products.length > 0 ? (
           products.map((product, index) =>
             product.category === "toy" ? (
-              <CardContainer
-                key={index}
-                onClick={() => {
-                  navigate(`/toy/${product.id}`);
-                }}
-              >
-                <ImageContainer>
-                  <Image src={product.img} alt="" />
-                </ImageContainer>
-                <ProductContainer>
-                  <NameContainer>
-                    <Name>{product.product}</Name>
-                  </NameContainer>
-                  <span>{product.price}원</span>
-                </ProductContainer>
-              </CardContainer>
+              <>
+                <CardContainer
+                  key={index}
+                  onClick={() => {
+                    navigate(`/toy/${product.id}`);
+                  }}
+                >
+                  <ImageContainer>
+                    <Image src={product.img} alt="" />
+                    <CartDiv>
+                      <CartBtn
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          HandleModalCheck(product.id);
+                        }}
+                      >
+                        <CartIcon />
+                      </CartBtn>
+                    </CartDiv>
+                  </ImageContainer>
+                  <ProductContainer>
+                    <NameContainer>
+                      <Name>{product.product}</Name>
+                    </NameContainer>
+                    <span>{product.price}원</span>
+                  </ProductContainer>
+                </CardContainer>
+                {modalOpen && (
+                  <ModalPortal>
+                    <CartModal
+                      itemId={itemId}
+                      onClose={HandleModal}
+                      setModalOpen={setModalOpen}
+                    />
+                  </ModalPortal>
+                )}
+              </>
             ) : null
           )
         ) : (
@@ -43,7 +79,7 @@ const ToyCard = () => {
 };
 const TitleContainer = styled.div`
   width: 100%;
-  margin: 30px 0 20px 12%;
+  margin: 15px 0 20px 12%;
   @media screen and (max-width: 875px) {
     margin: 20px 0 20px 0;
   }
@@ -55,7 +91,6 @@ const TitleContainer = styled.div`
 
 const Title = styled.h1`
   color: #f5a0a0;
-
   @media screen and (max-width: 875px) {
     font-size: 2rem;
     text-align: center;
@@ -74,11 +109,25 @@ const ProductCards = styled.div`
   display: flex;
   flex-wrap: wrap;
   background-color: #fff0f5;
-  margin-bottom: 50px;
   justify-content: center;
+  margin-bottom: 50px;
   @media screen and (max-width: 875px) {
     text-align: center;
     width: 100%;
+  }
+`;
+
+const CardContainer = styled.div`
+  position: relative;
+  width: 250px;
+  height: 280px;
+  box-shadow: 0px 0px 15px -5px;
+  margin: 10px;
+  overflow: hidden;
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 15px 0px;
   }
 `;
 
@@ -92,20 +141,8 @@ const ProductContainer = styled.div`
   font-weight: 700;
 `;
 
-const CardContainer = styled.div`
-  width: 250px;
-  height: 280px;
-  overflow: hidden;
-  box-shadow: 0px 0px 15px -5px;
-  margin: 10px;
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1.1);
-    box-shadow: 0px 0px 15px 0px;
-  }
-`;
-
 const ImageContainer = styled.div`
+  position: relative;
   width: 250px;
   height: 200px;
   margin-bottom: 10px;
@@ -116,6 +153,32 @@ const Image = styled.img`
   height: 100%;
 `;
 
+const CartDiv = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: rgba(120, 239, 118, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
+const CartBtn = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+
+const CartIcon = styled(BsCart2)`
+  width: 20px;
+  height: 20px;
+  color: #fff;
+`;
+
 const NameContainer = styled.div`
   width: 100%;
   height: 40px;
@@ -124,4 +187,4 @@ const NameContainer = styled.div`
 
 const Name = styled.span``;
 
-export default ToyCard;
+export default FoodCard;
