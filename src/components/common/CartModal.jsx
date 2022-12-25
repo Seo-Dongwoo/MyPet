@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartInitiate } from "../../redux/modules/actions/cartActions";
+import { AiOutlineAlert } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { v4 } from "uuid";
 
 const CartModal = ({ onClose, itemId, setModalOpen }) => {
+  const { currentUser } = useSelector((state) => state.user);
   const [quantity, setQuantity] = useState(1);
   const { products } = useSelector((state) => state.addProduct);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setQuantity(e.target.value);
     if (e.target.value < 1) {
@@ -15,62 +21,85 @@ const CartModal = ({ onClose, itemId, setModalOpen }) => {
     }
   };
 
-  const handleSubmit = (product, id) => {
-    dispatch(addCartInitiate({ ...product, quantity }, id));
+  const handleSubmit = (product, userId) => {
+    const token = currentUser.uid + v4();
+    dispatch(
+      addCartInitiate({ ...product, quantity, userId, token }, token, userId)
+    );
     alert("해당 상품이 장바구니에 추가되었습니다.");
     setModalOpen(false);
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
   };
 
   return (
     <ModalContainer>
       <Background>
-        <ModalDiv>
-          {products.map((product, index) =>
-            product.id === itemId ? (
-              <>
-                <ProductContainer key={index}>
-                  <ProductTitle>
-                    <Title>{product.product}</Title>
-                  </ProductTitle>
-                  <PriceQuantityContainer>
-                    <PriceContainer>
-                      <Price>{product.price}원</Price>
-                    </PriceContainer>
-                    <QuantityConatainer>
-                      <DecreaseBtn
-                        onClick={() => setQuantity(Math.max(quantity - 1, 1))}
-                        type="button"
-                      >
-                        -
-                      </DecreaseBtn>
-                      <Quantity
-                        type="text"
-                        value={quantity}
-                        onChange={handleChange}
-                      />
-                      <IncreaseBtn
-                        onClick={() => setQuantity(quantity + 1)}
-                        type="button"
-                      >
-                        +
-                      </IncreaseBtn>
-                    </QuantityConatainer>
-                  </PriceQuantityContainer>
-                </ProductContainer>
-                <TotalPriceContaier>
-                  <Title>총 가격</Title>
-                  <TotalPrice>{product.price * quantity}원</TotalPrice>
-                </TotalPriceContaier>
-                <ButtonContaier>
-                  <CartButton onClick={() => handleSubmit(product, product.id)}>
-                    장바구니 담기
-                  </CartButton>
-                  <CancelButton onClick={() => onClose()}>닫기</CancelButton>
-                </ButtonContaier>
-              </>
-            ) : null
-          )}
-        </ModalDiv>
+        {currentUser ? (
+          <ModalDiv>
+            {products.map((product) =>
+              product.id === itemId ? (
+                <Container key={product.id}>
+                  <ProductContainer>
+                    <ProductTitle>
+                      <Title>{product.product}</Title>
+                    </ProductTitle>
+                    <PriceQuantityContainer>
+                      <PriceContainer>
+                        <Price>{product.price}원</Price>
+                      </PriceContainer>
+                      <QuantityConatainer>
+                        <DecreaseBtn
+                          onClick={() => setQuantity(Math.max(quantity - 1, 1))}
+                          type="button"
+                        >
+                          -
+                        </DecreaseBtn>
+                        <Quantity
+                          type="text"
+                          value={quantity}
+                          onChange={handleChange}
+                        />
+                        <IncreaseBtn
+                          onClick={() => setQuantity(quantity + 1)}
+                          type="button"
+                        >
+                          +
+                        </IncreaseBtn>
+                      </QuantityConatainer>
+                    </PriceQuantityContainer>
+                  </ProductContainer>
+                  <TotalPriceContaier>
+                    <Title>총 가격</Title>
+                    <TotalPrice>{product.price * quantity}원</TotalPrice>
+                  </TotalPriceContaier>
+                  <ButtonContaier>
+                    <CartButton
+                      onClick={() => handleSubmit(product, currentUser.uid)}
+                    >
+                      장바구니 담기
+                    </CartButton>
+                    <CancelButton onClick={() => onClose()}>닫기</CancelButton>
+                  </ButtonContaier>
+                </Container>
+              ) : null
+            )}
+          </ModalDiv>
+        ) : (
+          <ModalDiv>
+            <NoneUserModal>
+              <AlramIcon />
+              <LoginTitle>로그인 후 장바구니를 이용 가능</LoginTitle>
+              <Span>로그인을 하시겠습니까 ?</Span>
+            </NoneUserModal>
+            <ButtonContaier>
+              <CartButton onClick={() => handleLogin()}>확인</CartButton>
+              <CancelButton onClick={() => onClose()}>닫기</CancelButton>
+            </ButtonContaier>
+          </ModalDiv>
+        )}
       </Background>
     </ModalContainer>
   );
@@ -94,7 +123,7 @@ const Background = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 const ModalDiv = styled.div`
@@ -109,6 +138,8 @@ const ModalDiv = styled.div`
   background-color: #fff;
   color: black;
 `;
+
+const Container = styled.div``;
 
 const ProductContainer = styled.div`
   width: 100%;
@@ -211,6 +242,36 @@ const CancelButton = styled.button`
   font-weight: 600;
   border: 1px solid rgb(221, 223, 225);
   border-radius: 5px;
+`;
+
+const NoneUserModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 2px 0px 4px;
+  padding: 30px 0px 20px;
+  min-height: 130px;
+  text-align: center;
+  line-height: 20px;
+`;
+
+const LoginTitle = styled.span`
+  font-weight: 600;
+  margin-top: 10px;
+`;
+
+const Span = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 5px;
+  color: red;
+`;
+
+const AlramIcon = styled(AiOutlineAlert)`
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  color: #6a5acd;
 `;
 
 export default CartModal;

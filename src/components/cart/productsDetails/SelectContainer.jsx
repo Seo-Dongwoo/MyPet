@@ -1,26 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteCheckedItems } from "../../../redux/modules/actions/cartActions";
 
-const SelectContainer = ({ cartItems, setCheckItems, checkItems }) => {
+const SelectContainer = ({ setCheckItems, checkItems, userCartItemsList }) => {
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // 체크박스 전체 선택
   const handleAllCheck = (checked) => {
     if (checked) {
       const idArray = [];
-      cartItems.forEach((item) => idArray.push(item));
+      userCartItemsList.forEach((item) => idArray.push(item));
       setCheckItems(idArray);
     } else {
       setCheckItems([]);
     }
   };
 
-  const handleDeleteCheckedItem = () => {
-    const ids = checkItems.map((item) => item.id);
+  const handleDeleteCheckedItem = (userId) => {
+    const ids = checkItems.map((item) => item.token);
 
-    dispatch(deleteCheckedItems(ids));
+    dispatch(deleteCheckedItems(ids, userId));
 
     alert("상품을 삭제하시겠습니까?");
     setCheckItems([]);
@@ -34,16 +35,19 @@ const SelectContainer = ({ cartItems, setCheckItems, checkItems }) => {
             type="checkbox"
             onChange={(e) => handleAllCheck(e.target.checked)}
             checked={
-              checkItems.length === cartItems.length && cartItems.length > 0
+              checkItems.length === userCartItemsList.length &&
+              userCartItemsList.length > 0
                 ? true
                 : false
             }
           />
           <AllSelect>
-            전체선택({checkItems.length}/{cartItems.length})
+            전체선택({checkItems.length}/{userCartItemsList.length})
           </AllSelect>
           <Bar />
-          <SelectDelete onClick={handleDeleteCheckedItem}>
+          <SelectDelete
+            onClick={() => handleDeleteCheckedItem(currentUser.uid)}
+          >
             선택삭제
           </SelectDelete>
         </Label>

@@ -18,6 +18,14 @@ const Sidebar = ({ openSidebar, toggle }) => {
     }
   };
 
+  // 현재 로그인한 유저와 상품을 장바구니에 담은 유저가 같은 상품만 뽑아냈다.
+  const totalLength = cartItems.reduce((acc, cur) => {
+    if (currentUser && cur.userId === currentUser.uid) {
+      return (acc = [...acc, cur]);
+    }
+    return acc;
+  }, []);
+
   return (
     <>
       <SidebarContainer openSidebar={openSidebar} onClick={toggle}>
@@ -44,10 +52,10 @@ const Sidebar = ({ openSidebar, toggle }) => {
                   Logout
                 </SideBarLogin>
                 <SideBarCart to="/cart">
-                  {cartItems.length > 0 ? (
+                  {totalLength.length > 0 ? (
                     <>
                       <BsFillCartPlusFill />
-                      <CartItemsLength>{cartItems.length}</CartItemsLength>
+                      <CartItemsLength>{totalLength.length}</CartItemsLength>
                     </>
                   ) : (
                     <BsFillCartPlusFill />
