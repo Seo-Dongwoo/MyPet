@@ -5,12 +5,16 @@ import styled from "styled-components";
 import { FiHeart } from "react-icons/fi";
 import { BiMessageRoundedError } from "react-icons/bi";
 import { addCartInitiate } from "../../redux/modules/actions/cartActions";
+import ModalPortal from "../common/ModalProtal";
+import CartModal from "../common/CartModal";
+import { v4 } from "uuid";
 
 const ProductSection = () => {
   const [quantity, setQuantity] = useState(1);
   const { products } = useSelector((state) => state.addProduct);
+  const { currentUser } = useSelector((state) => state.user);
   const { productId } = useParams();
-
+  const [modalOpen, setModalOpen] = useState();
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -21,16 +25,28 @@ const ProductSection = () => {
     }
   };
 
-  const handleSubmit = (product, id) => {
-    dispatch(addCartInitiate({ ...product, quantity }, id));
+  const handleSubmit = (product, userId) => {
+    const token = currentUser.uid + v4();
+
+    dispatch(
+      addCartInitiate({ ...product, quantity, userId, token }, token, userId)
+    );
+  };
+
+  const HandleModalCheck = () => {
+    setModalOpen(true);
+  };
+
+  const HandleModal = () => {
+    setModalOpen(false);
   };
 
   return (
     <>
       {products &&
-        products.map((product, index) =>
+        products.map((product) =>
           product.id === productId ? (
-            <Container key={index}>
+            <Container key={product.id}>
               <ImageContainer>
                 <Image src={product.img} alt="" />
               </ImageContainer>
@@ -55,7 +71,7 @@ const ProductSection = () => {
                       <Tr>
                         <TitleTd>배송비</TitleTd>
                         <Td>
-                          총 결제금액이 50,000원 미만시 배송비 3,000원이
+                          총 결제금액이 20,000원 미만시 배송비 3,000원이
                           청구됩니다.
                         </Td>
                       </Tr>
@@ -98,19 +114,40 @@ const ProductSection = () => {
                         <QuestionIcon />
                       </QuestionBtn>
                     </QuestionLink>
-                    <PurchaseLink to="/cart">
-                      <PurchaseBtn
-                        onClick={() => handleSubmit(product, product.id)}
-                      >
-                        장바구니 담기
-                      </PurchaseBtn>
-                    </PurchaseLink>
+                    {currentUser ? (
+                      <PurchaseLink to="/cart">
+                        <PurchaseBtn
+                          onClick={() => handleSubmit(product, currentUser.uid)}
+                        >
+                          장바구니 담기
+                        </PurchaseBtn>
+                      </PurchaseLink>
+                    ) : (
+                      <PurchaseLink>
+                        <PurchaseBtn
+                          onClick={() => {
+                            HandleModalCheck();
+                          }}
+                        >
+                          장바구니 담기
+                        </PurchaseBtn>
+                      </PurchaseLink>
+                    )}
                   </LinkContainer>
                 </PurchaseContainer>
               </DescContainer>
             </Container>
           ) : null
         )}
+      {modalOpen && (
+        <ModalPortal>
+          <CartModal
+            modalOpen={modalOpen}
+            onClose={HandleModal}
+            setModalOpen={setModalOpen}
+          />
+        </ModalPortal>
+      )}
     </>
   );
 };

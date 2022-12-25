@@ -29,51 +29,49 @@ const FoodCard = () => {
       </TitleContainer>
       <ProductCards>
         {products.length > 0 ? (
-          products.map((product, index) =>
+          products.map((product) =>
             product.category === "food" ? (
-              <>
-                <CardContainer
-                  key={index}
-                  onClick={() => {
-                    navigate(`/food/${product.id}`);
-                  }}
-                >
-                  <ImageContainer>
-                    <Image src={product.img} alt="" />
-                    <CartDiv>
-                      <CartBtn
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          HandleModalCheck(product.id);
-                        }}
-                      >
-                        <CartIcon />
-                      </CartBtn>
-                    </CartDiv>
-                  </ImageContainer>
-                  <ProductContainer>
-                    <NameContainer>
-                      <Name>{product.product}</Name>
-                    </NameContainer>
-                    <span>{product.price}원</span>
-                  </ProductContainer>
-                </CardContainer>
-                {modalOpen && (
-                  <ModalPortal>
-                    <CartModal
-                      itemId={itemId}
-                      onClose={HandleModal}
-                      setModalOpen={setModalOpen}
-                    />
-                  </ModalPortal>
-                )}
-              </>
+              <CardContainer
+                key={product.id}
+                onClick={() => {
+                  navigate(`/food/${product.id}`);
+                }}
+              >
+                <ImageContainer>
+                  <Image src={product.img} alt="" />
+                  <CartDiv>
+                    <CartBtn
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        HandleModalCheck(product.id);
+                      }}
+                    >
+                      <CartIcon />
+                    </CartBtn>
+                  </CartDiv>
+                </ImageContainer>
+                <ProductContainer>
+                  <NameContainer>
+                    <Name>{product.product}</Name>
+                  </NameContainer>
+                  <span>{product.price}원</span>
+                </ProductContainer>
+              </CardContainer>
             ) : null
           )
         ) : (
           <h1>상품이 존재하지 않습니다.</h1>
         )}
       </ProductCards>
+      {modalOpen && (
+        <ModalPortal>
+          <CartModal
+            itemId={itemId}
+            onClose={HandleModal}
+            setModalOpen={setModalOpen}
+          />
+        </ModalPortal>
+      )}
     </>
   );
 };
@@ -165,12 +163,14 @@ const CartDiv = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  cursor: pointer;
 `;
 
 const CartBtn = styled.button`
+  width: 100%;
+  height: 100%;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 `;
 
 const CartIcon = styled(BsCart2)`

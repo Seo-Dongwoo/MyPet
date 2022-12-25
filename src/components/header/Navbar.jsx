@@ -17,6 +17,14 @@ const Navbar = ({ toggle }) => {
     }
   };
 
+  // 현재 로그인한 유저와 상품을 장바구니에 담은 유저가 같은 상품만 뽑아냈다.
+  const totalLength = cartItems.reduce((acc, cur) => {
+    if (currentUser && cur.userId === currentUser.uid) {
+      return (acc = [...acc, cur]);
+    }
+    return acc;
+  }, []);
+
   return (
     <>
       <Nav>
@@ -53,24 +61,27 @@ const Navbar = ({ toggle }) => {
                 <NavBtnLink to="/" onClick={handleLogout}>
                   Logout
                 </NavBtnLink>
+                <NavBtnLink to="/cart">
+                  {totalLength.length > 0 ? (
+                    <>
+                      <BsFillCartPlusFill />
+                      <CartItemsLength>{totalLength.length}</CartItemsLength>
+                    </>
+                  ) : (
+                    <BsFillCartPlusFill />
+                  )}
+                </NavBtnLink>
               </>
             ) : (
               <>
                 <NavBtnLink to="/login" onClick={handleLogout}>
                   Login
                 </NavBtnLink>
+                <NavBtnLink to="/cart">
+                  <BsFillCartPlusFill />
+                </NavBtnLink>
               </>
             )}
-            <NavBtnLink to="/cart">
-              {cartItems.length > 0 ? (
-                <>
-                  <BsFillCartPlusFill />
-                  <CartItemsLength>{cartItems.length}</CartItemsLength>
-                </>
-              ) : (
-                <BsFillCartPlusFill />
-              )}
-            </NavBtnLink>
           </NavBtn>
         </NavbarContainer>
       </Nav>

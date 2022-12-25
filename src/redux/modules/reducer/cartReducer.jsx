@@ -8,20 +8,13 @@ const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_CART:
       const cartItem = state.cartItems.find(
-        (item) => item.id === action.payload.id
+        (item) =>
+          item.id === action.payload.id && item.userId === action.payload.userId
       );
       if (cartItem) {
         cartItem.quantity += action.payload.quantity;
       } else {
-        const addtoCart = {
-          id: action.payload.id,
-          img: action.payload.img,
-          product: action.payload.product,
-          price: action.payload.price,
-          quantity: action.payload.quantity,
-          desc: action.payload.desc,
-          category: action.payload.category,
-        };
+        const addtoCart = action.payload;
         state.cartItems.push(addtoCart);
       }
       return {
@@ -31,12 +24,14 @@ const cartReducer = (state = initialState, action) => {
     case types.DELETE_CART:
       return {
         ...state.cartItems,
-        cartItems: state.cartItems.filter((item) => item.id !== action.payload),
+        cartItems: state.cartItems.filter(
+          (item) => item.token !== action.payload
+        ),
       };
     case types.CHECKED_DELETE:
       return {
         cartItems: state.cartItems.filter(
-          (item) => !action.payload.ids.includes(item.id)
+          (item) => !action.payload.ids.includes(item.token)
         ),
       };
     default:

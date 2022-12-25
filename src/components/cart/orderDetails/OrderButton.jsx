@@ -1,12 +1,11 @@
 import React from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { addOrderInitiate } from "../../../redux/modules/actions/orderActions";
 import { useNavigate } from "react-router-dom";
 
 const OrderButton = ({ checkItems, address, totalPrice, detailAddress }) => {
-  const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const orderItemsList = checkItems.map((item) => item);
