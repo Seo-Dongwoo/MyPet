@@ -49,7 +49,7 @@ function App() {
             }
           />
           <Route
-            path="/order"
+            path="/order/:orderParams"
             element={
               <PrivateRoute>
                 <Order />
@@ -64,7 +64,6 @@ function App() {
               </PrivateRoute>
             }
           />
-          {/* <Route path="/cart" element={<Cart />} /> */}
           <Route path="/clothes" element={<Clothes />} />
           <Route path="/clothes/:productId" element={<ProductPage />} />
           <Route path="/food" element={<Food />} />

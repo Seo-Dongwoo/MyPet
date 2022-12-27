@@ -16,8 +16,8 @@ const OrderList = () => {
     <div>
       {orderItems.map((item, index) => (
         <div key={index}>
-          <h4>{item.Order.address}</h4>
-          <button onClick={() => deleteHandler(item.Order.id)}>삭제</button>
+          <h4>{item.address}</h4>
+          <button onClick={() => deleteHandler(item.id)}>삭제</button>
         </div>
       ))}
     </div>

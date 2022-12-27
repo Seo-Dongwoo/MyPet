@@ -6,10 +6,15 @@ const initialState = {
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.GET_ORDERS:
+      return {
+        ...state,
+        orderItems: action.payload,
+      };
     case types.ADD_ORDER:
-      const Order = action.payload;
+      const orderItem = action.payload;
 
-      state.orderItems.push({ Order });
+      state.orderItems.push(orderItem);
       return {
         ...state.orderItems,
         orderItems: [...state.orderItems],

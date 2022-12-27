@@ -1,30 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { addOrderInitiate } from "../../../redux/modules/actions/orderActions";
 import { useNavigate } from "react-router-dom";
+import { unsubscribe } from "../../../redux/modules/actions/orderActions";
+import { v4 } from "uuid";
 
 const OrderButton = ({ checkItems, address, totalPrice, detailAddress }) => {
+  const { orderItems } = useSelector((state) => state.orderProduct);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const orderItemsList = checkItems.map((item) => item);
+  // const orderPath = orderItems.map((item) =>
+  //   item.orderItemsList.map((item) => item.token)
+  // );
+
+  const orderPath = orderItems.map((item) => item.id);
 
   const handleSubmit = () => {
     if (orderItemsList && address && detailAddress) {
+      const orderPathId = v4();
+
       dispatch(
         addOrderInitiate({
+          orderPathId,
           orderItemsList,
           totalPrice,
           address,
           detailAddress,
         })
       );
-      navigate("/order");
+
+      navigate(`/order/${orderPathId}`);
     }
   };
 
   useEffect(() => {}, [orderItemsList, totalPrice, address, detailAddress]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(unsubscribe(setData));
+  //   };
+  // }, []);
 
   return (
     <Container>
