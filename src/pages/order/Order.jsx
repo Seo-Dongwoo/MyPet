@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Order = () => {
   const { orderItems } = useSelector((state) => state.orderProduct);
   const { orderParams } = useParams();
+  const [isOpen, setIsOpen] = useState(true);
 
   // optional chaining 연산자 (?.) 는 체인의 각 참조가 유효한지 명시적으로 검증하지 않고,
   // 연결된 객체 체인 내에 깊숙이 위치한 속성 값을 읽을 수 있다.
@@ -16,9 +17,14 @@ const Order = () => {
   const orderProducts = orderItems
     .filter((item) => item.orderPathId === orderParams)
     .map((item) => item.orderItemsList)
-    .reduce((acc, cur) => acc.concat(cur));
+    .reduce((acc, cur) => acc?.concat(cur), []);
 
-  console.log(orderProducts);
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeToggleProduct = orderProducts.map((item) => item.product)[0];
+  const closeProductsLength = orderProducts.map((item) => item).length - 1;
 
   return (
     <>
@@ -31,14 +37,31 @@ const Order = () => {
           <OrderDiv>
             <OrderProductsToggle>
               <OrderProductsTag>주문 상품</OrderProductsTag>
-              <ToggleButton>
-                <ToggleIcon />
+              <ToggleButton onClick={() => handleToggle()}>
+                {isOpen ? <ToggleOpen /> : <ToggleClose />}
               </ToggleButton>
             </OrderProductsToggle>
-            <OrderProducts>
-              {orderProducts &&
-                orderProducts.map((item) => <div key={item.id}></div>)}
-            </OrderProducts>
+            {isOpen ? (
+              <OrderProducts>
+                {orderProducts.map((item) => (
+                  <ProductContainer key={item.id}>
+                    <ProductImg src={item.img} />
+                    <ProductName>{item.product}</ProductName>
+                    <ProductQuantity>{item.quantity}개</ProductQuantity>
+                    <ProductPrice>{item.price * item.quantity}원</ProductPrice>
+                  </ProductContainer>
+                ))}
+              </OrderProducts>
+            ) : (
+              <CloseOrderProducts>
+                <CloseProductContainer>
+                  <CloseProductName>
+                    {closeToggleProduct} 외 {closeProductsLength}개의 상품을
+                    주문합니다.
+                  </CloseProductName>
+                </CloseProductContainer>
+              </CloseOrderProducts>
+            )}
             <OrderUserTag>주문자 정보</OrderUserTag>
             <OrderUserDiv></OrderUserDiv>
             <AddressTag>배송지 정보</AddressTag>
@@ -100,24 +123,71 @@ const ToggleButton = styled.button`
   border: 0px;
   background: none;
   outline: none;
+  cursor: pointer;
 `;
 
-const ToggleIcon = styled(IoIosArrowDown)`
+const ToggleOpen = styled(IoIosArrowDown)`
+  width: 100%;
+  height: 100%;
+`;
+
+const ToggleClose = styled(IoIosArrowUp)`
   width: 100%;
   height: 100%;
 `;
 
 const OrderProducts = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  padding: 25px 0px;
+`;
+
+const CloseOrderProducts = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ProductContainer = styled.div`
+  display: flex;
   align-items: center;
   padding: 25px 0px;
   border-bottom: 1px solid rgb(244, 244, 244);
 `;
 
-const ItemImg = styled.img`
+const CloseProductContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 25px 0px;
+  border-bottom: 1px solid rgb(244, 244, 244);
+`;
+
+const ProductImg = styled.img`
   width: 80px;
-  margin-right: 10px;
+  margin-right: 30px;
+`;
+
+const ProductName = styled.span`
+  width: 800px;
+  font-weight: 600;
+`;
+
+const CloseProductName = styled.span`
+  width: 800px;
+  font-weight: 600;
+  text-align: center;
+`;
+
+const ProductQuantity = styled.span`
+  width: 60px;
+`;
+
+const ProductPrice = styled.span`
+  width: 80px;
+  text-align: end;
+  font-weight: 600;
 `;
 
 const OrderUserTag = styled.h3`
@@ -125,7 +195,7 @@ const OrderUserTag = styled.h3`
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgb(51, 51, 51);
-  margin-top: 60px;
+  margin-top: 30px;
 `;
 
 const OrderUserDiv = styled.div`
