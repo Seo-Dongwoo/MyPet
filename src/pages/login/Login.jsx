@@ -107,7 +107,8 @@ const Login = () => {
               로그인 유지
             </AutoLogin>
             <FindField>
-              <FindEmail>Email찾기</FindEmail>/
+              <FindEmail>Email찾기</FindEmail>
+              <Bar />
               <FindPassword>Password찾기</FindPassword>
             </FindField>
           </AutoAndFind>
@@ -213,6 +214,15 @@ const FindEmail = styled(Link)`
 const FindPassword = styled(Link)`
   text-decoration: none;
   color: black;
+`;
+
+const Bar = styled.span`
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background: black;
+  margin: 3px 5px 0px 5px;
+  vertical-align: top;
 `;
 
 const SubmitBtn = styled.button`

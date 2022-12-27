@@ -8,8 +8,8 @@ import { v4 } from "uuid";
 
 const CartModal = ({ onClose, itemId, setModalOpen }) => {
   const { currentUser } = useSelector((state) => state.user);
-  const [quantity, setQuantity] = useState(1);
   const { products } = useSelector((state) => state.addProduct);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
