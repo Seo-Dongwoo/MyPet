@@ -112,12 +112,17 @@ export const unsubscribe = (setData) =>
     }
   );
 
-export const registerInitiate = (email, password) => {
+export const registerInitiate = (email, password, displayName, phoneNumber) => {
   return function (dispatch) {
     dispatch(registerStart());
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
+        user.updateProfile({
+          displayName,
+        });
+
+        console.log(user);
         dispatch(registerSuccess(user));
       })
       .catch((error) => dispatch(registerFail(error.message)));

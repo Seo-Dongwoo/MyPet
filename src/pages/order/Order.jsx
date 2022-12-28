@@ -8,6 +8,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Order = () => {
   const { orderItems } = useSelector((state) => state.orderProduct);
+  const { currentUser } = useSelector((state) => state.user);
   const { orderParams } = useParams();
   const [isOpen, setIsOpen] = useState(true);
 
@@ -63,7 +64,30 @@ const Order = () => {
               </CloseOrderProducts>
             )}
             <OrderUserTag>주문자 정보</OrderUserTag>
-            <OrderUserDiv></OrderUserDiv>
+            <OrderUserDiv>
+              <UserDiv>
+                <UserLabel>보내는 분</UserLabel>
+                <User>{currentUser.displayName}</User>
+              </UserDiv>
+              <UserDiv>
+                <UserLabel>이메일</UserLabel>
+                <User>{currentUser.email}</User>
+              </UserDiv>
+              <UserDiv>
+                <UserLabel>휴대폰</UserLabel>
+                {currentUser.phoneNumber === null ? (
+                  <User>비공개</User>
+                ) : (
+                  <User>{currentUser.phoneNumber}</User>
+                )}
+              </UserDiv>
+              <PhoneDetail>
+                <Desc>휴대폰은 기본적으로 비공개입니다.</Desc>
+                <Desc>
+                  정보변경은 MyPet {">"} 개인정보 수정에서 가능합니다.
+                </Desc>
+              </PhoneDetail>
+            </OrderUserDiv>
             <AddressTag>배송지 정보</AddressTag>
             <AddressDiv></AddressDiv>
             <PriceTag>결제 금액</PriceTag>
@@ -200,6 +224,36 @@ const OrderUserTag = styled.h3`
 
 const OrderUserDiv = styled.div`
   padding: 10px 0px;
+`;
+const UserDiv = styled.div`
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+const UserLabel = styled.span`
+  display: inline-block;
+  width: 160px;
+  margin-right: 30px;
+  line-height: 44px;
+  letter-spacing: -0.32px;
+`;
+
+const User = styled.span`
+  display: inline-block;
+  line-height: 44px;
+  letter-spacing: -0.32px;
+`;
+
+const PhoneDetail = styled.div`
+  margin-left: 190px;
+`;
+
+const Desc = styled.p`
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 15px;
+  color: rgb(102, 102, 102);
+  letter-spacing: -0.32px;
 `;
 
 const AddressTag = styled.h3`

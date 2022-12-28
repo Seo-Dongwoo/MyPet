@@ -20,7 +20,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const initialValues = {
     photoURL: null,
-    username: "",
+    displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -35,7 +35,14 @@ const Signup = () => {
       initialValues: initialValues,
       validationSchema: signupSchema,
       onSubmit: async (values) => {
-        dispatch(registerInitiate(values.email, values.password));
+        dispatch(
+          registerInitiate(
+            values.email,
+            values.password,
+            values.displayName,
+            values.phoneNumber
+          )
+        );
         dispatch(addUsers(values));
 
         await addDoc(collection(db, "users"), { values });
@@ -65,15 +72,15 @@ const Signup = () => {
             <InputField>
               <Input
                 type="text"
-                name="username"
+                name="displayName"
                 placeholder="UserName"
-                value={values.username || ""}
+                value={values.displayName || ""}
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
             </InputField>
-            {errors.username && touched.username ? (
-              <ErrorMessage>{errors.username}</ErrorMessage>
+            {errors.displayName && touched.displayName ? (
+              <ErrorMessage>{errors.displayName}</ErrorMessage>
             ) : null}
             <InputField>
               <Input
