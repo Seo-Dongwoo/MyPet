@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const signupSchema = Yup.object({
-  username: Yup.string()
+  displayName: Yup.string()
     .min(2, "UserName은 2자 이상이여야 합니다.")
     .max(25, "UserName은 25자 이하이여야 합니다.")
     .matches(
@@ -22,7 +22,5 @@ export const signupSchema = Yup.object({
   confirmPassword: Yup.string()
     .required("Confirm Password는 필수 항목입니다.")
     .oneOf([Yup.ref("password"), null], "Password가 일치하지 않습니다."),
-  phoneNumber:
-    Yup.string()
-    .required("핸드폰 번호를 입력해주세요."),
+  phoneNumber: Yup.string().required("핸드폰 번호를 입력해주세요."),
 });
