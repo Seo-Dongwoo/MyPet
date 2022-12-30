@@ -89,7 +89,22 @@ const Order = () => {
               </PhoneDetail>
             </OrderUserDiv>
             <AddressTag>배송지 정보</AddressTag>
-            <AddressDiv></AddressDiv>
+            <AddressDiv>
+              {orderItems
+                .filter((item) => item.orderPathId === orderParams)
+                .map((item) => (
+                  <div key={item}>
+                    <UserDiv>
+                      <UserLabel>배송지</UserLabel>
+                      <User>{item.address}</User>
+                    </UserDiv>
+                    <UserDiv>
+                      <UserLabel>상세 주소</UserLabel>
+                      <User>{item.detailAddress}</User>
+                    </UserDiv>
+                  </div>
+                ))}
+            </AddressDiv>
             <PriceTag>결제 금액</PriceTag>
             <PriceDiv></PriceDiv>
             <PaymentTag>결제 수단</PaymentTag>
@@ -150,12 +165,12 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-const ToggleOpen = styled(IoIosArrowDown)`
+const ToggleOpen = styled(IoIosArrowUp)`
   width: 100%;
   height: 100%;
 `;
 
-const ToggleClose = styled(IoIosArrowUp)`
+const ToggleClose = styled(IoIosArrowDown)`
   width: 100%;
   height: 100%;
 `;
@@ -256,6 +271,10 @@ const Desc = styled.p`
   letter-spacing: -0.32px;
 `;
 
+const AddressDiv = styled.div`
+  padding: 10px 0px;
+`;
+
 const AddressTag = styled.h3`
   height: 65px;
   display: flex;
@@ -263,8 +282,6 @@ const AddressTag = styled.h3`
   border-bottom: 1px solid rgb(51, 51, 51);
   margin-top: 60px;
 `;
-
-const AddressDiv = styled.div``;
 
 const PriceTag = styled.h3`
   height: 65px;
