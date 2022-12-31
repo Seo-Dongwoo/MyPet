@@ -14,7 +14,6 @@ import {
 import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
 
 const Login = () => {
-  const error = useSelector((state) => state.user.error);
   const { currentUser } = useSelector((state) => state.user);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
@@ -33,12 +32,6 @@ const Login = () => {
       validationSchema: loginSchema,
       onSubmit: async (values) => {
         await dispatch(loginInitiate(values.email, values.password));
-        if (
-          error ===
-          "Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found)."
-        ) {
-          setErrorMessage("가입된 Email이 아닙니다.");
-        }
       },
     });
 
