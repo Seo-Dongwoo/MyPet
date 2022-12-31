@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-
+import OrderPrice from "../../components/order/OrderPrice";
 const Order = () => {
   const { orderItems } = useSelector((state) => state.orderProduct);
   const { currentUser } = useSelector((state) => state.user);
@@ -26,7 +26,7 @@ const Order = () => {
 
   const closeToggleProduct = orderProducts.map((item) => item.product)[0];
   const closeProductsLength = orderProducts.map((item) => item).length - 1;
-
+  console.log(currentUser.providerData.map((item) => item.email));
   return (
     <>
       <Header />
@@ -64,49 +64,53 @@ const Order = () => {
               </CloseOrderProducts>
             )}
             <OrderUserTag>주문자 정보</OrderUserTag>
-            <OrderUserDiv>
-              <UserDiv>
-                <UserLabel>보내는 분</UserLabel>
-                <User>{currentUser.displayName}</User>
-              </UserDiv>
-              <UserDiv>
-                <UserLabel>이메일</UserLabel>
-                <User>{currentUser.email}</User>
-              </UserDiv>
-              <UserDiv>
-                <UserLabel>휴대폰</UserLabel>
-                {currentUser.phoneNumber === null ? (
-                  <User>비공개</User>
-                ) : (
-                  <User>{currentUser.phoneNumber}</User>
-                )}
-              </UserDiv>
-              <PhoneDetail>
-                <Desc>휴대폰은 기본적으로 비공개입니다.</Desc>
-                <Desc>
-                  정보변경은 MyPet {">"} 개인정보 수정에서 가능합니다.
-                </Desc>
-              </PhoneDetail>
-            </OrderUserDiv>
+            {currentUser.providerData.map((item) => (
+              <OrderUserDiv key={item}>
+                <UserDiv>
+                  <UserLabel>보내는 분</UserLabel>
+                  <User>{item.displayName}</User>
+                </UserDiv>
+                <UserDiv>
+                  <UserLabel>이메일</UserLabel>
+                  <User>{item.email}</User>
+                </UserDiv>
+                <UserDiv>
+                  <UserLabel>휴대폰</UserLabel>
+                  {item.phoneNumber === null ? (
+                    <User>비공개</User>
+                  ) : (
+                    <User>{item.phoneNumber}</User>
+                  )}
+                </UserDiv>
+                <PhoneDetail>
+                  <Desc>휴대폰은 기본적으로 비공개입니다.</Desc>
+                  <Desc>
+                    정보변경은 MyPet {">"} 개인정보 수정에서 가능합니다.
+                  </Desc>
+                </PhoneDetail>
+              </OrderUserDiv>
+            ))}
             <AddressTag>배송지 정보</AddressTag>
-            <AddressDiv>
+            <OrderAddressDiv>
               {orderItems
                 .filter((item) => item.orderPathId === orderParams)
                 .map((item) => (
                   <div key={item}>
-                    <UserDiv>
-                      <UserLabel>배송지</UserLabel>
-                      <User>{item.address}</User>
-                    </UserDiv>
-                    <UserDiv>
-                      <UserLabel>상세 주소</UserLabel>
-                      <User>{item.detailAddress}</User>
-                    </UserDiv>
+                    <AddressDiv>
+                      <AddressLabel>배송지</AddressLabel>
+                      <Address>{item.address}</Address>
+                    </AddressDiv>
+                    <AddressDiv>
+                      <AddressLabel>상세 주소</AddressLabel>
+                      <Address>{item.detailAddress}</Address>
+                    </AddressDiv>
                   </div>
                 ))}
-            </AddressDiv>
+            </OrderAddressDiv>
             <PriceTag>결제 금액</PriceTag>
-            <PriceDiv></PriceDiv>
+            <OrderPriceDiv>
+              <OrderPrice />
+            </OrderPriceDiv>
             <PaymentTag>결제 수단</PaymentTag>
             <PaymentDiv></PaymentDiv>
             <SubmitDiv></SubmitDiv>
@@ -240,6 +244,7 @@ const OrderUserTag = styled.h3`
 const OrderUserDiv = styled.div`
   padding: 10px 0px;
 `;
+
 const UserDiv = styled.div`
   font-size: 14px;
   font-weight: 700;
@@ -271,8 +276,13 @@ const Desc = styled.p`
   letter-spacing: -0.32px;
 `;
 
-const AddressDiv = styled.div`
+const OrderAddressDiv = styled.div`
   padding: 10px 0px;
+`;
+
+const AddressDiv = styled.div`
+  font-size: 14px;
+  font-weight: 700;
 `;
 
 const AddressTag = styled.h3`
@@ -283,6 +293,20 @@ const AddressTag = styled.h3`
   margin-top: 60px;
 `;
 
+const AddressLabel = styled.span`
+  display: inline-block;
+  width: 160px;
+  margin-right: 30px;
+  line-height: 44px;
+  letter-spacing: -0.32px;
+`;
+
+const Address = styled.span`
+  display: inline-block;
+  line-height: 44px;
+  letter-spacing: -0.32px;
+`;
+
 const PriceTag = styled.h3`
   height: 65px;
   display: flex;
@@ -291,7 +315,9 @@ const PriceTag = styled.h3`
   margin-top: 60px;
 `;
 
-const PriceDiv = styled.div``;
+const OrderPriceDiv = styled.div`
+  padding: 15px 0px 0px 0px;
+`;
 
 const PaymentTag = styled.h3`
   height: 65px;

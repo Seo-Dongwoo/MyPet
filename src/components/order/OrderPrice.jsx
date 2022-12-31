@@ -1,39 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-const OrderDetails = ({ checkItems, totalPrice, setTotalPrice }) => {
-  const productsPrice = checkItems.reduce(
-    (acc, item) => acc + item.quantity * item.price,
-    0
-  );
+const OrderPrice = () => {
+  const { orderItems } = useSelector((state) => state.orderProduct);
+  const { orderParams } = useParams();
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const orderPrice = orderItems
+    .filter((item) => item.orderPathId === orderParams)
+    .map((item) => item.orderItemsList)
+    .reduce((acc, cur) => acc?.concat(cur), [])
+    .reduce((acc, item) => acc + item.quantity * item.price, 0);
 
   useEffect(() => {
     const price =
-      productsPrice >= 20000
-        ? productsPrice
-        : productsPrice === 0
+      orderPrice >= 20000
+        ? orderPrice
+        : orderPrice === 0
         ? 0
-        : productsPrice + 3000;
+        : orderPrice + 3000;
     setTotalPrice(price);
-  }, [productsPrice]);
+  }, [orderPrice]);
 
   const handleDeliveryPrice = () => {
-    return productsPrice >= 20000 ? (
+    return orderPrice >= 20000 ? (
       <DeliveryPrice>0</DeliveryPrice>
-    ) : productsPrice === 0 ? (
+    ) : orderPrice === 0 ? (
       <DeliveryPrice>0</DeliveryPrice>
     ) : (
       <DeliveryPrice>+3000</DeliveryPrice>
     );
   };
-
-  console.log(checkItems);
+  console.log(orderPrice);
 
   return (
     <Container>
       <PriceDiv>
-        <Price>상품 금액</Price>
-        <Price>{productsPrice}원</Price>
+        <Price>주문 금액</Price>
+        <Price>{orderPrice}원</Price>
       </PriceDiv>
       <DiscountDiv>
         <Discount>상품 할인 금액</Discount>
@@ -100,7 +106,6 @@ const FreeDeliveryPrice = styled.p`
 const TotalPriceDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 12px;
   padding-top: 16px;
 `;
 
@@ -109,4 +114,4 @@ const TotalPrice = styled.span`
   font-weight: 600;
 `;
 
-export default OrderDetails;
+export default OrderPrice;
