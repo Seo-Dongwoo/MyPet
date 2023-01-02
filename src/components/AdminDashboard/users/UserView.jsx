@@ -9,9 +9,7 @@ const UserView = () => {
   const { userId } = useParams();
 
   useEffect(() => {
-    return () => {
-      unsubscribe(setUserProfile);
-    };
+    unsubscribe(setUserProfile);
   }, []);
 
   return (

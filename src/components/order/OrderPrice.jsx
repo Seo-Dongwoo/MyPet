@@ -1,29 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from "react";
+
 import styled from "styled-components";
 
-const OrderPrice = () => {
-  const { orderItems } = useSelector((state) => state.orderProduct);
-  const { orderParams } = useParams();
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const orderPrice = orderItems
-    .filter((item) => item.orderPathId === orderParams)
-    .map((item) => item.orderItemsList)
-    .reduce((acc, cur) => acc?.concat(cur), [])
-    .reduce((acc, item) => acc + item.quantity * item.price, 0);
-
-  useEffect(() => {
-    const price =
-      orderPrice >= 20000
-        ? orderPrice
-        : orderPrice === 0
-        ? 0
-        : orderPrice + 3000;
-    setTotalPrice(price);
-  }, [orderPrice]);
-
+const OrderPrice = ({ orderPrice, totalPrice }) => {
   const handleDeliveryPrice = () => {
     return orderPrice >= 20000 ? (
       <DeliveryPrice>0</DeliveryPrice>
@@ -33,8 +12,6 @@ const OrderPrice = () => {
       <DeliveryPrice>+3000</DeliveryPrice>
     );
   };
-  console.log(orderPrice);
-
   return (
     <Container>
       <PriceDiv>

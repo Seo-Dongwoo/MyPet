@@ -24,9 +24,7 @@ function UserList() {
   useEffect(() => {
     setLoading(false);
 
-    return () => {
-      unsubscribe(setData);
-    };
+    unsubscribe(setData);
   }, []);
 
   const columns = useMemo(

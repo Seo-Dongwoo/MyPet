@@ -27,8 +27,6 @@ const OrderDetails = ({ checkItems, totalPrice, setTotalPrice }) => {
     );
   };
 
-  console.log(checkItems);
-
   return (
     <Container>
       <PriceDiv>
