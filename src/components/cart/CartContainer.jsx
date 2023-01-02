@@ -105,10 +105,7 @@ const CartContainer = () => {
                                 {item.price * item.quantity}원
                               </ItemPrice>
                               <DeleteBtn
-                                onClick={() =>
-                                  // deleteHandler(item.token, currentUser.uid)
-                                  HandleModalCheck(item.token)
-                                }
+                                onClick={() => HandleModalCheck(item.token)}
                               >
                                 x
                               </DeleteBtn>

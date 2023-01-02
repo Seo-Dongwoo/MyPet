@@ -27,9 +27,7 @@ function ProductList() {
   useEffect(() => {
     setLoading(false);
 
-    return () => {
-      dispatch(unsubscribe(setData));
-    };
+    dispatch(unsubscribe(setData));
   }, []);
 
   const columns = useMemo(

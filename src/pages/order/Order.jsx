@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { SiKakao } from "react-icons/si";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import OrderPrice from "../../components/order/OrderPrice";
+import CardSelect from "../../components/order/CardSelect";
+import SimpleCheckBox from "../../components/order/radio/SimpleCheckBox";
+import { addPaymentInitiate } from "../../redux/modules/actions/paymentActions";
+import { deleteCheckedItems } from "../../redux/modules/actions/cartActions";
+
 const Order = () => {
   const { orderItems } = useSelector((state) => state.orderProduct);
   const { currentUser } = useSelector((state) => state.user);
   const { orderParams } = useParams();
   const [isOpen, setIsOpen] = useState(true);
+  const [creditOpen, setCreditOpen] = useState(false);
+  const [simpleOpen, setSimpleOpen] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [payment, setPayment] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // optional chaining 연산자 (?.) 는 체인의 각 참조가 유효한지 명시적으로 검증하지 않고,
   // 연결된 객체 체인 내에 깊숙이 위치한 속성 값을 읽을 수 있다.
@@ -26,7 +38,68 @@ const Order = () => {
 
   const closeToggleProduct = orderProducts.map((item) => item.product)[0];
   const closeProductsLength = orderProducts.map((item) => item).length - 1;
-  console.log(currentUser.providerData.map((item) => item.email));
+
+  const orderPrice = orderItems
+    .filter((item) => item.orderPathId === orderParams)
+    .map((item) => item.orderItemsList)
+    .reduce((acc, cur) => acc?.concat(cur), [])
+    .reduce((acc, item) => acc + item.quantity * item.price, 0);
+
+  const paymentOrder = orderItems.filter(
+    (item) => item.orderPathId === orderParams
+  );
+
+  const handleKakaoPayment = () => {
+    setCreditOpen(false);
+    setSimpleOpen(false);
+    setPayment("kakao");
+  };
+
+  const handlePhonePayment = () => {
+    setCreditOpen(false);
+    setSimpleOpen(false);
+    setPayment("phone");
+  };
+
+  const handleOpenCredit = () => {
+    setCreditOpen(true);
+    setSimpleOpen(false);
+  };
+
+  const handleOpenSimple = () => {
+    setCreditOpen(false);
+    setSimpleOpen(true);
+  };
+
+  const handleSubmit = () => {
+    const ids = orderItems
+      .filter((item) => item.orderPathId === orderParams)
+      .map((item) => item.orderItemsList)
+      .reduce((acc, cur) => acc?.concat(cur), [])
+      .map((item) => item.token);
+
+    if (payment) {
+      dispatch(
+        addPaymentInitiate({
+          paymentOrder,
+          payment,
+        })
+      );
+      dispatch(deleteCheckedItems(ids, currentUser.uid));
+    }
+    navigate("/finish");
+  };
+
+  useEffect(() => {
+    const price =
+      orderPrice >= 20000
+        ? orderPrice
+        : orderPrice === 0
+        ? 0
+        : orderPrice + 3000;
+    setTotalPrice(price);
+  }, [orderPrice, payment]);
+
   return (
     <>
       <Header />
@@ -72,7 +145,13 @@ const Order = () => {
                 </UserDiv>
                 <UserDiv>
                   <UserLabel>이메일</UserLabel>
-                  <User>{item.email}</User>
+                  {item.providerId === "google.com" ? (
+                    <User>구글 로그인 유저</User>
+                  ) : item.providerId === "github.com" ? (
+                    <User>깃허브 로그인 유저</User>
+                  ) : (
+                    <User>{item.email}</User>
+                  )}
                 </UserDiv>
                 <UserDiv>
                   <UserLabel>휴대폰</UserLabel>
@@ -109,11 +188,50 @@ const Order = () => {
             </OrderAddressDiv>
             <PriceTag>결제 금액</PriceTag>
             <OrderPriceDiv>
-              <OrderPrice />
+              <OrderPrice orderPrice={orderPrice} totalPrice={totalPrice} />
             </OrderPriceDiv>
             <PaymentTag>결제 수단</PaymentTag>
-            <PaymentDiv></PaymentDiv>
-            <SubmitDiv></SubmitDiv>
+            <OrderPaymentDiv>
+              <PaymentDiv>
+                <PaymentLabel>결제 수단 선택</PaymentLabel>
+                <PaymentButtonDiv>
+                  <KakaoButton onClick={handleKakaoPayment}>
+                    <Payment>
+                      <KakaoIcon />
+                    </Payment>
+                  </KakaoButton>
+                  <OtherPaymentDiv>
+                    <CardPaymentButton onClick={handleOpenCredit}>
+                      <Payment>신용카드</Payment>
+                    </CardPaymentButton>
+                    <SimplePaymentButton onClick={handleOpenSimple}>
+                      <Payment>간편 결제</Payment>
+                    </SimplePaymentButton>
+                    <PhonePaymentButton onClick={handlePhonePayment}>
+                      <Payment>핸드폰</Payment>
+                    </PhonePaymentButton>
+                  </OtherPaymentDiv>
+                  {creditOpen ? (
+                    <>
+                      <CreditDiv>
+                        <CardSelect setPayment={setPayment} />
+                      </CreditDiv>
+                      <InterestFree>
+                        은행계열/체크/기프트/법인/개인사업자 기업카드는 무이자
+                        할부 시 제외
+                      </InterestFree>
+                    </>
+                  ) : simpleOpen ? (
+                    <SimpleCheckBox setPayment={setPayment} />
+                  ) : null}
+                </PaymentButtonDiv>
+              </PaymentDiv>
+            </OrderPaymentDiv>
+            <SubmitDiv>
+              <SubmitButton onClick={() => handleSubmit()}>
+                {totalPrice}원 결제하기
+              </SubmitButton>
+            </SubmitDiv>
           </OrderDiv>
         </OrderContainer>
       </Container>
@@ -327,8 +445,128 @@ const PaymentTag = styled.h3`
   margin-top: 60px;
 `;
 
-const PaymentDiv = styled.div``;
+const OrderPaymentDiv = styled.div`
+  padding: 20px 0px;
+`;
 
-const SubmitDiv = styled.div``;
+const PaymentDiv = styled.div`
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+const PaymentLabel = styled.span`
+  display: inline-block;
+  width: 160px;
+  margin-right: 50px;
+  line-height: 44px;
+  letter-spacing: -0.32px;
+`;
+
+const PaymentButtonDiv = styled.div`
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const KakaoButton = styled.button`
+  width: 350px;
+  height: 50px;
+  margin-bottom: 15px;
+  background: white;
+  border: 2px solid rgb(244, 244, 244);
+  cursor: pointer;
+  &:focus {
+    background: rgb(246, 229, 0);
+  }
+`;
+
+const KakaoIcon = styled(SiKakao)`
+  font-size: 50px;
+`;
+
+const OtherPaymentDiv = styled.div`
+  border: 2px solid rgb(244, 244, 244);
+  height: 50px;
+`;
+
+const CardPaymentButton = styled.button`
+  width: 33.33%;
+  height: 100%;
+  border: none;
+  background-color: white;
+  font-weight: bold;
+  cursor: pointer;
+  &:focus {
+    background: #01bf71;
+    color: white;
+  }
+`;
+
+const SimplePaymentButton = styled.button`
+  width: 33.33%;
+  height: 100%;
+  border-right: 2px solid rgb(244, 244, 244);
+  border-top: none;
+  border-bottom: none;
+  border-left: 2px solid rgb(244, 244, 244);
+  background-color: white;
+  font-weight: bold;
+  cursor: pointer;
+  &:focus {
+    background: #01bf71;
+    color: white;
+  }
+`;
+
+const PhonePaymentButton = styled.button`
+  width: 33.33%;
+  height: 100%;
+  border: none;
+  background-color: white;
+  font-weight: bold;
+  cursor: pointer;
+  &:focus {
+    background: #01bf71;
+    color: white;
+  }
+`;
+
+const Payment = styled.span`
+  display: inline-block;
+  line-height: 44px;
+  letter-spacing: -0.32px;
+`;
+
+const CreditDiv = styled.div`
+  width: 240px;
+  margin: 10px 0;
+`;
+
+const InterestFree = styled.span`
+  font-size: 10px;
+  color: gray;
+`;
+
+const SubmitDiv = styled.div`
+  border-top: 3px solid rgb(244, 244, 244);
+`;
+
+const SubmitButton = styled.button`
+  width: 240px;
+  height: 56px;
+  display: block;
+  padding: 0px 10px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #01bf71;
+  border: 0px none;
+  margin: 40px auto 30px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+`;
 
 export default Order;

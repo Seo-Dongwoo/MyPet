@@ -12,6 +12,7 @@ import {
   Order,
   ProductPage,
   PrivateRoute,
+  Finish,
 } from "./pages";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
@@ -61,6 +62,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Cart />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/finish"
+            element={
+              <PrivateRoute>
+                <Finish />
               </PrivateRoute>
             }
           />
