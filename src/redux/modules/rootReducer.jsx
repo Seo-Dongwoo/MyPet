@@ -5,15 +5,16 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import cartReducer from "./reducer/cartReducer";
 import orderReducer from "./reducer/orderReducer";
-import paymentOrderReducer from "./reducer/paymentOrderReducer";
+import completedOrderReducer from "./reducer/completedOrderReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
   addProduct: productReducer,
   cartList: cartReducer,
   orderProduct: orderReducer,
-  paymentOrder: paymentOrderReducer,
+  completedOrder: completedOrderReducer,
 });
+
 const persistConfig = {
   key: "root",
   storage,

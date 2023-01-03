@@ -9,4 +9,4 @@ export { default as Admin } from "./admin/Admin";
 export { default as Order } from "./order/Order";
 export { default as ProductPage } from "./product_page/ProductPage";
 export { default as PrivateRoute } from "./privateRoute/PrivateRoute";
-export { default as Finish } from "./finish/Finish";
+export { default as OrderCompleted } from "./orderCompleted/OrderCompleted";

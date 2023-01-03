@@ -9,7 +9,7 @@ import Footer from "../../components/footer/Footer";
 import OrderPrice from "../../components/order/OrderPrice";
 import CardSelect from "../../components/order/CardSelect";
 import SimpleCheckBox from "../../components/order/radio/SimpleCheckBox";
-import { addPaymentInitiate } from "../../redux/modules/actions/paymentActions";
+import { completedOrderInitiate } from "../../redux/modules/actions/completedOrderActions";
 import { deleteCheckedItems } from "../../redux/modules/actions/cartActions";
 
 const Order = () => {
@@ -32,40 +32,56 @@ const Order = () => {
     .map((item) => item.orderItemsList)
     .reduce((acc, cur) => acc?.concat(cur), []);
 
+  // 토글 버튼 구햔
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
+  // 주문한 상품중에 가장 첫번 째 상품
   const closeToggleProduct = orderProducts.map((item) => item.product)[0];
+
+  // 현재 상품 외 같이 주문한 상품의 수
   const closeProductsLength = orderProducts.map((item) => item).length - 1;
 
+  // 총 결제 금액
   const orderPrice = orderItems
     .filter((item) => item.orderPathId === orderParams)
     .map((item) => item.orderItemsList)
     .reduce((acc, cur) => acc?.concat(cur), [])
     .reduce((acc, item) => acc + item.quantity * item.price, 0);
 
-  const paymentOrder = orderItems.filter(
+  const completedOrder = orderItems.filter(
     (item) => item.orderPathId === orderParams
   );
 
+  // 주문 번호 생성
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const orderNumber = year + month + day + Math.floor(Math.random() * 100000);
+
+  // 카카오페이 결제
   const handleKakaoPayment = () => {
     setCreditOpen(false);
     setSimpleOpen(false);
     setPayment("kakao");
   };
 
+  // 휴대폰 결제
   const handlePhonePayment = () => {
     setCreditOpen(false);
     setSimpleOpen(false);
     setPayment("phone");
   };
 
+  // 신용카드 결제
   const handleOpenCredit = () => {
     setCreditOpen(true);
     setSimpleOpen(false);
   };
 
+  // 간편 결제
   const handleOpenSimple = () => {
     setCreditOpen(false);
     setSimpleOpen(true);
@@ -80,14 +96,15 @@ const Order = () => {
 
     if (payment) {
       dispatch(
-        addPaymentInitiate({
-          paymentOrder,
+        completedOrderInitiate({
+          completedOrder,
           payment,
+          orderNumber,
         })
       );
       dispatch(deleteCheckedItems(ids, currentUser.uid));
     }
-    navigate("/finish");
+    navigate(`/OrderCompleted/${orderNumber}`);
   };
 
   useEffect(() => {

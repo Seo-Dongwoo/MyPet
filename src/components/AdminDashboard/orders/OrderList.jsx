@@ -1,13 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteOrderInitiate } from "../../../redux/modules/actions/orderActions";
+import { deleteCompletedInitiate } from "../../../redux/modules/actions/completedOrderActions";
 
 const OrderList = () => {
   const { orderItems } = useSelector((state) => state.orderProduct);
   const dispatch = useDispatch();
   const deleteHandler = () => {
+    dispatch(deleteCompletedInitiate());
     dispatch(deleteOrderInitiate());
-
     alert("해당 유저를 삭제하시겠습니까?");
   };
 

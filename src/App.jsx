@@ -12,7 +12,7 @@ import {
   Order,
   ProductPage,
   PrivateRoute,
-  Finish,
+  OrderCompleted,
 } from "./pages";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
@@ -66,10 +66,10 @@ function App() {
             }
           />
           <Route
-            path="/finish"
+            path="/orderCompleted/:completedParams"
             element={
               <PrivateRoute>
-                <Finish />
+                <OrderCompleted />
               </PrivateRoute>
             }
           />
