@@ -41,7 +41,7 @@ function UserList() {
         field: "username",
         headerName: "UserName",
         renderCell: (params) => (
-          <h3>{params.row.username || params.row.values.username}</h3>
+          <h3>{params.row.username || params.row.values.displayName}</h3>
         ),
         sortable: false,
         width: 150,

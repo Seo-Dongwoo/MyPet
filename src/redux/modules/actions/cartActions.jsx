@@ -17,6 +17,10 @@ const checkedDelete = (ids) => ({
   payload: ids,
 });
 
+const resetCart = () => ({
+  type: types.RESET_DATA,
+});
+
 // setDoc을 이용해서 데이터의 id값을 doc의 id값으로 대체한다.
 export const addCartInitiate = (data, id, userId) => {
   return async function (dispatch) {
@@ -41,5 +45,12 @@ export const deleteCheckedItems = (ids, userId) => {
       await deleteDoc(doc(db, "cartList", userId, "cartItem", token));
     });
     dispatch(checkedDelete({ ids }));
+  };
+};
+
+// 데이터 리셋
+export const resetCartInitiate = () => {
+  return async function (dispatch) {
+    dispatch(resetCart());
   };
 };

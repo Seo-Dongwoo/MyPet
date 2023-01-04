@@ -61,7 +61,6 @@ const CompletedOrderDiv = styled.div`
   width: 1000px;
   padding: 10px 0px;
   display: flex;
-
   margin: 0 auto;
   padding: 0 0 0 200px;
 `;
@@ -80,7 +79,7 @@ const CompletedMessage = styled.h2`
   width: 1000px;
   height: 50px;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   border-bottom: 1px solid rgb(51, 51, 51);
 `;
 

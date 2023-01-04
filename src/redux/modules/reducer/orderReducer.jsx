@@ -16,10 +16,15 @@ const orderReducer = (state = initialState, action) => {
 
       state.orderItems.push(orderItem);
       return {
-        ...state.orderItems,
         orderItems: [...state.orderItems],
       };
     case types.DELETE_ORDER:
+      return {
+        orderItems: state.orderItems.filter(
+          (item) => !action.payload.includes(item.orderPathId)
+        ),
+      };
+    case types.RESET_DATA:
       return {
         orderItems: [],
       };
