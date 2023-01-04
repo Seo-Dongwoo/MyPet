@@ -34,6 +34,10 @@ const cartReducer = (state = initialState, action) => {
           (item) => !action.payload.ids.includes(item.token)
         ),
       };
+    case types.RESET_DATA:
+      return {
+        cartItems: [],
+      };
     default:
       return state;
   }

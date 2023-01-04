@@ -11,6 +11,7 @@ import CardSelect from "../../components/order/CardSelect";
 import SimpleCheckBox from "../../components/order/radio/SimpleCheckBox";
 import { completedOrderInitiate } from "../../redux/modules/actions/completedOrderActions";
 import { deleteCheckedItems } from "../../redux/modules/actions/cartActions";
+import { deleteOrderInitiate } from "../../redux/modules/actions/orderActions";
 
 const Order = () => {
   const { orderItems } = useSelector((state) => state.orderProduct);
@@ -94,6 +95,11 @@ const Order = () => {
       .reduce((acc, cur) => acc?.concat(cur), [])
       .map((item) => item.token);
 
+    const orderId = orderItems
+      .filter((item) => item.orderPathId === orderParams)
+      .map((item) => item.orderPathId);
+
+    console.log(orderId);
     if (payment) {
       dispatch(
         completedOrderInitiate({
@@ -103,6 +109,7 @@ const Order = () => {
         })
       );
       dispatch(deleteCheckedItems(ids, currentUser.uid));
+      dispatch(deleteOrderInitiate(orderId));
     }
     navigate(`/OrderCompleted/${orderNumber}`);
   };

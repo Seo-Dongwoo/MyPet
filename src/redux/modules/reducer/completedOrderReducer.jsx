@@ -11,10 +11,16 @@ const completedOrderReducer = (state = initialState, action) => {
 
       state.completedOrders.push(completedOrder);
       return {
-        ...state.completedOrders,
         completedOrders: [...state.completedOrders],
       };
+
     case types.DELETE_COMPLETED_ORDER:
+      return {
+        completedOrders: state.completedOrders.filter(
+          (item) => item.orderNumber !== action.payload
+        ),
+      };
+    case types.RESET_DATA:
       return {
         completedOrders: [],
       };

@@ -25,7 +25,7 @@ const UserView = () => {
                     src={user.photoURL}
                   />
                   <UserName>
-                    이름 : {user.username || user.values.username}
+                    이름 : {user.username || user.values.displayName}
                   </UserName>
                   <UserEmailWrap>
                     {user.email === null || user.values.email === null ? (
