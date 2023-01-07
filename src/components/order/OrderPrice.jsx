@@ -36,9 +36,13 @@ const OrderPrice = ({ orderPrice, totalPrice }) => {
 };
 
 const Container = styled.div`
+  height: 100%;
   padding: 19px 18px 18px 20px;
   border: 1px solid rgb(242, 242, 242);
   background-color: rgb(250, 250, 250);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const PriceDiv = styled.div`

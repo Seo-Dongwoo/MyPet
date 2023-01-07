@@ -62,7 +62,7 @@ const OrderList = () => {
         renderCell: (row) => (
           <ViewButton
             onClick={() => {
-              navigate(`/admin/view/${row.id}`);
+              navigate(`/admin/orders/${row.id}`);
             }}
           >
             View
