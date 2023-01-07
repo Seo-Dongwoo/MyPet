@@ -8,6 +8,7 @@ import Users from "./users/Users";
 import Settings from "./settings/Settings";
 import EditProduct from "../AdminDashboard/editProduct/EditProduct";
 import UserView from "../AdminDashboard/users/UserView";
+import DetailOrder from "./orders/DetailOrder";
 
 const MainContent = () => {
   return (
@@ -21,6 +22,7 @@ const MainContent = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/edit/:productId" element={<EditProduct />} />
         <Route path="/view/:userId" element={<UserView />} />
+        <Route path="/orders/:orderParams" element={<DetailOrder />} />
       </Routes>
     </>
   );
