@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { unsubscribe } from "../../../redux/modules/actions/userActions";
+import { unsubscribeUsers } from "../../../redux/modules/actions/userActions";
 import { Avatar } from "@mui/material";
 import styled from "styled-components";
 
@@ -9,7 +9,7 @@ const UserView = () => {
   const { userId } = useParams();
 
   useEffect(() => {
-    unsubscribe(setUserProfile);
+    unsubscribeUsers(setUserProfile);
   }, []);
 
   return (

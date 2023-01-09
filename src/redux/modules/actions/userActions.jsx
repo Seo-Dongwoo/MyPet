@@ -95,7 +95,7 @@ export const addUsers = (data) => ({
 
 const userCollectionRef = collection(db, "users");
 
-export const unsubscribe = (setData) =>
+export const unsubscribeUsers = (setData) =>
   onSnapshot(
     userCollectionRef,
     (snapshot) => {

@@ -7,7 +7,7 @@ import { Avatar } from "@mui/material";
 import {
   deleteInitiate,
   deleteStorageFile,
-  unsubscribe,
+  unsubscribeProduct,
 } from "../../../redux/modules/actions/productActions";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../loading/Loading";
@@ -27,7 +27,7 @@ function ProductList() {
   useEffect(() => {
     setLoading(false);
 
-    dispatch(unsubscribe(setData));
+    unsubscribeProduct(setData);
   }, []);
 
   const columns = useMemo(

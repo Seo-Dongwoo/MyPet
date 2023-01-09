@@ -18,28 +18,53 @@ const deleteCompletedOrder = (id) => ({
   payload: id,
 });
 
+const getOrder = (data) => ({
+  type: types.GET_ORDER,
+  payload: data,
+});
+
 const resetCompleted = () => ({
   type: types.RESET_DATA,
 });
 
 const completedCollectionRef = collection(db, "completedOrder");
 
-export const unsubscribe = (setData) =>
+export const unsubscribeOrder = (setData) =>
   onSnapshot(
     completedCollectionRef,
     (snapshot) => {
-      let completedOrderList = [];
+      let orderList = [];
 
       snapshot.docs.forEach((doc) => {
-        completedOrderList.push({ id: doc.id, ...doc.data() });
+        orderList.push({ id: doc.id, ...doc.data() });
       });
 
-      setData(completedOrderList);
+      setData(orderList);
     },
     (err) => {
       console.log(err);
     }
   );
+
+// export const unsubscribeOrder = (setData) => {
+//   return function (dispatch) {
+//     onSnapshot(
+//       completedCollectionRef,
+//       (snapshot) => {
+//         let list = [];
+//         snapshot.docs.forEach((doc) => {
+//           list.push({ id: doc.id, ...doc.data() });
+//         });
+//         setData(list);
+
+//         dispatch(getOrder(list));
+//       },
+//       (err) => {
+//         console.log(err);
+//       }
+//     );
+//   };
+// };
 
 export const completedOrderInitiate = (data) => {
   return async function (dispatch) {

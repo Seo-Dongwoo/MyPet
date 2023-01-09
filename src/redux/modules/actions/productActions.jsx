@@ -35,32 +35,24 @@ const editProducts = (data) => ({
   payload: data,
 });
 
-const getProducts = (data) => ({
-  type: types.GET_PRODUCTS,
-  payload: data,
-});
-
 const productCollectionRef = collection(db, "products");
 
-export const unsubscribe = (setData) => {
-  return function (dispatch) {
-    onSnapshot(
-      productCollectionRef,
-      (snapshot) => {
-        let list = [];
-        snapshot.docs.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
-        });
-        setData(list);
-        setLoading(false);
-        dispatch(getProducts(list));
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  };
-};
+export const unsubscribeProduct = (setData) =>
+  onSnapshot(
+    productCollectionRef,
+    (snapshot) => {
+      let productList = [];
+
+      snapshot.docs.forEach((doc) => {
+        productList.push({ id: doc.id, ...doc.data() });
+      });
+
+      setData(productList);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
 
 // Firebase Database에 있는 데이터 추가
 export const addInitiate = (data) => {
