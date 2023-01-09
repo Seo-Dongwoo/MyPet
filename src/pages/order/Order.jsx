@@ -153,10 +153,16 @@ const Order = () => {
             ) : (
               <CloseOrderProducts>
                 <CloseProductContainer>
-                  <CloseProductName>
-                    {closeToggleProduct} 외 {closeProductsLength}개의 상품을
-                    주문합니다.
-                  </CloseProductName>
+                  {closeProductsLength > 0 ? (
+                    <CloseProductName>
+                      {closeToggleProduct} 외 {closeProductsLength}개의 상품을
+                      주문합니다.
+                    </CloseProductName>
+                  ) : (
+                    <CloseProductName>
+                      {closeToggleProduct} 상품을 주문합니다.
+                    </CloseProductName>
+                  )}
                 </CloseProductContainer>
               </CloseOrderProducts>
             )}

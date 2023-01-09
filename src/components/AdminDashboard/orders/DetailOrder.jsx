@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { unsubscribe } from "../../../redux/modules/actions/completedOrderActions";
+import { unsubscribeOrder } from "../../../redux/modules/actions/completedOrderActions";
 import OrderPrice from "../../order/OrderPrice";
 import CardProduct from "./CardProduct";
 import Pagination from "../../common/Pagination";
 
 const DetailOrder = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [endPage, setEndPage] = useState(4);
@@ -40,7 +41,7 @@ const DetailOrder = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   useEffect(() => {
-    unsubscribe(setData);
+    unsubscribeOrder(setData);
   }, []);
 
   return (

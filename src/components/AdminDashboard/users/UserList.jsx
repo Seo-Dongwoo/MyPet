@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
-import { unsubscribe } from "../../../redux/modules/actions/userActions";
+import { unsubscribeUsers } from "../../../redux/modules/actions/userActions";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../loading/Loading";
 import { deleteInitiate } from "../../../redux/modules/actions/userActions";
@@ -24,7 +24,7 @@ function UserList() {
   useEffect(() => {
     setLoading(false);
 
-    unsubscribe(setData);
+    unsubscribeUsers(setData);
   }, []);
 
   const columns = useMemo(

@@ -6,6 +6,11 @@ const initialState = {
 
 const completedOrderReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.GET_ORDER:
+      return {
+        ...state,
+        completedOrders: action.payload,
+      };
     case types.COMPLETED_ORDER:
       const completedOrder = action.payload;
 
