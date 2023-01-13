@@ -9,7 +9,7 @@ import Address from "./orderDetails/Address";
 import OrderDetails from "./orderDetails/OrderDetails";
 import OrderButton from "./orderDetails/OrderButton";
 import ModalPortal from "../common/ModalProtal";
-import DeleteModal from "../common/DeleteModal";
+import DeleteModal from "../common/cart/DeleteModal";
 
 const CartContainer = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -79,42 +79,43 @@ const CartContainer = () => {
               <ItemMenu>
                 {userCartItemsList.length > 0 ? (
                   <>
-                    {userCartItemsList.map((item) =>
-                      currentUser.uid === item.userId ? (
-                        <ItemWrap key={item.id}>
-                          <ToggleItem
-                            setCartItemsList={setCartItemsList}
-                            item={item}
-                            cartItems={cartItems}
-                          />
-                          {item.isSelected ? (
-                            <Item>
-                              <ItemCheckBox
-                                onChange={(e) =>
-                                  handleSingleCheck(e.target.checked, item)
-                                }
-                                checked={
-                                  checkItems.includes(item) ? true : false
-                                }
-                                type="checkbox"
-                              />
-                              <ItemImg src={item.img} />
-                              <ItemTitle>{item.product}</ItemTitle>
-                              <ItemQuantity>{item.quantity}개</ItemQuantity>
-                              <ItemPrice>
-                                {item.price * item.quantity}원
-                              </ItemPrice>
-                              <DeleteBtn
-                                onClick={() => HandleModalCheck(item.token)}
-                              >
-                                x
-                              </DeleteBtn>
-                            </Item>
-                          ) : (
-                            <NoneItems></NoneItems>
-                          )}
-                        </ItemWrap>
-                      ) : null
+                    {userCartItemsList.map(
+                      (item) =>
+                        currentUser.uid === item.userId && (
+                          <ItemWrap key={item.id}>
+                            <ToggleItem
+                              setCartItemsList={setCartItemsList}
+                              item={item}
+                              cartItems={cartItems}
+                            />
+                            {item.isSelected ? (
+                              <Item>
+                                <ItemCheckBox
+                                  onChange={(e) =>
+                                    handleSingleCheck(e.target.checked, item)
+                                  }
+                                  checked={
+                                    checkItems.includes(item) ? true : false
+                                  }
+                                  type="checkbox"
+                                />
+                                <ItemImg src={item.img} />
+                                <ItemTitle>{item.product}</ItemTitle>
+                                <ItemQuantity>{item.quantity}개</ItemQuantity>
+                                <ItemPrice>
+                                  {item.price * item.quantity}원
+                                </ItemPrice>
+                                <DeleteBtn
+                                  onClick={() => HandleModalCheck(item.token)}
+                                >
+                                  x
+                                </DeleteBtn>
+                              </Item>
+                            ) : (
+                              <NoneItems></NoneItems>
+                            )}
+                          </ItemWrap>
+                        )
                     )}
                   </>
                 ) : (
@@ -197,7 +198,7 @@ const TitleWrapper = styled.div`
 const ItemListContainer = styled.div`
   width: 100%;
   display: flex;
-  display: flex;
+
   flex-direction: column;
 `;
 

@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import "./App.css";
 import { setUser } from "./redux/modules/actions/userActions";
 import ScrollToTop from "./components/common/ScrollTop";
+import Layout from "./components/common/Layout";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,7 +39,39 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/order/:orderParams"
+              element={
+                <PrivateRoute>
+                  <Order />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/cart"
+              element={
+                <PrivateRoute>
+                  <Cart />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/orderCompleted/:completedParams"
+              element={
+                <PrivateRoute>
+                  <OrderCompleted />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/clothes" element={<Clothes />} />
+            <Route path="/clothes/:productId" element={<ProductPage />} />
+            <Route path="/food" element={<Food />} />
+            <Route path="/food/:productId" element={<ProductPage />} />
+            <Route path="/toy" element={<Toy />} />
+            <Route path="/toy/:productId" element={<ProductPage />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
@@ -49,36 +82,6 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/order/:orderParams"
-            element={
-              <PrivateRoute>
-                <Order />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              <PrivateRoute>
-                <Cart />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/orderCompleted/:completedParams"
-            element={
-              <PrivateRoute>
-                <OrderCompleted />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/clothes" element={<Clothes />} />
-          <Route path="/clothes/:productId" element={<ProductPage />} />
-          <Route path="/food" element={<Food />} />
-          <Route path="/food/:productId" element={<ProductPage />} />
-          <Route path="/toy" element={<Toy />} />
-          <Route path="/toy/:productId" element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
     </>

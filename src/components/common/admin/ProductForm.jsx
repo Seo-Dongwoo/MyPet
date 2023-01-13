@@ -1,78 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import Category from "../../common/admin/Category";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { updateInitiate } from "../../../redux/modules/actions/productActions";
-import { uploadFiles } from "../../../redux/modules/actions/productActions";
-import Loading from "../../common/Loading";
+import Category from "./Category";
+import Loading from "../Loading";
 
-const EditProduct = () => {
-  const [data, setData] = useState([]);
-  const { product, category, price, desc } = data;
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [file, setFile] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { productId } = useParams();
-
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (productId) {
-      try {
-        await dispatch(updateInitiate(productId, data));
-
-        setIsSubmit(true);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    navigate("/admin/products");
-  };
-
-  useEffect(() => {
-    file && uploadFiles(file, setProgress, setData, data.product);
-  }, [file]);
-
+const ProductForm = ({
+  isSubmit,
+  handleSubmit,
+  handleChange,
+  progress,
+  category,
+  product,
+  price,
+  desc,
+  setFile,
+}) => {
   return (
     <>
       {isSubmit ? (
         <Loading />
       ) : (
-        <EditContainer>
+        <Container>
           <FormWrapper>
-            <EditForm onSubmit={handleSubmit}>
-              <FormTitle to="/">상품 변경하기</FormTitle>
+            <Form onSubmit={handleSubmit}>
+              <FormTitle to="/">상품 추가하기</FormTitle>
               <Upload>Upload {progress} %</Upload>
               <Category
                 name="category"
-                values={category || ""}
+                values={category}
                 onChange={handleChange}
               />
               <Input
                 type="text"
                 name="product"
                 placeholder="상품 이름을 입력하세요."
-                value={product || ""}
+                value={product}
                 onChange={handleChange}
               />
               <Input
                 type="text"
                 name="price"
                 placeholder="상품 가격을 입력하세요."
-                value={price || ""}
+                value={price}
                 onChange={handleChange}
               />
               <DescInput
                 type="text"
                 name="desc"
                 placeholder="상품 정보를 입력하세요."
-                value={desc || ""}
+                value={desc}
                 onChange={handleChange}
               />
               <ImageInput
@@ -84,17 +59,17 @@ const EditProduct = () => {
                 type="submit"
                 disabled={progress !== null && progress < 100}
               >
-                변경하기
+                추가하기
               </SubmitBtn>
-            </EditForm>
+            </Form>
           </FormWrapper>
-        </EditContainer>
+        </Container>
       )}
     </>
   );
 };
 
-const EditContainer = styled.div`
+const Container = styled.div`
   position: relative;
   width: 80%;
   height: 100%
@@ -109,7 +84,7 @@ const FormWrapper = styled.div`
   transform: translate(-50%, 0);
 `;
 
-const EditForm = styled.form`
+const Form = styled.form`
   margin-top: 30px;
   width: 100%;
   height: 100%;
@@ -188,4 +163,4 @@ const SubmitBtn = styled.button`
   }
 `;
 
-export default EditProduct;
+export default ProductForm;

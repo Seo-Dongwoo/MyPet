@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Card = (props) => {
+const AdminCard = (props) => {
   const { Icon, title, linkMsg, link, count } = props;
 
   return (
     <Container>
       <DescContainer>
-        <span className="icon">
+        <span>
           <Icon />
         </span>
         <h1>{title}</h1>
@@ -61,4 +61,4 @@ const NumberContainer = styled.div`
   }
 `;
 
-export default Card;
+export default AdminCard;

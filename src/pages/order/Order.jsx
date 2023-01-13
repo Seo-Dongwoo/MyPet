@@ -4,11 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { SiKakao } from "react-icons/si";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
 import OrderPrice from "../../components/order/OrderPrice";
-import CardSelect from "../../components/order/CardSelect";
-import SimpleCheckBox from "../../components/order/radio/SimpleCheckBox";
+import CardSelect from "../../components/order/sort/CardSelect";
+import SimpleCheckBox from "../../components/order/sort/radio/SimpleCheckBox";
 import { completedOrderInitiate } from "../../redux/modules/actions/completedOrderActions";
 import { deleteCheckedItems } from "../../redux/modules/actions/cartActions";
 import { deleteOrderInitiate } from "../../redux/modules/actions/orderActions";
@@ -126,7 +124,6 @@ const Order = () => {
 
   return (
     <>
-      <Header />
       <Container>
         <OrderContainer>
           <HeadlineDiv>
@@ -265,7 +262,6 @@ const Order = () => {
           </OrderDiv>
         </OrderContainer>
       </Container>
-      <Footer />
     </>
   );
 };

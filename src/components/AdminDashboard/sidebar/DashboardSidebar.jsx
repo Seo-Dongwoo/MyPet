@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FaDog } from "react-icons/fa";
-import { darkThemeColor } from "../../utils";
-import { SidebarData } from "./data/SidebarData";
+import { darkThemeColor } from "../../../utils";
+import { SidebarData } from "./SidebarData";
 
 const DashboardSidebar = () => {
   return (

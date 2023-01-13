@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { sliderData } from "./slider-data";
 
 const Slider = () => {
@@ -34,17 +34,17 @@ const Slider = () => {
 
   return (
     <SlideContainer>
-      <LeftArrow onClick={prevSlide} />
-      <RightArrow onClick={nextSlide} />
       {sliderData.map((slide, index) => {
         return (
-          <CurrentSlide key={index}>
+          <Slide key={index}>
             {index === currentSlide && (
               <>
+                <LeftArrow onClick={prevSlide} />
+                <RightArrow onClick={nextSlide} />
                 <Image src={slide.image} alt="slide" />
               </>
             )}
-          </CurrentSlide>
+          </Slide>
         );
       })}
     </SlideContainer>
@@ -52,57 +52,48 @@ const Slider = () => {
 };
 
 const SlideContainer = styled.div`
-  width: 100%;
-  height: 450px;
   position: relative;
+  width: 1750px;
+  height: 350px;
   overflow: hidden;
-  background-color: var(--color-dark);
   @media screen and (max-width: 768px) {
     display: none;
   }
 `;
 
-const LeftArrow = styled(AiOutlineArrowLeft)`
+const LeftArrow = styled(MdKeyboardArrowLeft)`
   position: absolute;
-  border: 2px solid #01bf71;
   border-radius: 50%;
   background: transparent;
-  color: #01bf71;
-  width: 2.5rem;
-  height: 2.5rem;
+  color: rgb(220, 220, 220);
+  width: 3rem;
+  height: 3rem;
   cursor: pointer;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  left: 1.5rem;
-  &:hover {
-    background: #fff;
-  }
+  left: 200px;
 `;
 
-const CurrentSlide = styled.div``;
+const Slide = styled.div``;
 
-const RightArrow = styled(AiOutlineArrowRight)`
+const RightArrow = styled(MdKeyboardArrowRight)`
   position: absolute;
-  border: 2px solid #01bf71;
-  border-radius: 50%;
   background: transparent;
-  color: #01bf71;
-  width: 2.5rem;
-  height: 2.5rem;
+  color: rgb(220, 220, 220);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
   cursor: pointer;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  right: 1.5rem;
-  &:hover {
-    background: #fff;
-  }
+  right: 200px;
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 450px;
+  height: 100%;
 `;
 
 export default Slider;

@@ -1,5 +1,4 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import productReducer from "./reducer/productReducer";
 import userReducer from "./reducer/userReducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -9,7 +8,6 @@ import completedOrderReducer from "./reducer/completedOrderReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
-  addProduct: productReducer,
   cartList: cartReducer,
   orderProduct: orderReducer,
   completedOrder: completedOrderReducer,

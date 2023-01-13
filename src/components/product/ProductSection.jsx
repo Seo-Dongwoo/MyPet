@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -6,12 +6,13 @@ import { FiHeart } from "react-icons/fi";
 import { BiMessageRoundedError } from "react-icons/bi";
 import { addCartInitiate } from "../../redux/modules/actions/cartActions";
 import ModalPortal from "../common/ModalProtal";
-import CartModal from "../common/CartModal";
+import CartModal from "../common/cart/CartModal";
 import { v4 } from "uuid";
+import { unsubscribeProduct } from "../../redux/modules/actions/productActions";
 
 const ProductSection = () => {
   const [quantity, setQuantity] = useState(1);
-  const { products } = useSelector((state) => state.addProduct);
+  const [data, setData] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
   const { productId } = useParams();
   const [modalOpen, setModalOpen] = useState();
@@ -41,10 +42,14 @@ const ProductSection = () => {
     setModalOpen(false);
   };
 
+  useEffect(() => {
+    unsubscribeProduct(setData);
+  }, []);
+
   return (
     <>
-      {products &&
-        products.map((product) =>
+      {data &&
+        data.map((product) =>
           product.id === productId ? (
             <Container key={product.id}>
               <ImageContainer>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import DashboardSidebar from "./DashboardSidebar";
+import DashboardSidebar from "./sidebar/DashboardSidebar";
 import MainContent from "./MainContent";
 
 const AdminDashboard = () => {

@@ -1,4 +1,3 @@
-import * as types from "../actionTypes/productActionTypes";
 import { db, storage } from "../../../firebase";
 import {
   collection,
@@ -14,26 +13,6 @@ import {
   uploadBytesResumable,
   deleteObject,
 } from "firebase/storage";
-
-const setLoading = (products) => ({
-  type: types.SET_LOADING,
-  payload: products,
-});
-
-const addProducts = (data) => ({
-  type: types.ADD_PRODUCT,
-  payload: data,
-});
-
-export const deleteProducts = (id) => ({
-  type: types.DELETE_PRODUCT,
-  payload: id,
-});
-
-const editProducts = (data) => ({
-  type: types.EDIT_PRODUCT,
-  payload: data,
-});
 
 const productCollectionRef = collection(db, "products");
 
@@ -56,10 +35,8 @@ export const unsubscribeProduct = (setData) =>
 
 // Firebase Database에 있는 데이터 추가
 export const addInitiate = (data) => {
-  setLoading();
-  return async function (dispatch) {
+  return async function () {
     await addDoc(productCollectionRef, data);
-    dispatch(addProducts(data));
   };
 };
 
@@ -98,9 +75,8 @@ export const uploadFiles = (file, setProgress, setData, name) => {
 
 // Firebase Database에 있는 데이터 삭제
 export const deleteInitiate = (id) => {
-  return async function (dispatch) {
+  return async function () {
     await deleteDoc(doc(productCollectionRef, id));
-    dispatch(deleteProducts(id));
   };
 };
 
@@ -116,12 +92,8 @@ export const deleteStorageFile = async (name) => {
 };
 
 // Firebase Database에 있는 데이터 변경
-export const updateInitiate = (productId, data) => async (dispatch) => {
+export const updateInitiate = (productId, data) => async () => {
   await updateDoc(doc(db, "products", productId), {
     ...data,
-  })
-    .then(() => {
-      dispatch(editProducts({ data }));
-    })
-    .catch((err) => console.log(err));
+  });
 };

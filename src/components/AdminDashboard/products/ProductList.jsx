@@ -10,7 +10,7 @@ import {
   unsubscribeProduct,
 } from "../../../redux/modules/actions/productActions";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../loading/Loading";
+import Loading from "../../common/Loading";
 
 function ProductList() {
   const [data, setData] = useState([]);
@@ -29,6 +29,7 @@ function ProductList() {
 
     unsubscribeProduct(setData);
   }, []);
+  console.log(data);
 
   const columns = useMemo(
     () => [
