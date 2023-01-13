@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { unsubscribeOrder } from "../../../redux/modules/actions/completedOrderActions";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../loading/Loading";
+import Loading from "../../common/Loading";
 import { deleteInitiate } from "../../../redux/modules/actions/completedOrderActions";
 
 const OrderList = () => {

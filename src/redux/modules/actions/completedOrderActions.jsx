@@ -46,26 +46,6 @@ export const unsubscribeOrder = (setData) =>
     }
   );
 
-// export const unsubscribeOrder = (setData) => {
-//   return function (dispatch) {
-//     onSnapshot(
-//       completedCollectionRef,
-//       (snapshot) => {
-//         let list = [];
-//         snapshot.docs.forEach((doc) => {
-//           list.push({ id: doc.id, ...doc.data() });
-//         });
-//         setData(list);
-
-//         dispatch(getOrder(list));
-//       },
-//       (err) => {
-//         console.log(err);
-//       }
-//     );
-//   };
-// };
-
 export const completedOrderInitiate = (data) => {
   return async function (dispatch) {
     await addDoc(collection(db, "completedOrder"), { data });

@@ -10,6 +10,7 @@ import { signupSchema } from "../../components/Auth/AuthSchema/SignupSchema";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { addUsers } from "../../redux/modules/actions/userActions";
+import AuthInput from "../../components/common/auth/AuthInput";
 
 const Signup = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -69,55 +70,47 @@ const Signup = () => {
           <SignupForm onSubmit={handleSubmit}>
             <FormTitle to="/">REGISTER</FormTitle>
             {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-            <InputField>
-              <Input
-                type="text"
-                name="displayName"
-                placeholder="UserName"
-                value={values.displayName || ""}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-            </InputField>
+            <AuthInput
+              type={"text"}
+              name={"displayName"}
+              placeholder={"UserName"}
+              value={values.displayName}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
             {errors.displayName && touched.displayName ? (
               <ErrorMessage>{errors.displayName}</ErrorMessage>
             ) : null}
-            <InputField>
-              <Input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={values.email || ""}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-            </InputField>
+            <AuthInput
+              type={"email"}
+              name={"email"}
+              placeholder={"Emial"}
+              value={values.email}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
             {errors.email && touched.email ? (
               <ErrorMessage>{errors.email}</ErrorMessage>
             ) : null}
-            <InputField>
-              <Input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={values.password || ""}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-            </InputField>
+            <AuthInput
+              type={"password"}
+              name={"password"}
+              placeholder={"Password"}
+              value={values.password}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
             {errors.password && touched.password ? (
               <ErrorMessage>{errors.password}</ErrorMessage>
             ) : null}
-            <InputField>
-              <Input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                value={values.confirmPassword || ""}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-            </InputField>
+            <AuthInput
+              type={"password"}
+              name={"confirmPassword"}
+              placeholder={"Confirm Password"}
+              value={values.confirmPassword}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
             {errors.confirmPassword && touched.confirmPassword ? (
               <ErrorMessage>{errors.confirmPassword}</ErrorMessage>
             ) : null}

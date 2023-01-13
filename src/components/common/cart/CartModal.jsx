@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { addCartInitiate } from "../../redux/modules/actions/cartActions";
+import { addCartInitiate } from "../../../redux/modules/actions/cartActions";
 import { AiOutlineAlert } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { v4 } from "uuid";

@@ -6,7 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
 import { unsubscribeUsers } from "../../../redux/modules/actions/userActions";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../loading/Loading";
+import Loading from "../../common/Loading";
 import { deleteInitiate } from "../../../redux/modules/actions/userActions";
 
 function UserList() {

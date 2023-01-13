@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import NewYear from "../../assets/images/new.jpg";
@@ -18,7 +16,6 @@ const OrderCompleted = () => {
 
   return (
     <>
-      <Header />
       <CompletedMessageDiv>
         <Image src={NewYear} />
         <CompletedMessage>
@@ -52,7 +49,6 @@ const OrderCompleted = () => {
         <HomeLink to="/">홈으로 이동</HomeLink>
         <MyPageLink to="#">주문내역 상세보기</MyPageLink>
       </LinkDiv>
-      <Footer />
     </>
   );
 };

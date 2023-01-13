@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const Sort = ({ priceselect, handleChange }) => {
+const Sort = ({ handleChange }) => {
   return (
-    <Select onChange={handleChange} priceselect={priceselect}>
+    <Select onChange={handleChange}>
       <Option value="default">선택</Option>
       <Option value="sortByHighPrice">높은 가격순</Option>
       <Option value="sortByLowPrice">낮은 가격순</Option>

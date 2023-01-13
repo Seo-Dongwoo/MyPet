@@ -12,6 +12,7 @@ import {
   loginInitiate,
 } from "../../redux/modules/actions/userActions";
 import { loginSchema } from "../../components/Auth/AuthSchema/LoginSchema";
+import AuthInput from "../../components/common/auth/AuthInput";
 
 const Login = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -68,29 +69,25 @@ const Login = () => {
         <LoginForm type="submit" onSubmit={handleSubmit}>
           <FormTitle to="/">LOGIN</FormTitle>
           {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-          <InputField>
-            <Input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={values.email}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-          </InputField>
+          <AuthInput
+            type={"email"}
+            name={"email"}
+            placeholder={"Emial"}
+            value={values.email}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
           {errors.email && touched.email ? (
             <ErrorMessage>{errors.email}</ErrorMessage>
           ) : null}
-          <InputField>
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={values.password}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-          </InputField>
+          <AuthInput
+            type={"password"}
+            name={"password"}
+            placeholder={"Password"}
+            value={values.password}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
           {errors.password && touched.password ? (
             <ErrorMessage>{errors.password}</ErrorMessage>
           ) : null}
@@ -157,31 +154,6 @@ const FormTitle = styled(Link)`
   margin-bottom: 10px;
   color: #01bf71;
   text-decoration: none;
-`;
-
-const InputField = styled.div`
-  max-width: 350px;
-  width: 100%;
-  height: 55px;
-  background-color: #f0f0f0;
-  margin: 10px 0;
-  display: grid;
-  border-radius: 55px;
-  padding: 0 0.4rem;
-`;
-const Input = styled.input`
-  background: none;
-  outline: none;
-  border: none;
-  line-height: 1;
-  font-weight: 600;
-  font-size: 1rem;
-  color: #333;
-  margin-left: 10px;
-  &::placeholder {
-    color: #aaa;
-    font-weight: 500;
-  }
 `;
 
 const AutoAndFind = styled.div`

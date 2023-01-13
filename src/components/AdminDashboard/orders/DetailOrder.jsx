@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { unsubscribeOrder } from "../../../redux/modules/actions/completedOrderActions";
@@ -9,24 +9,27 @@ import Pagination from "../../common/Pagination";
 
 const DetailOrder = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [endPage, setEndPage] = useState(4);
   const { orderParams } = useParams();
 
+  // 주문 데이터
   const orderData = data
     .filter((item) => item.id === orderParams)
     .map((item) => item.data.completedOrder)
     .reduce((acc, cur) => acc?.concat(cur), []);
 
+  // 주문 금액 (2만원 미만일 경우 배송비 추가)
   const orderPrice = orderData
     .map((item) => item.orderItemsList)
     .reduce((acc, cur) => acc?.concat(cur), [])
     .reduce((acc, item) => acc + item.quantity * item.price, 0);
 
+  // 총 주문 금액
   const totalPrice = orderData.map((item) => item.totalPrice);
 
+  // 주문한 상품 데이터
   const productData = orderData
     .map((item) => item.orderItemsList)
     .reduce((acc, cur) => acc?.concat(cur), []);

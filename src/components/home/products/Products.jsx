@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { MdPets } from "react-icons/md";
-import Loading from "../../loading/Loading";
-import FoodCard from "./FoodCard";
-import ClothesCard from "./ClothesCard";
-import ToyCard from "./ToyCard";
+import Loading from "../../common/Loading";
+import SortProducts from "../../common/product/SortProducts";
 
 const Products = () => {
   const [loading, setLoading] = useState(false);
@@ -18,7 +16,7 @@ const Products = () => {
       <TitleContainer>
         <Title>
           <Icon />
-          All Products
+          마이펫 상품
           <Icon />
         </Title>
       </TitleContainer>
@@ -27,9 +25,9 @@ const Products = () => {
           <Loading />
         ) : (
           <>
-            <FoodCard />
-            <ClothesCard />
-            <ToyCard />
+            <SortProducts title={"마이펫 먹이"} category={"food"} />
+            <SortProducts title={"마이펫 의류"} category={"clothes"} />
+            <SortProducts title={"마이펫 장난감"} category={"toy"} />
           </>
         )}
       </ItemContainer>
@@ -42,13 +40,11 @@ const ProductContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #fff0f5;
   overflow-x: hidden;
 `;
 
 const TitleContainer = styled.div`
-  height: 15%;
-  margin-top: 50px;
+  padding: 30px 0;
   display: flex;
   justify-content: center;
 `;

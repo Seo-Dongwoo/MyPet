@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-const DeleteModal = ({ onClose, deleteHandler, isToken }) => {
+const DeleteCartModal = ({ onClose, deleteHandler, isToken }) => {
   const { currentUser } = useSelector((state) => state.user);
 
   return (
@@ -98,4 +98,4 @@ const CancelButton = styled.button`
   border: 1px solid rgb(221, 223, 225);
 `;
 
-export default DeleteModal;
+export default DeleteCartModal;

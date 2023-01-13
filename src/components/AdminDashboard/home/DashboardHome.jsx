@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Card from "../../common/Card";
-import PieChartComponent from "../../common/PieChart";
+import AdminCard from "../../common/admin/AdminCard";
+import PieChartComponent from "../../common/admin/PieChart";
 import OrderList from "./OrderList";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { MdPointOfSale } from "react-icons/md";
@@ -30,21 +30,15 @@ const DashboardHome = () => {
     .reduce((acc, cur) => acc?.concat(cur), [])
     .map((item) => item.category);
 
-  // 주문한 상품 중 카테고리가 음식인 상품의 수
-  const foodLength = categoryLength.filter((item) => item === "food").length;
-
-  // 주문한 상품 중 카테고리가 장난감인 상품의 수
-  const toyLength = categoryLength.filter((item) => item === "toy").length;
-
-  // 주문한 상품 중 카테고리가 의류인 상품의 수
-  const clothesLength = categoryLength.filter(
-    (item) => item === "clothes"
-  ).length;
+  const orderRate = (category) => {
+    const orderLength = categoryLength.filter((item) => item === category);
+    return orderLength.length;
+  };
 
   const pieChartdata = [
-    { name: "Food", value: foodLength },
-    { name: "Clothes", value: toyLength },
-    { name: "Toy", value: clothesLength },
+    { name: "Food", value: orderRate("food") },
+    { name: "Clothes", value: orderRate("clothes") },
+    { name: "Toy", value: orderRate("toy") },
   ];
 
   useEffect(() => {
@@ -57,28 +51,28 @@ const DashboardHome = () => {
     <Container>
       <Title>DashBoard</Title>
       <CardWrapper>
-        <Card
+        <AdminCard
           Icon={AiOutlineUserAdd}
           title={"소비자"}
           linkMsg={"소비자 목록 보기"}
           link={"/admin/users"}
           count={`${userData.length}명`}
         />
-        <Card
+        <AdminCard
           Icon={BsCartPlus}
           title={"상품 수"}
           linkMsg={"상품 목록 보기"}
           link={"/admin/products"}
           count={`${productData.length}개`}
         />
-        <Card
+        <AdminCard
           Icon={MdPointOfSale}
           title={"총 주문 건"}
           linkMsg={"주문 내역 보기"}
           link={"/admin/orders"}
           count={`${orderData.length}건`}
         />
-        <Card
+        <AdminCard
           Icon={FcSalesPerformance}
           title={"총 주문 금액"}
           linkMsg={"주문 내역 보기"}
@@ -87,7 +81,7 @@ const DashboardHome = () => {
         />
       </CardWrapper>
       <ChartTitleContainer>
-        <h2>카테고리 별 주문</h2>
+        <h2>카테고리 별 주문 비율</h2>
         <h2>최근 주문 목록</h2>
       </ChartTitleContainer>
       <ChartContainer>
@@ -126,7 +120,7 @@ const CardWrapper = styled.div`
 
 const ChartTitleContainer = styled.div`
   display: flex;
-  padding: 30px 100px 0 100px;
+  padding: 30px 80px 0 80px;
   h2 {
     margin: 0 200px;
   }
@@ -153,7 +147,7 @@ const PieChartDesc = styled.div`
 `;
 
 const FoodBar = styled.div`
-  width: 100%;
+  width: 70px;
   height: 25px;
   background-color: #0088fe;
   margin: 10px 0;
