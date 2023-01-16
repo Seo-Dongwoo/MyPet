@@ -37,8 +37,9 @@ const ProductCards = styled.div`
   width: 70%;
   align-items: center;
   margin: 0 auto 50px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 249px);
+  gap: 31px 18px;
   justify-content: center;
   @media screen and (max-width: 875px) {
     text-align: center;

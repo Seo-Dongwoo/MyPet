@@ -47,7 +47,7 @@ const ToyProducts = () => {
   return (
     <>
       <TitleContainer>
-        <Title>마이펫 장난감</Title>
+        <Title>장난감</Title>
       </TitleContainer>
       <CategoryContainer>
         <ProductsNums>총 {PaginationProduct.length}건</ProductsNums>

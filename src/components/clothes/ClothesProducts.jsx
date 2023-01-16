@@ -45,7 +45,7 @@ const ClothesProducts = () => {
   return (
     <>
       <TitleContainer>
-        <Title>마이펫 의류</Title>
+        <Title>의류 / </Title>
       </TitleContainer>
       <CategoryContainer>
         <ProductsNums>총 {PaginationProduct.length}건</ProductsNums>

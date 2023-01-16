@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartInitiate } from "../../../redux/modules/actions/cartActions";
 import { AiOutlineAlert } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { v4 } from "uuid";
+import { unsubscribeProduct } from "../../../redux/modules/actions/productActions";
 
 const CartModal = ({ onClose, itemId, setModalOpen }) => {
   const { currentUser } = useSelector((state) => state.user);
-  const { products } = useSelector((state) => state.addProduct);
+  const [data, setData] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,12 +35,16 @@ const CartModal = ({ onClose, itemId, setModalOpen }) => {
     navigate("/login");
   };
 
+  useEffect(() => {
+    unsubscribeProduct(setData);
+  }, []);
+
   return (
     <ModalContainer>
       <Background>
         {currentUser ? (
           <ModalDiv>
-            {products.map((product) =>
+            {data.map((product) =>
               product.id === itemId ? (
                 <Container key={product.id}>
                   <ProductContainer>
