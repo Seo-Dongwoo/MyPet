@@ -4,7 +4,7 @@ import Sort from "../common/Sort";
 import Pagination from "../common/Pagination";
 import CategoryCard from "../common/product/CategoryCard";
 import { unsubscribeProduct } from "../../redux/modules/actions/productActions";
-const ClothesProducts = () => {
+const FoodProducts = () => {
   const [priceFilter, setPriceFilter] = useState("default");
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +45,7 @@ const ClothesProducts = () => {
   return (
     <>
       <TitleContainer>
-        <Title>마이펫 사료</Title>
+        <Title>사료 / 간식</Title>
       </TitleContainer>
       <CategoryContainer>
         <ProductsNums>총 {PaginationProduct.length}건</ProductsNums>
@@ -97,4 +97,4 @@ const ProductsNums = styled.span`
   line-height: 50px;
 `;
 
-export default ClothesProducts;
+export default FoodProducts;

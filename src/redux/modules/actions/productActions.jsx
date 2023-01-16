@@ -6,6 +6,9 @@ import {
   doc,
   updateDoc,
   onSnapshot,
+  query,
+  limit,
+  where,
 } from "firebase/firestore";
 import {
   getDownloadURL,
@@ -19,6 +22,23 @@ const productCollectionRef = collection(db, "products");
 export const unsubscribeProduct = (setData) =>
   onSnapshot(
     productCollectionRef,
+    (snapshot) => {
+      let productList = [];
+
+      snapshot.docs.forEach((doc) => {
+        productList.push({ id: doc.id, ...doc.data() });
+      });
+
+      setData(productList);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+
+export const unsubscribeCategory = (setData, category) =>
+  onSnapshot(
+    query(productCollectionRef, where("category", "==", category), limit(4)),
     (snapshot) => {
       let productList = [];
 

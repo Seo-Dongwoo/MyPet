@@ -42,16 +42,16 @@ const Navbar = ({ toggle }) => {
           ) : (
             <NavMenu>
               <NavItem>
-                <NavLinks to="/">About</NavLinks>
+                <NavLinks to="/">Home</NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinks to="/clothes">Clothes</NavLinks>
+                <NavLinks to="/food">사료/간식</NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinks to="/food">Food</NavLinks>
+                <NavLinks to="/clothes">의류/야외용품</NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinks to="/toy">Toy</NavLinks>
+                <NavLinks to="/toy">장난감</NavLinks>
               </NavItem>
             </NavMenu>
           )}

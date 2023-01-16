@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { MdPets } from "react-icons/md";
 import Loading from "../../common/Loading";
 import SortProducts from "../../common/product/SortProducts";
+import savings from "../../../assets/images/event1.jpg";
+import newYear from "../../../assets/images/banner1.jpg";
+import EventBanner from "../../common/EventBanner";
 
 const Products = () => {
   const [loading, setLoading] = useState(false);
@@ -25,9 +28,19 @@ const Products = () => {
           <Loading />
         ) : (
           <>
-            <SortProducts title={"마이펫 먹이"} category={"food"} />
-            <SortProducts title={"마이펫 의류"} category={"clothes"} />
-            <SortProducts title={"마이펫 장난감"} category={"toy"} />
+            <SortProducts
+              title={"사료 / 간식"}
+              category={"food"}
+              link={"/food"}
+            />
+            <EventBanner img={newYear} />
+            <SortProducts
+              title={"의류 / 야외용품"}
+              category={"clothes"}
+              link={"/clothes"}
+            />
+            <EventBanner img={savings} />
+            <SortProducts title={"장난감"} category={"toy"} link={"/toy"} />
           </>
         )}
       </ItemContainer>
@@ -36,15 +49,16 @@ const Products = () => {
 };
 
 const ProductContainer = styled.div`
-  width: 100%;
+  width: 1240px !important;
   height: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
 `;
 
 const TitleContainer = styled.div`
-  padding: 30px 0;
+  padding: 50px 0 30px 0;
   display: flex;
   justify-content: center;
 `;

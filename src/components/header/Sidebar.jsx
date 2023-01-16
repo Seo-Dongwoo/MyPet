@@ -39,10 +39,10 @@ const Sidebar = ({ openSidebar, toggle }) => {
             </AdminMenu>
           ) : (
             <SidebarMenu>
-              <SidebarLinks to="/">About</SidebarLinks>
-              <SidebarLinks to="/clothes">Clothes</SidebarLinks>
-              <SidebarLinks to="/food">Food</SidebarLinks>
-              <SidebarLinks to="/toy">Toy</SidebarLinks>
+              <SidebarLinks to="/">Home</SidebarLinks>
+              <SidebarLinks to="/food">사료/간식</SidebarLinks>
+              <SidebarLinks to="/clothes">의류/야외용품</SidebarLinks>
+              <SidebarLinks to="/toy">장난감</SidebarLinks>
             </SidebarMenu>
           )}
           <SideBtnWrap>
