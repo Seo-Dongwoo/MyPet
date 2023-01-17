@@ -36,6 +36,9 @@ const Sidebar = ({ openSidebar, toggle }) => {
           {currentUser && currentUser.uid === process.env.REACT_APP_ADMIN_ID ? (
             <AdminMenu>
               <SidebarLinks to="/admin">관리자 페이지</SidebarLinks>
+              <SidebarLinks to="/food">사료/간식</SidebarLinks>
+              <SidebarLinks to="/clothes">의류/야외용품</SidebarLinks>
+              <SidebarLinks to="/toy">장난감</SidebarLinks>
             </AdminMenu>
           ) : (
             <SidebarMenu>
@@ -115,8 +118,9 @@ const SidebarWrapper = styled.div`
 const SidebarMenu = styled.ul`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(5, 80px);
+  grid-template-rows: repeat(4, 80px);
   text-align: center;
+  margin-bottom: 60px;
 
   @media screen and (max-width: 480px) {
     grid-template-rows: repeat(5, 60px);
@@ -126,8 +130,9 @@ const SidebarMenu = styled.ul`
 const AdminMenu = styled.ul`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, 80px);
+  grid-template-rows: repeat(4, 80px);
   text-align: center;
+  margin-bottom: 60px;
 
   @media screen and (max-width: 480px) {
     grid-template-rows: repeat(5, 60px);
@@ -161,6 +166,7 @@ const SideBtnWrap = styled.div`
 
 const SideBarLogin = styled(LinkR)`
   width: 250px;
+  height: 60px;
   text-align: center;
   border-radius: 50px;
   background: #01bf71;
@@ -184,6 +190,7 @@ const SideBarLogin = styled(LinkR)`
 
 const SideBarCart = styled(LinkR)`
   width: 250px;
+  height: 60px;
   align-items: center;
   justify-content: center;
   border-radius: 50px;
