@@ -41,3 +41,7 @@
   * #### 결제왼료 페이지
     * useParams를 이용해 결제한 상품의 주문번호와 params를 비교해서 경로와 Layout 구현
     * 주문한 사람과 주문 번호와 배송지 상세주소등 구현
+ * ### 프로젝트 간략한 영상
+https://user-images.githubusercontent.com/83106932/212872974-f6773c40-5220-460a-b6ce-09b50825bb53.mp4
+
+
