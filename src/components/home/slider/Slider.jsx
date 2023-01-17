@@ -53,7 +53,7 @@ const Slider = () => {
 
 const SlideContainer = styled.div`
   position: relative;
-  width: 1750px;
+  width: 1910px;
   height: 350px;
   overflow: hidden;
   @media screen and (max-width: 768px) {
