@@ -36,7 +36,16 @@ const Navbar = ({ toggle }) => {
           {currentUser && currentUser.uid === process.env.REACT_APP_ADMIN_ID ? (
             <NavMenu>
               <NavItem>
-                <NavLinks to="/admin">관리자 페이지</NavLinks>
+                <NavLinks to="/admin">관리자페이지</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/food">사료/간식</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/clothes">의류/야외용품</NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/toy">장난감</NavLinks>
               </NavItem>
             </NavMenu>
           ) : (
