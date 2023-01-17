@@ -84,7 +84,7 @@ const Signup = () => {
             <AuthInput
               type={"email"}
               name={"email"}
-              placeholder={"Emial"}
+              placeholder={"Email"}
               value={values.email}
               onBlur={handleBlur}
               onChange={handleChange}
