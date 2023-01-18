@@ -77,7 +77,7 @@ https://youtu.be/pRsDDPvHD-Q
  #### 관리자 로그인
  비공개
  
- ---
+---
  ## 새로 배우거나 집중적으로 공부한 것
  - Yup 라이브러리를 이용하여 유효성 검사 학습 및 적용
  - useFormik을 이용해서 Authentication Form의 상태관리
@@ -88,6 +88,9 @@ https://youtu.be/pRsDDPvHD-Q
  - 장바구니 기능 
     - Redux를 이용해 상품의 종류, 상품의 수량, 주문자의 주소, 배송비 추가 유무, 상품 선택 유무등 상태관리
     - 사용자의 쾌적하고 편안한 UI / UX 경험을 위해 많은 고민을 하고 적용시켰다.
+ ---
+ ## ISSUE 및 SOLUTION
+ #### 기능마다 branch를 따서 구현하였고 구현하면서 생긴 Issue는 Issue카테고리에 잘 정리했으며 Issue의 Solution은 PR에 올렸으니 참고해주세요.
 
   
 
