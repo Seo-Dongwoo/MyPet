@@ -1,5 +1,5 @@
 # MyPet E-Commerce
-## 프로젝트 목적 및 설명
+## 📄 프로젝트 목적 및 설명
 * ### 목적
   * 전자상거래의 흐름을 이해하고 학습하기 위함
   * Redux 상태관리 라이브러리의 이해 및 학습
@@ -42,14 +42,14 @@
     * useParams를 이용해 결제한 상품의 주문번호와 params를 비교해서 경로와 Layout 구현
     * 주문한 사람과 주문 번호와 배송지 상세주소등 구현
 ---
-## 프로젝트 영상 
+## 🎞 프로젝트 영상 
 #### gif로 변환하였으나 github readme 동영상 용량의 문제로 유튜브에 게시하였습니다.
 https://youtu.be/pRsDDPvHD-Q
 
 --- 
-## 개발 기간 및 사용 기술
-- 개발 기간 : 2022.10.27 ~ 2023.01.16 (약 10주)
-* 사용 기술 
+## 🛠 개발 기간 및 사용 기술
+- **개발 기간** : 2022.10.27 ~ 2023.01.16 (약 10주)
+* **사용 기술** 
 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
@@ -65,7 +65,7 @@ https://youtu.be/pRsDDPvHD-Q
   <img src="https://img.shields.io/badge/mui-007FFF?style=for-the-badge&logo=mui&logoColor=white"/>
     <img src="https://img.shields.io/badge/rechart-FF6384?style=for-the-badge&logo=chartjs&logoColor=white"/>
  ---
- ## 프로젝트 실행
+ ## 🔌 프로젝트 실행
  ```
    npm start
  ```
@@ -78,7 +78,7 @@ https://youtu.be/pRsDDPvHD-Q
  비공개
  
 ---
- ## 새로 배우거나 집중적으로 공부한 것
+ ## 🤩 새로 배우거나 집중적으로 공부한 것
  - Yup 라이브러리를 이용하여 유효성 검사 학습 및 적용
  - useFormik을 이용해서 Authentication Form의 상태관리
  - Firebase와 Redux를 이용해서 로그인, 로그아웃 및 회원가입 상태관리
@@ -89,8 +89,6 @@ https://youtu.be/pRsDDPvHD-Q
     - Redux를 이용해 상품의 종류, 상품의 수량, 주문자의 주소, 배송비 추가 유무, 상품 선택 유무등 상태관리
     - 사용자의 쾌적하고 편안한 UI / UX 경험을 위해 많은 고민을 하고 적용시켰다.
  ---
- ## ISSUE 및 SOLUTION
- #### 기능마다 branch를 따서 구현하였고 구현하면서 생긴 Issue는 Issue카테고리에 잘 정리했으며 Issue의 Solution은 PR에 올렸으니 참고해주세요.
-
-  
+ ## 🔧 이슈 및 해결
+ #### ❗ 기능마다 branch를 따서 구현하였고 구현하면서 생긴 Issue는 Issue카테고리에 잘 정리했으며 Issue의 Solution은 PR에 올렸으니 참고해주세요.
 
