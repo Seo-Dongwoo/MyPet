@@ -42,9 +42,10 @@
     * useParams를 이용해 결제한 상품의 주문번호와 params를 비교해서 경로와 Layout 구현
     * 주문한 사람과 주문 번호와 배송지 상세주소등 구현
 ---
-## 프로젝트 간략한 영상 
+## 프로젝트 영상 
 #### gif로 변환하였으나 github readme 동영상 용량의 문제로 유튜브에 게시하였습니다.
 https://youtu.be/pRsDDPvHD-Q
+
 --- 
 ## 개발 기간 및 사용 기술
 - 개발 기간 : 2022.10.27 ~ 2023.01.16 (약 10주)
@@ -59,9 +60,34 @@ https://youtu.be/pRsDDPvHD-Q
   <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
   <img src="https://img.shields.io/badge/firestore-FF7139?style=for-the-badge&logo=firebase&logoColor=white">
   <br />
-  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+  <img src="https://img.shields.io/badge/fontawesome-528DD7?style=for-the-badge&logo=font-awesome&logoColor=white">
   <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/>
   <img src="https://img.shields.io/badge/mui-007FFF?style=for-the-badge&logo=mui&logoColor=white"/>
+    <img src="https://img.shields.io/badge/rechart-FF6384?style=for-the-badge&logo=chartjs&logoColor=white"/>
+ ---
+ ## 프로젝트 실행
+ ```
+   npm start
+ ```
+ #### 게스트 로그인
+ Email : guest@guest.com
+ <br />
+ Password : !guest123
  
+ #### 관리자 로그인
+ 비공개
+ 
+ ---
+ ## 새로 배우거나 집중적으로 공부한 것
+ - Yup 라이브러리를 이용하여 유효성 검사 학습 및 적용
+ - useFormik을 이용해서 Authentication Form의 상태관리
+ - Firebase와 Redux를 이용해서 로그인, 로그아웃 및 회원가입 상태관리
+ - useParams, useLocation hooks를 이용해 경로 접근에 대해 학습 및 적용
+ - Firestore와 연동하여 관리자 페이지에서 상품 CRUD 구현 및 리스트에 상품 데이터 Fetch
+ - 중복된 코드 리팩토링 및 컴포넌트 재사용
+ - 장바구니 기능 
+    - Redux를 이용해 상품의 종류, 상품의 수량, 주문자의 주소, 배송비 추가 유무, 상품 선택 유무등 상태관리
+    - 사용자의 쾌적하고 편안한 UI / UX 경험을 위해 많은 고민을 하고 적용시켰다.
+
   
 
