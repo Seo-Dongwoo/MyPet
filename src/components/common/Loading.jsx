@@ -19,8 +19,11 @@ const Loading = () => {
 };
 
 const LoadingContainer = styled.div`
-  width: 80%;
+  position: fixed;
+  width: 100%;
   height: 100%;
-  transform: translate(40%, 40%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 export default Loading;
