@@ -89,7 +89,7 @@ https://youtu.be/pRsDDPvHD-Q
  - 장바구니 기능 
     - Redux를 이용해 상품의 종류, 상품의 수량, 주문자의 주소, 배송비 추가 유무, 상품 선택 유무등 상태관리
     - 사용자의 쾌적하고 편안한 UI / UX 경험을 위해 많은 고민을 하고 적용시켰다.
- - React.lazy를 이용해서 route 부분 Code Splitting (대략 2배정도의 성능 개선!!)
+ - React.lazy를 이용해서 route 부분 Code Splitting (**약 275%의 성능 개선**)
  ---
  ## 🔧 이슈 및 해결
  #### ❗ 기능마다 branch를 따서 구현하였고 구현하면서 생긴 Issue는 Issue카테고리에 잘 정리했으며 Issue의 Solution은 PR에 올렸으니 참고해주세요.
