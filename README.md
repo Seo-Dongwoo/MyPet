@@ -5,7 +5,7 @@
   * Redux 상태관리 라이브러리의 이해 및 학습
   * Firebase를 이용해서 Authentication를 이해 및 학습
   * Firestore를 이용해서 데이터의 관리 및 CRUD를 이해 및 학습
-  * 코드 분할하여 최적화 
+  * Code Splitting함으로써 성능 개선
 * ### 설명
   * #### 관리자 페이지
     * 관리자 로그인시 관리자 페이지 접근 가능 ( .env에 관리자 uid 저장)
@@ -89,7 +89,7 @@ https://youtu.be/pRsDDPvHD-Q
  - 장바구니 기능 
     - Redux를 이용해 상품의 종류, 상품의 수량, 주문자의 주소, 배송비 추가 유무, 상품 선택 유무등 상태관리
     - 사용자의 쾌적하고 편안한 UI / UX 경험을 위해 많은 고민을 하고 적용시켰다.
- - lazy를 이용해서 route
+ - React.lazy를 이용해서 route 부분 Code Splitting (대략 2배정도의 성능 개선!!)
  ---
  ## 🔧 이슈 및 해결
  #### ❗ 기능마다 branch를 따서 구현하였고 구현하면서 생긴 Issue는 Issue카테고리에 잘 정리했으며 Issue의 Solution은 PR에 올렸으니 참고해주세요.
