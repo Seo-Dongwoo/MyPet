@@ -5,7 +5,7 @@
   * Redux 상태관리 라이브러리의 이해 및 학습
   * Firebase를 이용해서 Authentication를 이해 및 학습
   * Firestore를 이용해서 데이터의 관리 및 CRUD를 이해 및 학습
-  * Code Splitting함으로써 성능 개선
+  * lazy를 이용해서 Code Splitting함으로써 성능 개선
 * ### 설명
   * #### 관리자 페이지
     * 관리자 로그인시 관리자 페이지 접근 가능 ( .env에 관리자 uid 저장)
